@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Unified Search Overlay</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Plus+Jakarta+Sans:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-error": "#690005",
+                        "glass-specular": "rgba(255, 255, 255, 0.28)",
+                        "surface-tint": "#acc7ff",
+                        "on-primary-container": "#00295c",
+                        "accent-glow": "rgba(74, 144, 255, 0.24)",
+                        "on-tertiary-container": "#452200",
+                        "on-tertiary-fixed-variant": "#6d3900",
+                        "surface": "#131313",
+                        "background": "#131313",
+                        "surface-container-high": "#2a2a2a",
+                        "primary": "#acc7ff",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#ffb77b",
+                        "secondary-container": "#48494d",
+                        "secondary-fixed-dim": "#c6c6cb",
+                        "on-secondary-container": "#b8b8bd",
+                        "surface-raised": "#242426",
+                        "on-tertiary": "#4d2700",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary-fixed": "#e3e2e7",
+                        "on-surface": "#e5e2e1",
+                        "surface-variant": "#353534",
+                        "secondary": "#c6c6cb",
+                        "tertiary": "#ffb77b",
+                        "on-primary": "#002f67",
+                        "on-surface-variant": "#c2c6d5",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary-fixed-variant": "#004491",
+                        "inverse-on-surface": "#313030",
+                        "error": "#ffb4ab",
+                        "surface-container-highest": "#353534",
+                        "on-error-container": "#ffdad6",
+                        "surface-base": "#1C1C1E",
+                        "on-secondary-fixed": "#1a1b1f",
+                        "inverse-surface": "#e5e2e1",
+                        "glass-fill": "rgba(36, 36, 38, 0.78)",
+                        "on-background": "#e5e2e1",
+                        "success": "#30D158",
+                        "primary-fixed-dim": "#acc7ff",
+                        "danger": "#FF453A",
+                        "primary-fixed": "#d7e2ff",
+                        "surface-bright": "#393939",
+                        "outline": "#8c909f",
+                        "surface-container": "#201f1f",
+                        "warning": "#FFB340",
+                        "surface-dim": "#131313",
+                        "on-tertiary-fixed": "#2e1500",
+                        "on-primary-fixed": "#001a40",
+                        "tertiary-fixed": "#ffdcc2",
+                        "on-secondary-fixed-variant": "#46474b",
+                        "on-secondary": "#2f3034",
+                        "outline-variant": "#414753",
+                        "tertiary-container": "#db7900",
+                        "inverse-primary": "#005bbe",
+                        "primary-container": "#4a90ff",
+                        "surface-high": "#2E2E32"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "gap-section": "24px",
+                        "gutter-bento": "16px",
+                        "padding-card": "16px",
+                        "touch-target-min": "48px",
+                        "unit": "8px",
+                        "margin-screen": "20px"
+                    },
+                    fontFamily: {
+                        "display-xl": ["PlusJakartaSans"],
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "caption": ["Inter"],
+                        "title": ["Inter"],
+                        "display-lg": ["PlusJakartaSans"],
+                        "micro": ["Inter"],
+                        "stats-mono": ["JetBrains Mono"]
+                    },
+                    fontSize: {
+                        "display-xl": ["64px", { lineHeight: "72px", letterSpacing: "-0.03em", fontWeight: "700" }],
+                        "headline": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "body": ["15px", { lineHeight: "22px", letterSpacing: "0", fontWeight: "400" }],
+                        "caption": ["13px", { lineHeight: "18px", letterSpacing: "0.01em", fontWeight: "400" }],
+                        "title": ["18px", { lineHeight: "24px", letterSpacing: "0", fontWeight: "600" }],
+                        "display-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "micro": ["11px", { lineHeight: "14px", letterSpacing: "0.02em", fontWeight: "500" }],
+                        "stats-mono": ["14px", { lineHeight: "20px", letterSpacing: "-0.01em", fontWeight: "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Hide scrollbar for seamless look */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Keyboard key press animation */
+        .key-press:active {
+            transform: translateY(2px);
+            background-color: var(--color-surface-container-high);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-hidden h-screen w-screen relative">
+<div class="absolute inset-0 w-full h-full bg-cover bg-center" data-alt="A dark, blurred abstract digital wallpaper featuring deep indigo and subtle neon purple gradients. The image simulates a high-end smartphone home screen background that is entirely out of focus, creating a smooth, velvety backdrop with no sharp edges. Lighting is moody and cinematic, perfectly suited for a dark mode interface overlay." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXlCpb1neUri2qSCAWGsr_DY1cg7qThsV8fXuOclLSsXsapNIqu0Exe53pswqHx9eLnwljWp58xrvz__R3WMImmng53QvqHs0J3uDW9pB3aR9ml8fBojLYMQSmUpyen7Sos4AN2ezGtQHwHMnU0D8Ktv8Y6xxqQIeuuTq1czoBVu1wXVtFrI9uD4DbOdqjBc5H21msxw8_7RIgj81bMOujpjdZlChcWFacJG377fHcjW9nMA-t9Px3')"></div>
+<div class="absolute inset-0 bg-glass-fill backdrop-blur-3xl z-10 flex flex-col">
+<div class="h-12 w-full"></div>
+<div class="px-margin-screen pt-4 pb-4 flex-shrink-0">
+<div class="flex items-center bg-surface-raised border border-glass-specular rounded-full h-[52px] px-4 shadow-lg shadow-accent-glow backdrop-blur-2xl transition-all duration-300 transform scale-[0.98]">
+<span class="material-symbols-outlined text-primary">search</span>
+<input class="bg-transparent border-none outline-none text-body font-body text-on-surface flex-1 mx-3 placeholder:text-on-surface-variant/50 focus:ring-0" placeholder="Search..." type="text" value="72 x 1612"/>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer">mic</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-margin-screen flex flex-col gap-gap-section pb-[320px]">
+<section class="flex gap-4 overflow-x-auto pb-2 snap-x">
+<div class="flex flex-col items-center gap-2 snap-start">
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#FF512F] to-[#DD2476] shadow-md flex items-center justify-center">
+<span class="material-symbols-outlined text-white icon-filled text-[28px]">mail</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Mail</span>
+</div>
+<div class="flex flex-col items-center gap-2 snap-start">
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#11998e] to-[#38ef7d] shadow-md flex items-center justify-center">
+<span class="material-symbols-outlined text-white icon-filled text-[28px]">message</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Messages</span>
+</div>
+<div class="flex flex-col items-center gap-2 snap-start">
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#4A00E0] to-[#8E2DE2] shadow-md flex items-center justify-center">
+<span class="material-symbols-outlined text-white icon-filled text-[28px]">photo_library</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Photos</span>
+</div>
+<div class="flex flex-col items-center gap-2 snap-start">
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F2994A] to-[#F2C94C] shadow-md flex items-center justify-center">
+<span class="material-symbols-outlined text-white icon-filled text-[28px]">note</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Notes</span>
+</div>
+<div class="flex flex-col items-center gap-2 snap-start">
+<div class="w-14 h-14 rounded-2xl bg-surface-raised border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface">grid_view</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">All Apps</span>
+</div>
+</section>
+<section class="bg-surface-raised rounded-[20px] p-padding-card shadow-md flex flex-col gap-2 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-[2px] bg-primary-container opacity-50"></div>
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">calculate</span> Calculator
+                    </span>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">more_horiz</span>
+</div>
+<div class="font-body text-body text-on-surface-variant mt-1">
+                    72 × 1612
+                </div>
+<div class="font-display-lg text-display-lg text-primary tracking-tight">
+                    116,064
+                </div>
+</section>
+<section class="flex flex-col gap-3">
+<h3 class="font-headline text-headline text-on-surface px-1">Contacts</h3>
+<div class="bg-surface-raised rounded-[20px] divide-y divide-outline-variant/30 flex flex-col">
+<div class="p-padding-card flex items-center justify-between hover:bg-surface-variant/50 transition-colors first:rounded-t-[20px]">
+<div class="flex items-center gap-4">
+<img class="w-12 h-12 rounded-full object-cover border border-surface-variant" data-alt="A sleek, high-contrast black and white portrait photo of a professional woman with short hair. Dramatic studio lighting highlights her features against a pure black background. Cinematic, sharp focus, styled for a modern dark mode UI avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvyQjNNyEMG3_8vmKKMrG89ksWTXRNX6fnF4CXjGPgURi6S9l-WlkS7KXLdOakYeIxFUCOrIvba2kPaluSikMi567YQc8yVe-IEchrL41ao6At_2QGtOWYTavhjX3LiL9b5YEKUR3UxOr-qBxhrsAul4FzgKaVuq6BkqGOueYNSNCnwJJGAgg7fa_hxmSwLyV2MrHl-_v4zqeHGbAEY9-Bt1Ozin8GTBf2uK-msW3Nr3yGJqX90ZvM"/>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface">Ada Lovelace</span>
+<span class="font-caption text-caption text-on-surface-variant">Mobile • Analyst</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-colors text-on-surface">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-colors text-on-surface">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</button>
+</div>
+</div>
+<div class="p-padding-card flex items-center justify-between hover:bg-surface-variant/50 transition-colors last:rounded-b-[20px]">
+<div class="flex items-center gap-4">
+<img class="w-12 h-12 rounded-full object-cover border border-surface-variant" data-alt="A moody, high-end profile portrait of a man looking slightly off-camera. Soft, cool-toned rim lighting shapes his silhouette against an impenetrable dark grey background. Shot with a shallow depth of field, optimized for a premium digital address book icon." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVG0P3d4E_YAQZJGApjqeKYspM0rW0Mjh0qvB0nyl3ql6xx3wZHojs67tdUqK_KE8l7z4vJR6gQa0x4l3m-Y7StTrz1mA_kajTJKqtGpTfDBVcX4ZQG6teiEON5w44MMs008CFdGPP__GyQEN0hIAq9nbWnRKF-wcEXn3uqdZj8N0Hk7__qeCtfh4xKghNi-40fcKa17MBi8rn5KQNSdrp4hZekJkS6BECvWnoM47lTFTv_EBcwXSi"/>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface">Alan Turing</span>
+<span class="font-caption text-caption text-on-surface-variant">Work • Engineer</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-colors text-on-surface">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-colors text-on-surface">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<section class="flex flex-col gap-3">
+<h3 class="font-headline text-headline text-on-surface px-1">From Web</h3>
+<div class="bg-surface-raised rounded-[20px] flex flex-col overflow-hidden">
+<div class="p-4 flex items-center gap-4 border-b border-outline-variant/30 hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<span class="font-body text-body text-on-surface">72 x 1612 in scientific notation</span>
+<span class="material-symbols-outlined text-on-surface-variant ml-auto text-[18px]">north_west</span>
+</div>
+<div class="p-4 flex items-center gap-4 border-b border-outline-variant/30 hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<span class="font-body text-body text-on-surface">how to multiply large numbers in head</span>
+<span class="material-symbols-outlined text-on-surface-variant ml-auto text-[18px]">north_west</span>
+</div>
+<div class="p-4 flex items-center gap-4 hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<span class="font-body text-body text-on-surface">calculator history</span>
+<span class="material-symbols-outlined text-on-surface-variant ml-auto text-[18px]">north_west</span>
+</div>
+</div>
+</section>
+</div>
+<div class="fixed bottom-0 left-0 w-full bg-surface-dim border-t border-glass-specular/10 backdrop-blur-3xl pt-2 pb-6 px-1 z-50">
+<div class="flex justify-between px-2 mb-2">
+<div class="flex gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">g_translate</span>
+<span class="material-symbols-outlined text-[20px]">palette</span>
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</div>
+<div class="flex gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</div>
+</div>
+<div class="flex flex-col gap-[6px] px-1">
+<div class="flex justify-center gap-[6px]">
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">1</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">2</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">3</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">4</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">5</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">6</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">7</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">8</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">9</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">0</div>
+</div>
+<div class="flex justify-center gap-[6px] px-[5%]">
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">Q</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">W</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">E</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">R</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">T</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">Y</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">U</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">I</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">O</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">P</div>
+</div>
+<div class="flex justify-center gap-[6px] px-[10%]">
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">A</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">S</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">D</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">F</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">G</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">H</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">J</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">K</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">L</div>
+</div>
+<div class="flex justify-center gap-[6px]">
+<div class="key-press w-[15%] h-[42px] bg-surface-container-high rounded-[6px] flex items-center justify-center text-on-surface shadow-sm select-none">
+<span class="material-symbols-outlined text-[20px]">shift</span>
+</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">Z</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">X</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">C</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">V</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">B</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">N</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center font-body text-body text-on-surface shadow-sm select-none">M</div>
+<div class="key-press w-[15%] h-[42px] bg-surface-container-high rounded-[6px] flex items-center justify-center text-on-surface shadow-sm select-none">
+<span class="material-symbols-outlined text-[20px]">backspace</span>
+</div>
+</div>
+<div class="flex justify-center gap-[6px]">
+<div class="key-press w-[15%] h-[42px] bg-surface-container-high rounded-[6px] flex items-center justify-center font-caption text-caption text-on-surface shadow-sm select-none">?123</div>
+<div class="key-press w-[10%] h-[42px] bg-surface-container-high rounded-[6px] flex items-center justify-center text-on-surface shadow-sm select-none">
+<span class="material-symbols-outlined text-[20px]">sentiment_satisfied</span>
+</div>
+<div class="key-press flex-1 h-[42px] bg-surface-raised rounded-[6px] flex items-center justify-center text-on-surface shadow-sm select-none"></div>
+<div class="key-press w-[10%] h-[42px] bg-surface-container-high rounded-[6px] flex items-center justify-center text-on-surface shadow-sm select-none">.</div>
+<div class="key-press w-[15%] h-[42px] bg-primary-container rounded-[6px] flex items-center justify-center text-on-primary-container shadow-sm select-none">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4">
+<div class="w-1/3 h-1 bg-on-surface-variant rounded-full opacity-40"></div>
+</div>
+</div>
+</div>
+</body></html>

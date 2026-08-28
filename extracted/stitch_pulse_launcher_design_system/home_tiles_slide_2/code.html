@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pulse Launcher - Tiles &amp; Widgets</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#690005",
+                        "glass-specular": "rgba(255, 255, 255, 0.28)",
+                        "surface-tint": "#acc7ff",
+                        "on-primary-container": "#00295c",
+                        "accent-glow": "rgba(74, 144, 255, 0.24)",
+                        "on-tertiary-container": "#452200",
+                        "on-tertiary-fixed-variant": "#6d3900",
+                        "surface": "#131313",
+                        "background": "#131313",
+                        "surface-container-high": "#2a2a2a",
+                        "primary": "#acc7ff",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#ffb77b",
+                        "secondary-container": "#48494d",
+                        "secondary-fixed-dim": "#c6c6cb",
+                        "on-secondary-container": "#b8b8bd",
+                        "surface-raised": "#242426",
+                        "on-tertiary": "#4d2700",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary-fixed": "#e3e2e7",
+                        "on-surface": "#e5e2e1",
+                        "surface-variant": "#353534",
+                        "secondary": "#c6c6cb",
+                        "tertiary": "#ffb77b",
+                        "on-primary": "#002f67",
+                        "on-surface-variant": "#c2c6d5",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary-fixed-variant": "#004491",
+                        "inverse-on-surface": "#313030",
+                        "error": "#ffb4ab",
+                        "surface-container-highest": "#353534",
+                        "on-error-container": "#ffdad6",
+                        "surface-base": "#1C1C1E",
+                        "on-secondary-fixed": "#1a1b1f",
+                        "inverse-surface": "#e5e2e1",
+                        "glass-fill": "rgba(36, 36, 38, 0.78)",
+                        "on-background": "#e5e2e1",
+                        "success": "#30D158",
+                        "primary-fixed-dim": "#acc7ff",
+                        "danger": "#FF453A",
+                        "primary-fixed": "#d7e2ff",
+                        "surface-bright": "#393939",
+                        "outline": "#8c909f",
+                        "surface-container": "#201f1f",
+                        "warning": "#FFB340",
+                        "surface-dim": "#131313",
+                        "on-tertiary-fixed": "#2e1500",
+                        "on-primary-fixed": "#001a40",
+                        "tertiary-fixed": "#ffdcc2",
+                        "on-secondary-fixed-variant": "#46474b",
+                        "on-secondary": "#2f3034",
+                        "outline-variant": "#414753",
+                        "tertiary-container": "#db7900",
+                        "inverse-primary": "#005bbe",
+                        "primary-container": "#4a90ff",
+                        "surface-high": "#2E2E32"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gap-section": "24px",
+                        "gutter-bento": "16px",
+                        "padding-card": "16px",
+                        "touch-target-min": "48px",
+                        "unit": "8px",
+                        "margin-screen": "20px"
+                    },
+                    "fontFamily": {
+                        "display-xl": ["PlusJakartaSans"],
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "caption": ["Inter"],
+                        "title": ["Inter"],
+                        "display-lg": ["PlusJakartaSans"],
+                        "micro": ["Inter"],
+                        "stats-mono": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-xl": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+                        "headline": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body": ["15px", { "lineHeight": "22px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "caption": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "title": ["18px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600" }],
+                        "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "micro": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "stats-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@700&display=swap');
+        
+        .glass-panel {
+            background: rgba(36, 36, 38, 0.78);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.28);
+        }
+        
+        .bento-tile {
+            background-color: #242426;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+        
+        .bento-tile:active {
+            transform: translateY(2px) scale(0.98);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .circular-progress {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        
+        .liquid-pill {
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body overflow-hidden">
+<!-- Mobile Device Container for Preview -->
+<div class="max-w-[400px] h-[850px] mx-auto relative bg-surface border-x-4 border-y-[12px] border-surface-container-highest rounded-[48px] overflow-hidden shadow-2xl flex flex-col my-8">
+<!-- TopAppBar (From JSON) -->
+<header class="docked full-width top-0 h-12 flex justify-between items-center px-margin-screen w-full bg-transparent text-primary font-stats-mono text-stats-mono z-50">
+<div class="flex items-center hover:opacity-80 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="signal_cellular_4_bar">signal_cellular_4_bar</span>
+</div>
+<div class="font-stats-mono text-stats-mono text-on-surface">
+                11:46
+            </div>
+<div class="flex items-center hover:opacity-80 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="battery_charging_full">battery_charging_full</span>
+</div>
+</header>
+<!-- Dynamic Island (Liquid Glass Pill) (From JSON) -->
+<div class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center rounded-full mx-auto mt-2 w-32 h-8 bg-glass-fill backdrop-blur-3xl border border-glass-specular shadow-md shadow-accent-glow hover:scale-105 transition-all liquid-pill active:spring-bounce duration-300">
+<span class="material-symbols-outlined text-primary font-caption text-caption mr-1" data-icon="music_note">music_note</span>
+<span class="font-headline text-headline text-primary text-[10px] leading-none">Now Playing</span>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 px-margin-screen pt-20 pb-24 overflow-y-auto no-scrollbar flex flex-col gap-gutter-bento">
+<!-- Grid Container -->
+<div class="grid grid-cols-4 gap-gutter-bento auto-rows-[80px]">
+<!-- Weather Tile (2x2) -->
+<div class="bento-tile col-span-2 row-span-2 p-padding-card flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container/20 to-transparent opacity-50"></div>
+<div class="flex justify-between items-start z-10">
+<div>
+<p class="font-caption text-caption text-on-surface-variant">Seattle</p>
+<h2 class="font-display-lg text-display-lg text-on-surface">62°</h2>
+</div>
+<span class="material-symbols-outlined text-warning text-3xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">partly_cloudy_day</span>
+</div>
+<div class="z-10 flex justify-between items-end">
+<p class="font-micro text-micro text-on-surface-variant">H:65° L:54°</p>
+<p class="font-micro text-micro text-primary">Rain 30%</p>
+</div>
+</div>
+<!-- Battery Tile (2x2) -->
+<div class="bento-tile col-span-2 row-span-2 p-padding-card flex flex-col items-center justify-center relative">
+<div class="relative w-24 h-24 flex items-center justify-center">
+<svg class="w-full h-full circular-progress" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="#2C2C2E" stroke-width="8"></circle>
+<circle class="transition-all duration-1000 ease-out" cx="50" cy="50" fill="none" r="45" stroke="#30D158" stroke-dasharray="283" stroke-dashoffset="42" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-title text-title text-success">85%</span>
+<span class="material-symbols-outlined text-success text-sm mt-1" data-icon="bolt">bolt</span>
+</div>
+</div>
+</div>
+<!-- Music Tile (4x2) -->
+<div class="bento-tile col-span-4 row-span-2 p-padding-card flex items-center gap-4 border-t-2 border-primary-container">
+<div class="w-16 h-16 rounded-xl overflow-hidden bg-surface-variant flex-shrink-0 relative">
+<img class="w-full h-full object-cover" data-alt="A macro shot of a sleek, abstract music album cover featuring liquid glass textures swirling in deep blue and vibrant orange hues, illuminated by dramatic studio lighting against a dark minimalist background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1BjxqpMaBPm-tzG3IjR29rqLXwm1y3MPO2rkHGL62HflfzlI-ANRYmGb7hBrHTi2ZrjSZP1sSlji7FSvmDqmTsENHEKEBk7L2rzQmorDRJGYB6yuQoNy4MzWP5xTa_lTrpJKAQxHRtiaeNjMv2KUm9w75YK4DMkft-5I8tlyG-jpb2uNK8rj-hx8VoqWjV0eV195RhVEx5EYDl0iGrJeRA6SVSJhL93dGYOYTlfw49BO-OnJygGQy"/>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-title text-title text-on-surface truncate">Midnight City</h3>
+<p class="font-body text-body text-on-surface-variant truncate">M83</p>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center hover:bg-surface-high transition-colors">
+<span class="material-symbols-outlined text-on-surface" data-icon="skip_previous">skip_previous</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="pause" data-weight="fill" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center hover:bg-surface-high transition-colors">
+<span class="material-symbols-outlined text-on-surface" data-icon="skip_next">skip_next</span>
+</button>
+</div>
+</div>
+<!-- App Shortcuts (1x1 each) -->
+<div class="bento-tile col-span-1 row-span-1 flex flex-col items-center justify-center gap-1 bg-gradient-to-br from-surface-raised to-surface-container-high hover:brightness-110 cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-[#1da1f2]/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[#1da1f2]" data-icon="chat">chat</span>
+</div>
+</div>
+<div class="bento-tile col-span-1 row-span-1 flex flex-col items-center justify-center gap-1 bg-gradient-to-br from-surface-raised to-surface-container-high hover:brightness-110 cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-[#E1306C]/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[#E1306C]" data-icon="photo_camera">photo_camera</span>
+</div>
+</div>
+<div class="bento-tile col-span-1 row-span-1 flex flex-col items-center justify-center gap-1 bg-gradient-to-br from-surface-raised to-surface-container-high hover:brightness-110 cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-[#FF0000]/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[#FF0000]" data-icon="play_circle">play_circle</span>
+</div>
+</div>
+<div class="bento-tile col-span-1 row-span-1 flex flex-col items-center justify-center gap-1 bg-gradient-to-br from-surface-raised to-surface-container-high hover:brightness-110 cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="mail">mail</span>
+</div>
+</div>
+<!-- Calendar Tile (2x2) -->
+<div class="bento-tile col-span-2 row-span-2 p-padding-card flex flex-col justify-between">
+<div class="flex justify-between items-center">
+<span class="font-headline text-headline text-on-surface">14</span>
+<span class="font-caption text-caption text-primary uppercase tracking-widest">Tue</span>
+</div>
+<div class="space-y-2 mt-2">
+<div class="flex flex-col gap-1 relative pl-3 border-l-2 border-primary-container">
+<span class="font-body text-body text-on-surface leading-tight truncate">Design Sync</span>
+<span class="font-micro text-micro text-on-surface-variant">2:00 PM</span>
+</div>
+<div class="flex flex-col gap-1 relative pl-3 border-l-2 border-tertiary-container">
+<span class="font-body text-body text-on-surface leading-tight truncate">Gym</span>
+<span class="font-micro text-micro text-on-surface-variant">6:30 PM</span>
+</div>
+</div>
+</div>
+<!-- Habit Tracker (2x2) -->
+<div class="bento-tile col-span-2 row-span-2 p-padding-card flex flex-col justify-between">
+<div class="flex justify-between items-center">
+<span class="font-caption text-caption text-on-surface-variant">Water</span>
+<span class="material-symbols-outlined text-primary" data-icon="water_drop">water_drop</span>
+</div>
+<div class="flex items-end justify-between">
+<div>
+<span class="font-headline text-headline text-on-surface">4</span>
+<span class="font-body text-body text-on-surface-variant">/8</span>
+</div>
+<div class="flex gap-1 h-12 items-end">
+<div class="w-2 bg-primary-container rounded-t-sm h-full"></div>
+<div class="w-2 bg-primary-container rounded-t-sm h-full"></div>
+<div class="w-2 bg-primary-container rounded-t-sm h-full"></div>
+<div class="w-2 bg-primary-container rounded-t-sm h-full"></div>
+<div class="w-2 bg-surface-container-high rounded-t-sm h-1/4"></div>
+<div class="w-2 bg-surface-container-high rounded-t-sm h-1/4"></div>
+<div class="w-2 bg-surface-container-high rounded-t-sm h-1/4"></div>
+<div class="w-2 bg-surface-container-high rounded-t-sm h-1/4"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Page Indicator -->
+<div class="flex justify-center gap-2 mt-8 mb-4">
+<div class="w-2 h-2 rounded-full bg-surface-variant transition-all"></div>
+<div class="w-6 h-2 rounded-full bg-primary-container transition-all shadow-[0_0_8px_rgba(74,144,255,0.4)]"></div>
+<div class="w-2 h-2 rounded-full bg-surface-variant transition-all"></div>
+</div>
+</main>
+<!-- BottomNavBar (From JSON) -->
+<nav class="fixed bottom-8 left-0 w-full flex justify-center gap-2 z-40 bg-transparent text-primary font-micro text-micro docked full-width">
+<button class="w-12 h-12 flex items-center justify-center text-outline-variant opacity-50 hover:opacity-100 transition-transform">
+<span class="material-symbols-outlined" data-icon="fiber_manual_record">fiber_manual_record</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center text-primary scale-125 transition-transform shadow-lg shadow-accent-glow rounded-full bg-surface-raised">
+<span class="material-symbols-outlined" data-icon="grid_view" data-weight="fill" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center text-outline-variant opacity-50 hover:opacity-100 transition-transform">
+<span class="material-symbols-outlined" data-icon="fiber_manual_record">fiber_manual_record</span>
+</button>
+</nav>
+</div>
+</body></html>

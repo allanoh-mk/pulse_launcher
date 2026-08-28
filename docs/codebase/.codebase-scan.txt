@@ -1,0 +1,237 @@
+
+=== DIRECTORY TREE (max depth 3, source files only) ===
+app
+app/build.gradle.kts
+app/src
+app/src/main
+app/src/main/AndroidManifest.xml
+app/src/main/assets
+app/src/main/java
+app/src/main/res
+build.gradle.kts
+docs
+docs/00-launcher-comparison-and-feasibility.md
+docs/01-home-screen.md
+docs/02-icon-studio.md
+docs/03-dynamic-island.md
+docs/04-control-center.md
+docs/05-search.md
+docs/06-theming.md
+docs/07-fonts.md
+docs/08-animations.md
+docs/09-gestures.md
+docs/10-assistant.md
+docs/11-wallpaper.md
+docs/12-architecture.md
+docs/12-roadmap.md
+docs/13-ui-ux-design-references.md
+docs/PROJECT_DOCUMENT.md
+docs/README.md
+docs/codebase
+docs/codebase/.codebase-scan.txt
+docs/concept_images
+docs/concept_images/2048.jpeg
+docs/concept_images/9gnjriyjxbkh1.webp
+docs/concept_images/ControlCenter-820x600.jpg
+docs/concept_images/HYCCUsWiBry1GppOlnI0QGVAKITVdaN0tpNbsGvM-M1jsZdspp83GHLBSj7H29LYVc0=-rw.webp
+docs/concept_images/Mur-Launcher-1.webp
+docs/concept_images/X2jcbceZII9ErcbvGbGPvY5gaOd1Lfq8dhIm1llhCGE.webp
+docs/concept_images/android-quick-settings-customize-mi-control-center-options.webp
+docs/concept_images/android_halo_d2bda0a64e.webp
+docs/concept_images/b4ZhYLmmGM3wC2X7Ueovb8.webp
+docs/concept_images/control-center-ios-quick-panel-screenshot.webp
+docs/concept_images/file-tW6PxmR4iV-1024x576.webp
+docs/concept_images/hero-image.fill.size_1248x702.v1756959082.webp
+docs/concept_images/hyperion-launcher-screenshots.webp
+docs/concept_images/image.webp
+docs/concept_images/images-6.fill.size_2000x1500.v1756959083.webp
+docs/concept_images/lZk7gw8xVfQzAfzegIU2-rzBSH_gYE7N0ykce5lyF8uV9IdvFsKqSfB2euISzXIoqQ=-rw.webp
+docs/concept_images/new-nova-version-v0-336g7eurygyf1.webp
+docs/concept_images/niagara-launcher-1.webp
+docs/concept_images/niagara-launcher-theming-update-hero.webp
+docs/concept_images/original-2d80f0fa77ad8de45f2ba17efbf53896.webp
+docs/concept_images/phi-launcher-android-300x169.webp
+docs/concept_images/photo_1556204976_4a72b0565dab_029bef6f1a.webp
+docs/concept_images/theme-blooming-v0-gr0bylkt6cgh1.webp
+docs/concept_images/unnamed (1).webp
+docs/concept_images/unnamed (10).webp
+docs/concept_images/unnamed (11).webp
+docs/concept_images/unnamed (12).webp
+docs/concept_images/unnamed (13).webp
+docs/concept_images/unnamed (14).webp
+docs/concept_images/unnamed (15).webp
+docs/concept_images/unnamed (16).webp
+docs/concept_images/unnamed (17).webp
+docs/concept_images/unnamed (18).webp
+docs/concept_images/unnamed (19).webp
+docs/concept_images/unnamed (2).webp
+docs/concept_images/unnamed (20).webp
+docs/concept_images/unnamed (21).webp
+docs/concept_images/unnamed (3).webp
+docs/concept_images/unnamed (4).webp
+docs/concept_images/unnamed (5).webp
+docs/concept_images/unnamed (6).webp
+docs/concept_images/unnamed (7).webp
+docs/concept_images/unnamed (8).webp
+docs/concept_images/unnamed (9).webp
+docs/concept_images/unnamed.webp
+docs/concept_images/using-dynamic-islan-to-improve-user-experience.jpg
+docs/concept_images/what-does-your-control-center-look-like-v0-0iag841smtee1.webp
+docs/concept_images/what-does-your-control-center-look-like-v0-mj2p0n7a1pee1.webp
+docs/concept_images/what-does-your-control-center-look-like-v0-uzh4a4p0jtee1.webp
+docs/concept_images/what-is-the-difference-between-nova-launcher-and-smart-v0-jwd7f9ce5tqd1.webp
+docs/tiles-manifesto.md
+extracted
+extracted/01_home_feed.png
+extracted/02_home_tiles.png
+extracted/03_home_applist.png
+extracted/04_island_compact.png
+extracted/05_island_expanded.png
+extracted/06_search_overlay.png
+extracted/07_control_center.png
+extracted/08_icon_studio.png
+extracted/09_settings.png
+extracted/PULSE_LAUNCHER_PROJECT.md
+extracted/stitch_pulse_launcher_design_system
+extracted/stitch_pulse_launcher_design_system/control_center_overlay
+extracted/stitch_pulse_launcher_design_system/control_center_overlay/code.html
+extracted/stitch_pulse_launcher_design_system/control_center_overlay/screen.png
+extracted/stitch_pulse_launcher_design_system/design.md
+extracted/stitch_pulse_launcher_design_system/dynamic_island_compact
+extracted/stitch_pulse_launcher_design_system/dynamic_island_compact/code.html
+extracted/stitch_pulse_launcher_design_system/dynamic_island_compact/screen.png
+extracted/stitch_pulse_launcher_design_system/dynamic_island_expanded
+extracted/stitch_pulse_launcher_design_system/dynamic_island_expanded/code.html
+extracted/stitch_pulse_launcher_design_system/dynamic_island_expanded/screen.png
+extracted/stitch_pulse_launcher_design_system/home_app_list_slide_3
+extracted/stitch_pulse_launcher_design_system/home_app_list_slide_3/code.html
+extracted/stitch_pulse_launcher_design_system/home_app_list_slide_3/screen.png
+extracted/stitch_pulse_launcher_design_system/home_feed_slide_1
+extracted/stitch_pulse_launcher_design_system/home_feed_slide_1/code.html
+extracted/stitch_pulse_launcher_design_system/home_feed_slide_1/screen.png
+extracted/stitch_pulse_launcher_design_system/home_tiles_slide_2
+extracted/stitch_pulse_launcher_design_system/home_tiles_slide_2/code.html
+extracted/stitch_pulse_launcher_design_system/home_tiles_slide_2/screen.png
+extracted/stitch_pulse_launcher_design_system/icon_studio_settings
+extracted/stitch_pulse_launcher_design_system/icon_studio_settings/code.html
+extracted/stitch_pulse_launcher_design_system/icon_studio_settings/screen.png
+extracted/stitch_pulse_launcher_design_system/image.png_1
+extracted/stitch_pulse_launcher_design_system/image.png_1/screen.png
+extracted/stitch_pulse_launcher_design_system/image.png_2
+extracted/stitch_pulse_launcher_design_system/image.png_2/screen.png
+extracted/stitch_pulse_launcher_design_system/image.png_3
+extracted/stitch_pulse_launcher_design_system/image.png_3/screen.png
+extracted/stitch_pulse_launcher_design_system/image.png_4
+extracted/stitch_pulse_launcher_design_system/image.png_4/screen.png
+extracted/stitch_pulse_launcher_design_system/main_settings_screen
+extracted/stitch_pulse_launcher_design_system/main_settings_screen/code.html
+extracted/stitch_pulse_launcher_design_system/main_settings_screen/screen.png
+extracted/stitch_pulse_launcher_design_system/pulse_launcher
+extracted/stitch_pulse_launcher_design_system/pulse_launcher/DESIGN.md
+extracted/stitch_pulse_launcher_design_system/richtext_converted_to_markdown.md
+extracted/stitch_pulse_launcher_design_system/unified_search_overlay
+extracted/stitch_pulse_launcher_design_system/unified_search_overlay/code.html
+extracted/stitch_pulse_launcher_design_system/unified_search_overlay/screen.png
+files.zip
+gradle
+gradle/libs.versions.toml
+gradle.properties
+settings.gradle.kts
+stitch_pulse_launcher_design_system.zip
+
+=== STACK DETECTION (manifest files) ===
+
+--- build.gradle.kts ---
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.compose) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.hilt) apply false
+}
+
+--- gradle.properties ---
+android.useAndroidX=true
+android.nonTransitiveRClass=true
+kotlin.code.style=official
+android.enableJetifier=false
+org.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8
+org.gradle.parallel=true
+org.gradle.caching=true
+
+--- settings.gradle.kts ---
+pluginManagement {
+    repositories {
+        google { content { includeGroupByRegex("com\\.android.*"); includeGroupByRegex("com\\.google.*"); includeGroupByRegex("androidx.*") } }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
+}
+rootProject.name = "PulseLauncher"
+include(":app")
+
+
+=== ENTRY POINTS ===
+No common entry points found. Check 'main' or 'scripts.start' in manifest files above.
+
+=== LINTING AND FORMATTING CONFIG ===
+No linting or formatting config files found in project root.
+
+=== ENVIRONMENT VARIABLE TEMPLATES ===
+No .env.example or .env.template found. Identify required environment variables by searching the code and config for environment variable reads.
+
+=== TODO / FIXME / HACK (production code only, test dirs excluded) ===
+app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt:59: // TODO: Move PulseTheme to a separate file app.pulse.launcher.ui.theme.Theme.kt
+app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt:67: // TODO: Move WorkspaceScreen to a separate file app.pulse.launcher.launcher.WorkspaceScreen.kt
+
+=== GIT RECENT COMMITS (last 20) ===
+No commits found.
+
+=== HIGH-CHURN FILES (last 90 days, top 20) ===
+None found.
+
+=== MONOREPO SIGNALS ===
+No monorepo signals detected.
+
+=== CODE METRICS ===
+Total files scanned: 176
+Total lines of code: 6072
+
+Files by language:
+  Other: 122
+  Kotlin: 54
+
+Top 10 largest files:
+stitch_pulse_launcher_design_system.zip: 2838.5KB
+files.zip: 2044.9KB
+docs/concept_images/unnamed (20).webp: 715.5KB
+docs/concept_images/unnamed (12).webp: 536.1KB
+extracted/04_island_compact.png: 527.0KB
+extracted/stitch_pulse_launcher_design_system/dynamic_island_compact/screen.png: 527.0KB
+extracted/07_control_center.png: 419.8KB
+extracted/stitch_pulse_launcher_design_system/control_center_overlay/screen.png: 419.8KB
+docs/concept_images/unnamed (6).webp: 398.4KB
+extracted/stitch_pulse_launcher_design_system/image.png_1/screen.png: 389.4KB
+
+=== CI/CD PIPELINES ===
+No CI/CD pipelines detected.
+
+=== CONTAINERS & ORCHESTRATION ===
+No containerization configs detected.
+
+=== SECURITY & COMPLIANCE ===
+No security configs detected.
+
+=== PERFORMANCE & TESTING ===
+No performance testing configs detected.
+
+=== SCAN COMPLETE ===

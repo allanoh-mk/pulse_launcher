@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dynamic Island - Expanded</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#690005",
+                      "glass-specular": "rgba(255, 255, 255, 0.28)",
+                      "surface-tint": "#acc7ff",
+                      "on-primary-container": "#00295c",
+                      "accent-glow": "rgba(74, 144, 255, 0.24)",
+                      "on-tertiary-container": "#452200",
+                      "on-tertiary-fixed-variant": "#6d3900",
+                      "surface": "#131313",
+                      "background": "#131313",
+                      "surface-container-high": "#2a2a2a",
+                      "primary": "#acc7ff",
+                      "error-container": "#93000a",
+                      "tertiary-fixed-dim": "#ffb77b",
+                      "secondary-container": "#48494d",
+                      "secondary-fixed-dim": "#c6c6cb",
+                      "on-secondary-container": "#b8b8bd",
+                      "surface-raised": "#242426",
+                      "on-tertiary": "#4d2700",
+                      "surface-container-lowest": "#0e0e0e",
+                      "secondary-fixed": "#e3e2e7",
+                      "on-surface": "#e5e2e1",
+                      "surface-variant": "#353534",
+                      "secondary": "#c6c6cb",
+                      "tertiary": "#ffb77b",
+                      "on-primary": "#002f67",
+                      "on-surface-variant": "#c2c6d5",
+                      "surface-container-low": "#1c1b1b",
+                      "on-primary-fixed-variant": "#004491",
+                      "inverse-on-surface": "#313030",
+                      "error": "#ffb4ab",
+                      "surface-container-highest": "#353534",
+                      "on-error-container": "#ffdad6",
+                      "surface-base": "#1C1C1E",
+                      "on-secondary-fixed": "#1a1b1f",
+                      "inverse-surface": "#e5e2e1",
+                      "glass-fill": "rgba(36, 36, 38, 0.78)",
+                      "on-background": "#e5e2e1",
+                      "success": "#30D158",
+                      "primary-fixed-dim": "#acc7ff",
+                      "danger": "#FF453A",
+                      "primary-fixed": "#d7e2ff",
+                      "surface-bright": "#393939",
+                      "outline": "#8c909f",
+                      "surface-container": "#201f1f",
+                      "warning": "#FFB340",
+                      "surface-dim": "#131313",
+                      "on-tertiary-fixed": "#2e1500",
+                      "on-primary-fixed": "#001a40",
+                      "tertiary-fixed": "#ffdcc2",
+                      "on-secondary-fixed-variant": "#46474b",
+                      "on-secondary": "#2f3034",
+                      "outline-variant": "#414753",
+                      "tertiary-container": "#db7900",
+                      "inverse-primary": "#005bbe",
+                      "primary-container": "#4a90ff",
+                      "surface-high": "#2E2E32"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gap-section": "24px",
+                      "gutter-bento": "16px",
+                      "padding-card": "16px",
+                      "touch-target-min": "48px",
+                      "unit": "8px",
+                      "margin-screen": "20px"
+              },
+              "fontFamily": {
+                      "display-xl": [
+                              "PlusJakartaSans"
+                      ],
+                      "headline": [
+                              "Inter"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "title": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "PlusJakartaSans"
+                      ],
+                      "micro": [
+                              "Inter"
+                      ],
+                      "stats-mono": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {
+                      "display-xl": [
+                              "64px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.03em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body": [
+                              "15px",
+                              {
+                                      "lineHeight": "22px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "caption": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "title": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "40px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "micro": [
+                              "11px",
+                              {
+                                      "lineHeight": "14px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "stats-mono": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+      </style>
+</head>
+<body class="bg-background text-on-background min-h-screen overflow-hidden flex flex-col items-center justify-start pt-16 relative">
+<!-- Blurred Background (Home Screen context) -->
+<div class="absolute inset-0 bg-cover bg-center w-full h-full opacity-50 blur-md z-0 pointer-events-none" data-alt="A stylized, dark-themed, glassmorphic smartphone home screen layout with app icons and widgets. Soft, ambient glows of blue and orange. Dark mode aesthetics, minimalist design, high contrast." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC-_Rr4ZI40wXoAGyfy9XTe57zYdz5ArnyofhqtnUHYwyz2ur1cTAWwKtQ_DtiWRJvA26VXoeeVDYl-6KbWSJ3q-a-zDPgKtF3oE0uR7fvYgu7exwrB4TfD6RnNa6E7gWhHl4ld2JGis_H-ERl897AB1ujJFMgIii4PHR9LUjY8JHSMidbNkf1BNrGWeRKDUjv5UpG60W2tjmdPaYi8wFY7yG1zRgdY8Vk_HJZQ7UY5uZxN_JNHLCeu')"></div>
+<!-- Dynamic Island - Expanded -->
+<div class="relative z-10 w-full max-w-sm px-margin-screen">
+<div class="bg-glass-fill backdrop-blur-3xl border-t border-glass-specular shadow-lg shadow-accent-glow rounded-[28px] p-4 flex flex-col gap-4 overflow-hidden" style="transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);">
+<!-- Header row: Album Art, Info, AI Mic -->
+<div class="flex items-center gap-4">
+<img class="w-16 h-16 rounded-xl object-cover" data-alt="A stylized, aggressive punk rock album cover art thumbnail, dark reds and blacks, gritty texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjVmtQrc2-eWTRW-f_4zEPYClQ4IxO8jDcLSSEVch6dRy4CPh1Bzqr-u98TcQXXfqXc1S7qO7LBSdmgBxonKaYp9PRd1asVFcaKa_pxPSNM9zUfVxb-CoHYirlQOajFOlj9t12a7rg9cmYPeE2jW7vKtYez9sbQspmZQHcjg2dQEAnArtGJ0z8YqLA3KXqq2-SeQDpjEqQHwaAPulCYxyApFoyzUXMm2gsoHxiQyN8lRSwHCHwrqmm"/>
+<div class="flex-1 min-w-0">
+<p class="font-body text-body text-on-surface truncate">Lazy Generation</p>
+<p class="font-caption text-caption text-on-surface-variant truncate">The F-Ups</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-raised flex items-center justify-center border border-outline-variant/30 flex-shrink-0 cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="mic" data-weight="fill" style="font-variation-settings: 'FILL' 1;">mic</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full flex items-center gap-3">
+<span class="font-micro text-micro text-on-surface-variant">1:24</span>
+<div class="flex-1 h-1.5 bg-surface-variant rounded-full overflow-hidden relative">
+<div class="absolute top-0 left-0 h-full bg-primary w-1/3 rounded-full"></div>
+</div>
+<span class="font-micro text-micro text-on-surface-variant">-2:15</span>
+</div>
+<!-- Controls -->
+<div class="flex items-center justify-center gap-6 mt-1">
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="skip_previous" data-weight="fill" style="font-variation-settings: 'FILL' 1;">skip_previous</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-on-surface text-surface-dim hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="pause" data-weight="fill" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="skip_next" data-weight="fill" style="font-variation-settings: 'FILL' 1;">skip_next</span>
+</button>
+</div>
+</div>
+</div>
+<!-- BottomNavBar (Suppressed as per rules, but included in JSON, so determining relevance. Page intent is a highly focused component state, so Navigation shell is suppressed. I will not render BottomNavBar or TopAppBar from the JSON as this is a focused component state on a blurred background). -->
+</body></html>

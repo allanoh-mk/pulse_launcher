@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Icon Studio - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#690005",
+                        "glass-specular": "rgba(255, 255, 255, 0.28)",
+                        "surface-tint": "#acc7ff",
+                        "on-primary-container": "#00295c",
+                        "accent-glow": "rgba(74, 144, 255, 0.24)",
+                        "on-tertiary-container": "#452200",
+                        "on-tertiary-fixed-variant": "#6d3900",
+                        "surface": "#131313",
+                        "background": "#131313",
+                        "surface-container-high": "#2a2a2a",
+                        "primary": "#acc7ff",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#ffb77b",
+                        "secondary-container": "#48494d",
+                        "secondary-fixed-dim": "#c6c6cb",
+                        "on-secondary-container": "#b8b8bd",
+                        "surface-raised": "#242426",
+                        "on-tertiary": "#4d2700",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary-fixed": "#e3e2e7",
+                        "on-surface": "#e5e2e1",
+                        "surface-variant": "#353534",
+                        "secondary": "#c6c6cb",
+                        "tertiary": "#ffb77b",
+                        "on-primary": "#002f67",
+                        "on-surface-variant": "#c2c6d5",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary-fixed-variant": "#004491",
+                        "inverse-on-surface": "#313030",
+                        "error": "#ffb4ab",
+                        "surface-container-highest": "#353534",
+                        "on-error-container": "#ffdad6",
+                        "surface-base": "#1C1C1E",
+                        "on-secondary-fixed": "#1a1b1f",
+                        "inverse-surface": "#e5e2e1",
+                        "glass-fill": "rgba(36, 36, 38, 0.78)",
+                        "on-background": "#e5e2e1",
+                        "success": "#30D158",
+                        "primary-fixed-dim": "#acc7ff",
+                        "danger": "#FF453A",
+                        "primary-fixed": "#d7e2ff",
+                        "surface-bright": "#393939",
+                        "outline": "#8c909f",
+                        "surface-container": "#201f1f",
+                        "warning": "#FFB340",
+                        "surface-dim": "#131313",
+                        "on-tertiary-fixed": "#2e1500",
+                        "on-primary-fixed": "#001a40",
+                        "tertiary-fixed": "#ffdcc2",
+                        "on-secondary-fixed-variant": "#46474b",
+                        "on-secondary": "#2f3034",
+                        "outline-variant": "#414753",
+                        "tertiary-container": "#db7900",
+                        "inverse-primary": "#005bbe",
+                        "primary-container": "#4a90ff",
+                        "surface-high": "#2E2E32"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gap-section": "24px",
+                        "gutter-bento": "16px",
+                        "padding-card": "16px",
+                        "touch-target-min": "48px",
+                        "unit": "8px",
+                        "margin-screen": "20px"
+                    },
+                    "fontFamily": {
+                        "display-xl": ["PlusJakartaSans"],
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "caption": ["Inter"],
+                        "title": ["Inter"],
+                        "display-lg": ["PlusJakartaSans"],
+                        "micro": ["Inter"],
+                        "stats-mono": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-xl": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+                        "headline": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body": ["15px", { "lineHeight": "22px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "caption": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "title": ["18px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600" }],
+                        "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "micro": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "stats-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Hide scrollbar for clean UI */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Custom Range Slider Styling for WebKit */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #acc7ff; /* primary */
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 0 0 10px rgba(74, 144, 255, 0.5);
+            transition: transform 0.1s ease;
+        }
+        input[type=range]::-webkit-slider-thumb:active {
+            transform: scale(0.9);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #353534; /* surface-variant */
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body text-body min-h-screen flex selection:bg-primary-container selection:text-on-primary-container">
+<!-- Desktop Navigation Drawer -->
+<nav class="hidden md:flex fixed inset-y-0 left-0 z-50 flex-col py-6 bg-surface-container-high docked h-full w-80 rounded-r-xl backdrop-blur-xl border-r border-outline-variant shadow-lg">
+<!-- Header -->
+<div class="px-6 mb-8 flex items-center gap-4 left_align">
+<div class="w-12 h-12 rounded-full bg-surface-variant overflow-hidden flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="person">person</span>
+</div>
+<div>
+<h2 class="font-display-lg text-display-lg text-primary text-[24px] leading-tight">Pulse Launcher</h2>
+<div class="font-caption text-caption text-on-surface-variant">Version 2.4.0</div>
+<div class="font-micro text-micro text-tertiary-fixed mt-1">Pro Active</div>
+</div>
+</div>
+<!-- Links -->
+<div class="flex flex-col gap-1 mt-4">
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-title text-title text-[15px]">Search</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-title text-title text-[15px]">Home</span>
+</a>
+<!-- Active Tab: Settings -->
+<a class="flex items-center gap-4 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg mx-2 Active: translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings" data-weight="fill" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-title text-title text-[15px]">Settings</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+<span class="font-title text-title text-[15px]">Icons</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full md:ml-80 pb-32 md:pb-8 pt-safe">
+<!-- Mobile Top Anchor Header (Custom for Context) -->
+<header class="md:hidden flex items-center justify-between px-margin-screen py-4 h-16 sticky top-0 bg-background/80 backdrop-blur-md z-30">
+<h1 class="font-headline text-headline text-on-surface tracking-tight font-extrabold">Icon Studio</h1>
+<button class="w-10 h-10 rounded-full bg-surface-raised flex items-center justify-center text-on-surface active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</header>
+<!-- Desktop Header Anchor -->
+<header class="hidden md:flex items-center justify-between px-margin-screen py-8">
+<h1 class="font-display-xl text-display-xl text-on-surface tracking-tighter">Icon Settings</h1>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 rounded-full bg-primary-container text-on-primary-container font-title text-[15px] hover:opacity-90 active:scale-95 transition-all">
+                    Apply Theme
+                </button>
+</div>
+</header>
+<div class="px-margin-screen max-w-4xl mx-auto flex flex-col gap-gap-section">
+<!-- 1. Live Preview Grid -->
+<section class="flex flex-col gap-unit">
+<div class="flex justify-between items-center">
+<h2 class="font-title text-title text-on-surface">Live Preview</h2>
+<span class="font-caption text-caption text-on-surface-variant">8 Icons</span>
+</div>
+<div class="bg-surface-raised p-padding-card rounded-[24px] border border-surface-bright/20 shadow-lg relative overflow-hidden">
+<!-- Subtle background noise/gradient to show off glass -->
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-tertiary/5 opacity-50 pointer-events-none"></div>
+<div class="grid grid-cols-4 gap-gutter-bento place-items-center relative z-10">
+<!-- Glass Squircles -->
+<!-- Icon 1: Phone -->
+<div class="w-16 h-16 rounded-[22px] bg-glass-fill backdrop-blur-2xl border border-glass-specular shadow-md flex items-center justify-center text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[28px]" data-icon="call">call</span>
+</div>
+<!-- Icon 2: Camera -->
+<div class="w-16 h-16 rounded-[22px] bg-glass-fill backdrop-blur-2xl border border-glass-specular shadow-md flex items-center justify-center text-success active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[28px]" data-icon="photo_camera">photo_camera</span>
+</div>
+<!-- Icon 3: Mail -->
+<div class="w-16 h-16 rounded-[22px] bg-glass-fill backdrop-blur-2xl border border-glass-specular shadow-md flex items-center justify-center text-warning active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[28px]" data-icon="mail">mail</span>
+</div>
+<!-- Icon 4: Messages -->
+<div class="w-16 h-16 rounded-[22px] bg-glass-fill backdrop-blur-2xl border border-glass-specular shadow-md flex items-center justify-center text-primary-container active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[28px]" data-icon="chat">chat</span>
+</div>
+<!-- Icon 5: Settings -->
+<div class="w-16 h-16 rounded-[22px] bg-glass-fill backdrop-blur-2xl border border-glass-specular shadow-md flex items-center justify-center text-on-surface active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[28px]" data-icon="settings">settings</span>
+</div>
+<!-- Icon 6: Map -->
+<div class="w-16 h-16 rounded-[22px] bg-glass-fill backdrop-blur-2xl border border-glass-specular shadow-md flex items-center justify-center text-tertiary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[28px]" data-icon="map">map</span>
+</div>
+<!-- Icon 7: Music -->
+<div class="w-16 h-16 rounded-[22px] bg-glass-fill backdrop-blur-2xl border border-glass-specular shadow-md flex items-center justify-center text-danger active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[28px]" data-icon="music_note">music_note</span>
+</div>
+<!-- Icon 8: Calendar -->
+<div class="w-16 h-16 rounded-[22px] bg-glass-fill backdrop-blur-2xl border border-glass-specular shadow-md flex items-center justify-center text-primary-fixed active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[28px]" data-icon="calendar_month">calendar_month</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Style Row -->
+<section class="flex flex-col gap-unit">
+<h2 class="font-title text-title text-on-surface">Material Metaphor</h2>
+<div class="flex overflow-x-auto hide-scrollbar gap-unit py-2 -mx-margin-screen px-margin-screen md:mx-0 md:px-0">
+<!-- Glass (Active) -->
+<button class="flex-shrink-0 flex flex-col items-center gap-2 group outline-none">
+<div class="w-20 h-24 rounded-xl bg-surface-container flex items-center justify-center border-2 border-primary relative overflow-hidden transition-transform group-active:scale-95 shadow-[0_0_15px_rgba(74,144,255,0.15)]">
+<!-- Visual Rep -->
+<div class="w-10 h-10 rounded-lg bg-glass-fill backdrop-blur-md border border-glass-specular shadow-sm"></div>
+</div>
+<span class="font-caption text-caption text-primary font-medium">Glass</span>
+</button>
+<!-- Embossed (Inactive) -->
+<button class="flex-shrink-0 flex flex-col items-center gap-2 group outline-none">
+<div class="w-20 h-24 rounded-xl bg-surface-raised flex items-center justify-center border-2 border-transparent hover:border-outline-variant transition-all group-active:scale-95">
+<!-- Visual Rep -->
+<div class="w-10 h-10 rounded-lg bg-surface-raised shadow-[inset_2px_2px_4px_rgba(255,255,255,0.1),inset_-2px_-2px_4px_rgba(0,0,0,0.5)]"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Embossed</span>
+</button>
+<!-- Material -->
+<button class="flex-shrink-0 flex flex-col items-center gap-2 group outline-none">
+<div class="w-20 h-24 rounded-xl bg-surface-raised flex items-center justify-center border-2 border-transparent hover:border-outline-variant transition-all group-active:scale-95">
+<div class="w-10 h-10 rounded-lg bg-primary shadow-lg shadow-primary/20"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Material</span>
+</button>
+<!-- Neon -->
+<button class="flex-shrink-0 flex flex-col items-center gap-2 group outline-none">
+<div class="w-20 h-24 rounded-xl bg-surface-raised flex items-center justify-center border-2 border-transparent hover:border-outline-variant transition-all group-active:scale-95">
+<div class="w-10 h-10 rounded-lg bg-surface border-2 border-[#ff00ff] shadow-[0_0_10px_#ff00ff]"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Neon</span>
+</button>
+<!-- Duotone -->
+<button class="flex-shrink-0 flex flex-col items-center gap-2 group outline-none">
+<div class="w-20 h-24 rounded-xl bg-surface-raised flex items-center justify-center border-2 border-transparent hover:border-outline-variant transition-all group-active:scale-95">
+<div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-danger"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Duotone</span>
+</button>
+<!-- Gradient -->
+<button class="flex-shrink-0 flex flex-col items-center gap-2 group outline-none">
+<div class="w-20 h-24 rounded-xl bg-surface-raised flex items-center justify-center border-2 border-transparent hover:border-outline-variant transition-all group-active:scale-95">
+<div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-surface-tint to-tertiary-fixed"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Gradient</span>
+</button>
+<!-- Film Grain -->
+<button class="flex-shrink-0 flex flex-col items-center gap-2 group outline-none">
+<div class="w-20 h-24 rounded-xl bg-surface-raised flex items-center justify-center border-2 border-transparent hover:border-outline-variant transition-all group-active:scale-95 relative overflow-hidden">
+<div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
+<div class="w-10 h-10 rounded-lg bg-surface-variant z-10 border border-outline"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Film Grain</span>
+</button>
+</div>
+</section>
+<!-- 3. Shape Selector -->
+<section class="flex flex-col gap-unit">
+<h2 class="font-title text-title text-on-surface">Base Shape</h2>
+<div class="flex gap-4 p-2 bg-surface-container rounded-2xl w-fit">
+<!-- Circle -->
+<button class="w-14 h-14 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-raised transition-colors focus:outline-none">
+<div class="w-8 h-8 rounded-full border-2 border-current"></div>
+</button>
+<!-- Squircle (Active) -->
+<button class="w-14 h-14 rounded-xl flex items-center justify-center bg-primary-container/20 text-primary transition-colors focus:outline-none shadow-[inset_0_0_0_1px_rgba(74,144,255,0.3)]">
+<div class="w-8 h-8 rounded-[10px] border-2 border-current"></div>
+</button>
+<!-- Rounded Square -->
+<button class="w-14 h-14 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-raised transition-colors focus:outline-none">
+<div class="w-8 h-8 rounded-md border-2 border-current"></div>
+</button>
+<!-- Teardrop -->
+<button class="w-14 h-14 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-raised transition-colors focus:outline-none">
+<div class="w-8 h-8 rounded-tl-full rounded-tr-full rounded-bl-full rounded-br-sm border-2 border-current"></div>
+</button>
+</div>
+</section>
+<!-- 4. Sliders -->
+<section class="flex flex-col gap-6 bg-surface-raised p-padding-card rounded-2xl border border-surface-bright/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="tune">tune</span>
+<h2 class="font-title text-title text-on-surface">Geometry &amp; Optics</h2>
+</div>
+<!-- Size Slider -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<label class="font-body text-body text-on-surface">Icon Size</label>
+<span class="font-stats-mono text-stats-mono text-on-surface-variant">100%</span>
+</div>
+<input class="w-full appearance-none bg-transparent focus:outline-none" max="150" min="50" type="range" value="100"/>
+</div>
+<!-- Transparency Slider -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<label class="font-body text-body text-on-surface flex items-center gap-2">
+                            Base Transparency
+                            <span class="px-1.5 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider bg-primary-container text-on-primary-container">Glass Only</span>
+</label>
+<span class="font-stats-mono text-stats-mono text-on-surface-variant">78%</span>
+</div>
+<input class="w-full appearance-none bg-transparent focus:outline-none" max="100" min="0" type="range" value="78"/>
+</div>
+<!-- Edge Thickness Slider -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<label class="font-body text-body text-on-surface">Specular Edge Weight</label>
+<span class="font-stats-mono text-stats-mono text-on-surface-variant">1px</span>
+</div>
+<input class="w-full appearance-none bg-transparent focus:outline-none" max="4" min="0" step="0.5" type="range" value="1"/>
+</div>
+</section>
+</div>
+</main>
+<!-- Mobile Bottom Navigation Shell -->
+<nav class="md:hidden fixed bottom-8 left-0 w-full flex justify-center gap-2 z-40 bg-transparent flat no shadows docked full-width">
+<div class="flex items-center justify-center gap-6 px-6 py-3 rounded-full bg-surface-container-high/90 backdrop-blur-xl border border-surface-bright shadow-lg">
+<!-- Icon 1: Search -->
+<a class="w-12 h-12 flex items-center justify-center text-outline-variant opacity-50 hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</a>
+<!-- Icon 2: Home -->
+<a class="w-12 h-12 flex items-center justify-center text-outline-variant opacity-50 hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+</a>
+<!-- Icon 3: Settings (Active) -->
+<a class="w-12 h-12 flex items-center justify-center text-primary scale-125 Active: scale-110 transition-transform bg-primary-container/10 rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="settings" data-weight="fill" style="font-variation-settings: 'FILL' 1;">settings</span>
+</a>
+</div>
+</nav>
+</body></html>

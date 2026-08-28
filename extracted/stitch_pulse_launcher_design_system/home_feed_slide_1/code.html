@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pulse Launcher - Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Plus+Jakarta+Sans:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#690005",
+                    "glass-specular": "rgba(255, 255, 255, 0.28)",
+                    "surface-tint": "#acc7ff",
+                    "on-primary-container": "#00295c",
+                    "accent-glow": "rgba(74, 144, 255, 0.24)",
+                    "on-tertiary-container": "#452200",
+                    "on-tertiary-fixed-variant": "#6d3900",
+                    "surface": "#131313",
+                    "background": "#131313",
+                    "surface-container-high": "#2a2a2a",
+                    "primary": "#acc7ff",
+                    "error-container": "#93000a",
+                    "tertiary-fixed-dim": "#ffb77b",
+                    "secondary-container": "#48494d",
+                    "secondary-fixed-dim": "#c6c6cb",
+                    "on-secondary-container": "#b8b8bd",
+                    "surface-raised": "#242426",
+                    "on-tertiary": "#4d2700",
+                    "surface-container-lowest": "#0e0e0e",
+                    "secondary-fixed": "#e3e2e7",
+                    "on-surface": "#e5e2e1",
+                    "surface-variant": "#353534",
+                    "secondary": "#c6c6cb",
+                    "tertiary": "#ffb77b",
+                    "on-primary": "#002f67",
+                    "on-surface-variant": "#c2c6d5",
+                    "surface-container-low": "#1c1b1b",
+                    "on-primary-fixed-variant": "#004491",
+                    "inverse-on-surface": "#313030",
+                    "error": "#ffb4ab",
+                    "surface-container-highest": "#353534",
+                    "on-error-container": "#ffdad6",
+                    "surface-base": "#1C1C1E",
+                    "on-secondary-fixed": "#1a1b1f",
+                    "inverse-surface": "#e5e2e1",
+                    "glass-fill": "rgba(36, 36, 38, 0.78)",
+                    "on-background": "#e5e2e1",
+                    "success": "#30D158",
+                    "primary-fixed-dim": "#acc7ff",
+                    "danger": "#FF453A",
+                    "primary-fixed": "#d7e2ff",
+                    "surface-bright": "#393939",
+                    "outline": "#8c909f",
+                    "surface-container": "#201f1f",
+                    "warning": "#FFB340",
+                    "surface-dim": "#131313",
+                    "on-tertiary-fixed": "#2e1500",
+                    "on-primary-fixed": "#001a40",
+                    "tertiary-fixed": "#ffdcc2",
+                    "on-secondary-fixed-variant": "#46474b",
+                    "on-secondary": "#2f3034",
+                    "outline-variant": "#414753",
+                    "tertiary-container": "#db7900",
+                    "inverse-primary": "#005bbe",
+                    "primary-container": "#4a90ff",
+                    "surface-high": "#2E2E32"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "bento": "20px"
+            },
+            "spacing": {
+                    "gap-section": "24px",
+                    "gutter-bento": "16px",
+                    "padding-card": "16px",
+                    "touch-target-min": "48px",
+                    "unit": "8px",
+                    "margin-screen": "20px"
+            },
+            "fontFamily": {
+                    "display-xl": [
+                            "PlusJakartaSans"
+                    ],
+                    "headline": [
+                            "Inter"
+                    ],
+                    "body": [
+                            "Inter"
+                    ],
+                    "caption": [
+                            "Inter"
+                    ],
+                    "title": [
+                            "Inter"
+                    ],
+                    "display-lg": [
+                            "PlusJakartaSans"
+                    ],
+                    "micro": [
+                            "Inter"
+                    ],
+                    "stats-mono": [
+                            "JetBrains Mono"
+                    ]
+            },
+            "fontSize": {
+                    "display-xl": [
+                            "64px",
+                            {
+                                    "lineHeight": "72px",
+                                    "letterSpacing": "-0.03em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body": [
+                            "15px",
+                            {
+                                    "lineHeight": "22px",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "caption": [
+                            "13px",
+                            {
+                                    "lineHeight": "18px",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "title": [
+                            "18px",
+                            {
+                                    "lineHeight": "24px",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg": [
+                            "40px",
+                            {
+                                    "lineHeight": "48px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "micro": [
+                            "11px",
+                            {
+                                    "lineHeight": "14px",
+                                    "letterSpacing": "0.02em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "stats-mono": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "500"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #121212;
+            color: #e5e2e1;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Hide scrollbar for bento grid container if needed */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen flex flex-col items-center justify-start overflow-hidden">
+<!-- Mobile Frame Container (Simulating 6.6" device) -->
+<div class="w-full max-w-[400px] h-full min-h-screen max-h-screen relative flex flex-col bg-background shadow-2xl mx-auto overflow-y-auto no-scrollbar pt-6 pb-24">
+<!-- TopAppBar (Status) -->
+<header class="flex justify-between items-center px-margin-screen w-full docked full-width top-0 h-12 bg-transparent z-50">
+<div class="flex items-center">
+<span class="font-stats-mono text-stats-mono text-on-surface">11:46</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="signal_cellular_4_bar">signal_cellular_4_bar</span>
+<span class="material-symbols-outlined text-primary text-sm" data-icon="battery_charging_full">battery_charging_full</span>
+</div>
+</header>
+<!-- Dynamic Island (Liquid Glass Pill) - Hidden/Replaced by Status Bar but keeping structure for consistency if needed -->
+<div class="hidden">
+<nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center rounded-full mx-auto mt-2 w-32 h-8 bg-glass-fill backdrop-blur-3xl border border-glass-specular shadow-md shadow-accent-glow hover:scale-105 transition-all">
+<span class="material-symbols-outlined text-primary font-caption text-caption mr-2" data-icon="music_note">music_note</span>
+<span class="font-headline text-headline text-primary text-sm"></span>
+</nav>
+</div>
+<!-- Main Scrollable Content -->
+<main class="flex-1 w-full px-margin-screen flex flex-col gap-gutter-bento pt-unit pb-24">
+<!-- Hero Card: Weather -->
+<div class="w-full bg-surface-raised rounded-bento p-padding-card flex flex-col justify-between shadow-[0_4px_12px_rgba(0,0,0,0.3)] relative overflow-hidden border-t-2 border-primary-container h-48">
+<!-- Atmospheric background glow -->
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-primary-container opacity-20 blur-3xl rounded-full pointer-events-none"></div>
+<div class="flex justify-between items-start z-10">
+<div class="flex flex-col">
+<span class="font-body text-body text-on-surface-variant uppercase tracking-wider text-xs font-semibold mb-1">Current</span>
+<span class="font-display-xl text-display-xl text-on-surface">31°</span>
+</div>
+<span class="material-symbols-outlined text-4xl text-warning" data-icon="sunny" style="font-variation-settings: 'FILL' 1;">sunny</span>
+</div>
+<div class="z-10 mt-auto">
+<h2 class="font-title text-title text-on-surface">Clear Sky</h2>
+<p class="font-caption text-caption text-on-surface-variant">Feels like 34° • H:35° L:24°</p>
+</div>
+</div>
+<!-- Horizontal Circular Quick Actions -->
+<div class="w-full overflow-x-auto no-scrollbar py-2">
+<div class="flex gap-4 min-w-max px-2">
+<!-- Action: News -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-surface-raised border border-outline-variant flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.2)] group-hover:-translate-y-1 transition-transform group-active:translate-y-0 group-active:scale-95 group-active:shadow-none">
+<span class="material-symbols-outlined text-primary-container text-xl" data-icon="article">article</span>
+</div>
+<span class="font-micro text-micro text-on-surface-variant">News</span>
+</div>
+<!-- Action: Calendar -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-surface-raised border border-outline-variant flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.2)] group-hover:-translate-y-1 transition-transform group-active:translate-y-0 group-active:scale-95 group-active:shadow-none">
+<span class="material-symbols-outlined text-tertiary-container text-xl" data-icon="calendar_month">calendar_month</span>
+</div>
+<span class="font-micro text-micro text-on-surface-variant">Calendar</span>
+</div>
+<!-- Action: Music -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-surface-raised border border-outline-variant flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.2)] group-hover:-translate-y-1 transition-transform group-active:translate-y-0 group-active:scale-95 group-active:shadow-none">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="music_note">music_note</span>
+</div>
+<span class="font-micro text-micro text-on-surface-variant">Music</span>
+</div>
+<!-- Action: Traffic -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-surface-raised border border-outline-variant flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.2)] group-hover:-translate-y-1 transition-transform group-active:translate-y-0 group-active:scale-95 group-active:shadow-none">
+<span class="material-symbols-outlined text-warning text-xl" data-icon="directions_car">directions_car</span>
+</div>
+<span class="font-micro text-micro text-on-surface-variant">Traffic</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Structure -->
+<div class="grid grid-cols-2 gap-gutter-bento">
+<!-- Calendar Card (2x1 wide) -->
+<div class="col-span-2 bg-surface-raised rounded-bento p-padding-card flex flex-col justify-center shadow-[0_4px_12px_rgba(0,0,0,0.3)] min-h-[100px] border border-[#2C2C2E]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary text-lg" data-icon="schedule">schedule</span>
+</div>
+<div>
+<span class="font-caption text-caption text-tertiary block mb-0.5">Next up</span>
+<h3 class="font-title text-title text-on-surface leading-tight">Coffee at 10:00</h3>
+</div>
+</div>
+</div>
+<!-- Music Card (1x2 tall) -->
+<div class="col-span-1 row-span-2 bg-surface-raised rounded-bento p-padding-card flex flex-col shadow-[0_4px_12px_rgba(0,0,0,0.3)] relative overflow-hidden border border-[#2C2C2E] min-h-[200px]">
+<!-- Blurred album art background -->
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center opacity-30 blur-sm mix-blend-screen" data-alt="A stylized, vibrant album cover featuring abstract geometric shapes in electric blue and charcoal grey tones, high contrast, modern digital art aesthetic, glowing edges, dark mode background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsSenqO5ediUw04TqNQWmYaV9S-e1fZY4NFeKGxelpHsUN861QrhdxqfP8F3VGzmS87Lo259xT8piCc_0rpM5cxyDNRbHJDQnCuN_kVk9MQ2dPiWFy_nE2mTvaRI2E0AEYUsJaigsjbFZ-_aAb3C2KcV-7An7b8qX7Oa61650AtmG8JkozfG4KZt6Z8OmoMk8tUZXVfQfAeAVHCWQg0oIKNbBkj7hiTUQuNkeC_RCgvU-fo4VC6b7n')"></div>
+</div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="w-full aspect-square rounded-lg overflow-hidden mb-4 shadow-lg border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="Detailed abstract album artwork with a retro-futuristic aesthetic, dominant dark charcoal background with stark electric blue neon lines forming a fragmented face, high quality, digital illustration." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBoEWUkCXK3AO_m64gejoZrXY7ZSqvG_SYLIq4jnlnPnbfNbkIS_xYMGsJjoeby4Wuq2MjUrSpc9J581sVamiYNucOMOp3xN_6rOusQ1vUxIcPEh0VW8WChCRBKi_L1wUSvpNRthKgLIRvcXfNnAMAmAWYPYq-h6jUfvn4CnhGOpkDZ4pXSAUMh49nJe7TYM6p5xWphuxZhTyXktw3gPdnz_uFFyRvdBoMQNm1gHshB0WKtvjZgxgQ"/>
+</div>
+<div class="mt-auto">
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-primary text-xs" data-icon="graphic_eq" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+<span class="font-micro text-micro text-primary uppercase tracking-wide">Now Playing</span>
+</div>
+<h3 class="font-title text-title text-on-surface truncate text-sm">Lazy Generation</h3>
+<p class="font-caption text-caption text-on-surface-variant truncate text-xs">The F-Ups</p>
+</div>
+</div>
+</div>
+<!-- News Headline (1x1 square) -->
+<div class="col-span-1 bg-surface-raised rounded-bento p-padding-card flex flex-col shadow-[0_4px_12px_rgba(0,0,0,0.3)] border border-[#2C2C2E] h-full justify-between group cursor-pointer hover:bg-surface-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant text-lg self-end opacity-50" data-icon="north_east">north_east</span>
+<div>
+<span class="font-micro text-micro text-outline-variant uppercase mb-2 block">Tech News</span>
+<p class="font-body text-body text-on-surface font-medium leading-snug line-clamp-3">Major breakthrough in solid-state battery tech announced.</p>
+</div>
+</div>
+<!-- Quote of the Day (1x1 square) -->
+<div class="col-span-1 bg-surface-raised rounded-bento p-padding-card flex flex-col shadow-[0_4px_12px_rgba(0,0,0,0.3)] border border-[#2C2C2E] h-full justify-center text-center relative overflow-hidden">
+<!-- Subtle pattern overlay -->
+<div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 10px 10px;"></div>
+<span class="material-symbols-outlined text-primary opacity-20 text-4xl absolute top-2 left-2" data-icon="format_quote">format_quote</span>
+<p class="font-caption text-caption text-on-surface italic relative z-10 px-2 line-clamp-4">"The best way to predict the future is to invent it."</p>
+</div>
+</div>
+<!-- Bottom padding for nav bar -->
+<div class="h-8"></div>
+</main>
+<!-- Bottom Page Indicator & Navigation (BottomNavBar) -->
+<nav class="fixed bottom-8 left-0 w-full flex justify-center gap-2 z-40 docked full-width bg-transparent flat no shadows">
+<div class="flex items-center justify-center gap-3 bg-surface-raised/80 backdrop-blur-xl px-4 py-2 rounded-full border border-[#2C2C2E]">
+<!-- Active Dot -->
+<div class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_8px_rgba(74,144,255,0.6)]"></div>
+<!-- Inactive Dots -->
+<div class="w-1.5 h-1.5 rounded-full bg-outline-variant opacity-50"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-outline-variant opacity-50"></div>
+</div>
+<!-- Hidden original component structure for JSON compliance, visually replaced by the dots above as requested by prompt "3 dots, 1st dot active" -->
+<div class="hidden">
+<span class="material-symbols-outlined text-primary scale-125 font-micro text-micro" data-icon="fiber_manual_record">fiber_manual_record</span>
+<span class="material-symbols-outlined text-outline-variant opacity-50 hover:opacity-100 font-micro text-micro" data-icon="fiber_manual_record">fiber_manual_record</span>
+<span class="material-symbols-outlined text-outline-variant opacity-50 hover:opacity-100 font-micro text-micro" data-icon="fiber_manual_record">fiber_manual_record</span>
+</div>
+</nav>
+</div>
+</body></html>
