@@ -46,3 +46,4 @@ Please visit the [Lawnchair Contributing Guidelines](CONTRIBUTING.md) for inform
 -   [_XDA_ thread](https://forum.xda-developers.com/t/lawnchair-customizable-pixel-launcher.3627137/)
 
 You can view all our links in the [Lawnchair Wiki](https://github.com/LawnchairLauncher/lawnchair/wiki).
+# pulse_launcher
