@@ -1,0 +1,34 @@
+===============================================================================
+RESEARCH FINDINGS: Animation Smoothness & Spring Physics
+===============================================================================
+
+--- [STEP-BY-STEP RESEARCH OUTLINE] ---
+1. Spring Physics Equations - Hooke's Law, damping ratios, and stiffness parameters.
+2. Android Choreographer & Frame Syncing - 60Hz, 90Hz, and 120Hz refresh rates.
+3. Jetpack Compose Motion Systems - Animatable, rememberSpline, and physics-based animateTo.
+4. Open-Source Animation Toolkits - PhysicsAnimator (AOSP), Material Motion Compose.
+
+--- [SECTION 1: SPRING PHYSICS MATHEMATICS] ---
+Unlike linear or bezier easing curves, spring physics calculate forces dynamically based on physical coefficients:
+* HOOKE'S LAW: $F = -kx - cv$
+  - $k$ represents **stiffness** (force constant).
+  - $c$ represents **damping** (velocity reduction).
+  - $x$ represents **displacement** (distance from target).
+* DAMPING RATIO ($\zeta$):
+  - $\zeta = 1.0$: **Critically Damped** (Snaps to target as quickly as possible without overshooting).
+  - $\zeta < 1.0$: **Underdamped** (Overshoots and oscillates slightly before settling; great for bouncy, organic transitions).
+  - $\zeta > 1.0$: **Overdamped** (Slow, sluggish approach without overshooting).
+* FOR LAUNCHERS: Typically standard on underdamped values ($\zeta \approx 0.7$ to 0.85) to create responsive, tactile bounceback, paired with medium stiffness ($k \approx 300$ to 500) for instant feedback.
+
+--- [SECTION 2: FRAME CYCLE SYNCHRONIZATION] ---
+* ANDROID CHOREOGRAPHER: Coordinates system drawing cycles. Syncs layout animations exactly with the hardware display's VSYNC pulses (60Hz, 90Hz, or 120Hz LTPO panels).
+* REFRESH RATE ADAPTATION: To avoid jank, calculations use delta time ($\Delta t$) instead of assuming constant frame ticks, maintaining consistent physics speeds even during sudden frame-rate drops.
+
+--- [SECTION 3: COMPOSE PHYSICS ARSENAL] ---
+* `Animatable`: Jetpack Compose's state-driven animation wrapper. Supports launching spring animations via `animateTo(targetValue, spring(stiffness, dampingRatio))`.
+* `sh.calvin.reorderable`: Uses smooth spring-based displacement curves during list drag-and-drop operations, ensuring elements slide out of the way before snapping to their sorted positions.
+
+--- [SECTION 4: SOURCES] ---
+* [1] Android DynamicAnimation API Reference (`androidx.dynamicanimation`).
+* [2] Jetpack Compose Animation Guidelines (https://developer.android.com/develop/ui/compose/animation).
+* [3] Material Motion Compose specifications (https://github.com/fornewid/material-motion-compose).

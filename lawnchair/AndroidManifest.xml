@@ -35,6 +35,13 @@
     <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
     <uses-permission android:name="android.permission.STATUS_BAR_SERVICE" />
 
+    <!-- Pulse: Dynamic Island overlay -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <!-- Pulse: Control Center toggles -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
     <!--override minSdk declared in it-->
     <uses-sdk tools:overrideLibrary="com.kieronquinn.app.smartspacer.sdk" />
 
@@ -137,6 +144,16 @@
             android:enabled="true"
             android:exported="false"
             android:process=":bugReport" />
+
+        <service
+            android:name="app.lawnchair.pulse.island.IslandService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Pulse Dynamic Island live-activity overlay" />
+        </service>
 
         <receiver
             android:name="app.lawnchair.smartspace.SmartspaceAppWidgetProvider"

@@ -1,0 +1,28 @@
+===============================================================================
+RESEARCH FINDINGS: Mur Launcher (by Incendiary Pigs)
+===============================================================================
+
+--- [STEP-BY-STEP RESEARCH OUTLINE] ---
+1. Mur Launcher Product Archetype - Windows Phone live tiles rebuilt on modern Android.
+2. Live Tile Matrix - Multi-size tiles, dynamic notifications, and media overlays.
+3. Folder & Tile Dashboards - Long-press widgets, quick shortcuts, and notification bundles.
+4. On-Device Local AI (Version 1.2) - Local message summary and folder brief features.
+
+--- [SECTION 1: THE TILE LAYOUT PARADIGM] ---
+* METRO REIMAGINED: Mur Launcher takes the Windows Phone live-tile philosophy (active, real-time widgets instead of static tap-targets) and blends it with Material You.
+* FLEXIBLE GRID: Home layout supports multi-size tiles (1x1, 2x1, 2x2, 4x2) that resize with smooth touch gestures.
+* DYNAMIC UPDATES: Tiles read notification payloads and playback sessions, refreshing content instantly.
+
+--- [SECTION 2: TILE & FOLDER DASHBOARDS] ---
+* TILE DASHBOARD: Long-pressing an individual tile reveals a popover container holding active notification lists, custom widgets, and shortcuts.
+* FOLDER DASHBOARD: Long-pressing an app folder aggregates all notification streams from every nested app, compiling them into a single, cohesive feed.
+
+--- [SECTION 3: ON-DEVICE LOCAL AI (MUR 1.2)] ---
+In July 2026, Mur 1.2 introduced local-first AI built on local system configurations:
+* PRIVATE NOTIFICATION SUMMARY: Uses offline on-device neural runtimes to parse and summarize incoming notifications.
+* FOLDER BREIFS: Aggregates notifications within a folder and formats them into actionable bulleted summaries (such as "John messaged twice, 1 package update").
+
+--- [SECTION 4: VERIFIABLE SOURCES] ---
+* [1] Mur Launcher Google Play Store Listing (club.incendiarypigs.mur)
+* [2] Official Mur Launcher Website & Press Kit (https://www.murlauncher.com/press-kit)
+* [3] Mur Launcher v1.2 Release Changelog (APKPure/APKCombo metrics, July 2026)

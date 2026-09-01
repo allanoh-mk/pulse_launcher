@@ -1,0 +1,27 @@
+===============================================================================
+RESEARCH FINDINGS: Home Screen Widgets & Layout Containers
+===============================================================================
+
+--- [STEP-BY-STEP RESEARCH OUTLINE] ---
+1. Android AppWidget Architecture - Host binding, RemoteViews, and RemoteViewsService.
+2. Custom Jetpack Compose Widget Containers - Localized, lightweight, fluid UI alternatives.
+3. Bento-Grid Dashboard Systems - Custom layout grid cells, resizing logic, and drag-to-reorder.
+4. Open-Source Widget Libraries - Glacier widgets, Smartspacer client-side bindings.
+
+--- [SECTION 1: ANDROID APPWIDGETS (AOSP)] ---
+* ARCHITECTURAL LIMITS: Stock widgets compile to serialized XML structures called `RemoteViews`. They run in a separate process, restricting UI layout to basic views (TextView, ImageView, ProgressBar) and blocking custom layouts or animations.
+* INTERACTION OVERHEAD: Touch events trigger `PendingIntent` loops, which require heavy IPC routing and can cause visual lags.
+
+--- [SECTION 2: CUSTOM COMPOSE-BASED TILES] ---
+For custom private launchers (such as Pulse or Mur), developers bypass AppWidgets entirely and build custom widgets natively in **Jetpack Compose**:
+* DIRECT COMPOSE EXECUTION: Widgets are compiled locally as native Compose hierarchies within the app process. This allows for rich fluid animations, custom painters, and direct reactive state bindings.
+* FLUID SCALING: Custom cells can seamlessly resize from 1x1 tiles to 2x2 or 4x2 dashboard tiles with real-time resizing animations.
+
+--- [SECTION 3: BENTO-GRID CELL SYSTEMS] ---
+* FLEXIBLE COLUMNS: Grid layouts typically divide the workspace into an 8x4 or 4x4 bento matrix.
+* DRAG TO REORDER: Reorderable layouts (e.g. `sh.calvin.reorderable`) allow custom tiles to be rearranged or swapped instantly using spring-based sorting animations.
+
+--- [SECTION 4: SOURCES] ---
+* [1] Android AppWidget Developer Guidelines (https://developer.android.com/develop/ui/views/appwidgets).
+* [2] Reorderable Compose libraries (such as `sh.calvin.reorderable`).
+* [3] Smartspacer SDK developer repository (https://github.com/KieronQuinn/Smartspacer).

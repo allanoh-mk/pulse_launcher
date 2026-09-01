@@ -6,40 +6,45 @@
 
 | Item | Rule | Example | Evidence |
 |------|------|---------|----------|
-| Files | PascalCase Kotlin files, usually one main type or screen per file | `PulseLauncherActivity.kt`, `ControlCenterOverlay.kt` | [PulseLauncherActivity.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt), [ControlCenterOverlay.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/controlcenter/ControlCenterOverlay.kt) |
-| Functions/methods | camelCase for functions and state helpers | `setCurrentSlide`, `getAllTiles`, `saveThemeConfig` | [PulsePreferencesRepository.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/repository/PulsePreferencesRepository.kt), [PulseRepository.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/repository/PulseRepository.kt) |
-| Types/interfaces | PascalCase for classes, data classes, enums, DAOs | `PulseDatabase`, `TileConfigEntity`, `IslandState` | [PulseDatabase.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/db/PulseDatabase.kt), [IslandState.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/island/states/IslandState.kt) |
-| Constants/env vars | `UPPER_SNAKE_CASE` for preference keys and constants | `CURRENT_SLIDE`, `IS_CONTROL_CENTER_OPEN` | [PulsePreferencesRepository.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/repository/PulsePreferencesRepository.kt) |
+| Files | PascalCase Kotlin/Java files matching the main type | `WorkspaceController.kt`, `LawnchairLauncher.kt` | [WorkspaceController.kt](lawnchair/src/app/lawnchair/pulse/workspace/WorkspaceController.kt), [LawnchairLauncher.kt](lawnchair/src/app/lawnchair/LawnchairLauncher.kt) |
+| Functions | camelCase for standard methods; PascalCase for `@Composable` functions | `PulseWorkspace()`, `setWallpaperOffsets()` | [WorkspaceController.kt](lawnchair/src/app/lawnchair/pulse/workspace/WorkspaceController.kt) |
+| Classes/Types | PascalCase for classes, objects, interfaces, and data classes | `PulseWorkspaceHost`, `LawnchairLauncher` | [PulseWorkspaceHost.kt](lawnchair/src/app/lawnchair/pulse/workspace/PulseWorkspaceHost.kt) |
+| Constants | UPPER_SNAKE_CASE for compile-time constants | `PAGE_COUNT`, `WALLPAPER_PARALLAX` | [WorkspaceController.kt](lawnchair/src/app/lawnchair/pulse/workspace/WorkspaceController.kt) |
 
 ### 2) Formatting and Linting
 
-- Formatter: [TODO] no formatter config file was detected in the repo root scan
-- Linter: [TODO] no lint config file was detected in the repo root scan
-- Most relevant enforced rules: Kotlin code style is set to `official`, AndroidX and non-transitive R classes are enabled, and Java 17 is the declared target
-- Run commands: `./gradlew assembleDebug`, `./gradlew test`, `./gradlew lint`
+- **Formatter & Linter:** The project uses the **Spotless** Gradle plugin for code formatting.
+  - **Kotlin:** Enforced using **KtLint** (with customized Compose rules, e.g. `io.nlopez.compose.rules:ktlint:0.4.10`).
+  - **Java:** Enforced using **Google Java Format** in AOSP style (specifically for the compatibility libraries).
+- **EditorConfig:** A `.editorconfig` file is located at the root to enforce indent size (4 spaces for Kotlin/Java, 2 spaces for YAML/XML), trim trailing whitespaces, and insert a final newline.
+- **Run Commands:**
+  ```bash
+  # Check formatting compliance
+  ./gradlew spotlessCheck
+
+  # Automatically format code according to conventions
+  ./gradlew spotlessApply
+  ```
 
 ### 3) Import and Module Conventions
 
-- Import grouping/order: Kotlin imports are grouped by source package, with Android, Compose, app, and third-party imports interleaved in standard Kotlin style
-- Alias vs relative import policy: no custom import aliasing policy was detected
-- Public exports/barrel policy: no barrel files or module re-export pattern was detected
+- **Import sorting:** Standard Kotlin and Java packages are organized alphabetically, with JVM and Android framework packages usually separated from local packages.
+- **Path aliases:** No TypeScript-like path aliases exist. Relative packages translate directly to the folder nested under the `src/` hierarchy (e.g. package `app.lawnchair.pulse.workspace` is in `lawnchair/src/app/lawnchair/pulse/workspace/`).
 
 ### 4) Error and Logging Conventions
 
-- Error strategy by layer: [TODO] no explicit app-wide error-handling pattern was observed in the inspected files
-- Logging style and required context fields: [TODO] no logging convention or logger wrapper was found
-- Sensitive-data redaction rules: [TODO] no redaction policy file or logging guidance was found
+- **Error Strategy:** Checked exceptions and try-catch blocks are used extensively for Android system interaction (such as querying services or resolving packages).
+- **Logging:** Upstream Launcher3/Lawnchair uses custom logging wrappers like `FileLog` or system `android.util.Log`. For Compose/Pulse components, standard reactive flows (or standard logging) will be preferred.
 
 ### 5) Testing Conventions
 
-- Test file naming/location rule: [TODO] no test files were detected in the scan output
-- Mocking strategy norm: [TODO] no test framework or mock stack was detected
-- Coverage expectation: [TODO] not defined in the inspected repository files
+- **Test Placement:** Unit and integration tests reside under the `tests/src` folder, matching the package structures of the tested files.
+- **Naming Pattern:** Test class files are named with a suffix of `Test` (e.g. `LauncherPrefsTest.kt`, `GridSizeMigrationUtilTest.kt`).
+- **Mocking Tooling:** Standard Mockito (`KotlinMockitoHelpers.kt`) and Android Instrumentation (TAPL) libraries are used.
 
 ### 6) Evidence
 
-- [gradle.properties](/home/nana/Documents/pulse_launcher/gradle.properties)
-- [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts)
-- [PulseLauncherActivity.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt)
-- [PulsePreferencesRepository.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/repository/PulsePreferencesRepository.kt)
-
+- [build.gradle](build.gradle) (Spotless task definitions and rulesets)
+- [.editorconfig](.editorconfig)
+- [lawnchair/src/app/lawnchair/pulse/workspace/WorkspaceController.kt](lawnchair/src/app/lawnchair/pulse/workspace/WorkspaceController.kt)
+- [tests/src/com/android/launcher3/LauncherPrefsTest.kt](tests/src/com/android/launcher3/LauncherPrefsTest.kt)

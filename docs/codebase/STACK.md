@@ -6,56 +6,65 @@
 
 | Area | Value | Evidence |
 |------|-------|----------|
-| Primary language | Kotlin | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts) |
-| Runtime + version | Android 12+ target, compileSdk 35, Java 17 bytecode, Kotlin 2.0.0 | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts), [gradle/libs.versions.toml](/home/nana/Documents/pulse_launcher/gradle/libs.versions.toml) |
-| Package manager | Gradle with Kotlin DSL | [build.gradle.kts](/home/nana/Documents/pulse_launcher/build.gradle.kts), [settings.gradle.kts](/home/nana/Documents/pulse_launcher/settings.gradle.kts), [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts) |
-| Module/build system | Single Android application module (`:app`) | [settings.gradle.kts](/home/nana/Documents/pulse_launcher/settings.gradle.kts) |
+| Primary language | Kotlin (with legacy Java in Launcher3) | [build.gradle](build.gradle), source files |
+| Runtime + version | Android 12+ (minSdk 31, targetSdk 35, compileSdk 35), Java 17 toolchain, Kotlin 2.0.10 | [build.gradle](build.gradle) |
+| Package manager | Gradle (Groovy DSL) | [build.gradle](build.gradle), [settings.gradle](settings.gradle) |
+| Module/build system | Single application built at root level, pulling in source sets (`src`, `lawnchair/src`, `quickstep/src`) plus helper modules (e.g. `:compatLib`, `:systemUIShared`, `:baseline-profile`) | [build.gradle](build.gradle), [settings.gradle](settings.gradle) |
 
 ### 2) Production Frameworks and Dependencies
 
 | Dependency | Version | Role in system | Evidence |
 |------------|---------|----------------|----------|
-| Jetpack Compose | BOM 2024.08.00 | UI framework for the launcher screens and overlays | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts), [gradle/libs.versions.toml](/home/nana/Documents/pulse_launcher/gradle/libs.versions.toml) |
-| Hilt | 2.51.1 | Dependency injection | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts), [app/src/main/java/app/pulse/launcher/di/AppModule.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/di/AppModule.kt) |
-| Room | 2.6.1 | Local persistence for tiles, feed items, configs, and overrides | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts), [app/src/main/java/app/pulse/launcher/data/db/PulseDatabase.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/db/PulseDatabase.kt) |
-| DataStore Preferences | 1.1.1 | Small user preferences such as current slide and overlay state | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts), [app/src/main/java/app/pulse/launcher/data/repository/PulsePreferencesRepository.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/repository/PulsePreferencesRepository.kt) |
-| Haze | 0.9.0 | Blur / glass-style UI effects | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts), [gradle/libs.versions.toml](/home/nana/Documents/pulse_launcher/gradle/libs.versions.toml) |
-| Retrofit + OkHttp + Gson | 2.11.0 / 4.12.0 / 2.11.0 | Network client stack; configured but not yet wired to a real API base URL | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts), [app/src/main/java/app/pulse/launcher/di/AppModule.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/di/AppModule.kt) |
-| Coil | 2.7.0 | Image loading for Compose | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts) |
-| WorkManager | 2.9.1 | Background work support | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts) |
-| Media3 | 1.4.1 | Media playback UI / player support | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts) |
-| Palette KTX | 1.0.0 | Color extraction / theme support | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts) |
-| Accompanist permissions + drawablepainter | 0.34.0 | Compose helpers for permissions and drawable rendering | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts) |
+| Jetpack Compose | BOM 2024.06.00 | UI framework for custom Pulse components | [build.gradle](build.gradle) |
+| Material 3 | 1.3.0-beta05 | UI styling and components | [build.gradle](build.gradle) |
+| Room | 2.6.1 | Local database persistence | [build.gradle](build.gradle) |
+| DataStore Preferences | 1.1.1 | Key-value preferences storage | [build.gradle](build.gradle) |
+| Opto (by patrykmichalik) | 1.0.18 | Type-safe preferences wrapper built on DataStore | [build.gradle](build.gradle) |
+| Retrofit | 2.11.0 | REST API client (with Kotlinx Serialization) | [build.gradle](build.gradle) |
+| Coil Compose | 2.7.0 | Image and icon loading | [build.gradle](build.gradle) |
+| Lottie | 6.5.0 | Vector animation rendering | [build.gradle](build.gradle) |
+| Reorderable (by sh.calvin) | 2.3.0 | Compose drag-and-drop support | [build.gradle](build.gradle) |
+| Accompanist | 0.34.0 | Permissions, Adaptive, and DrawablePainter | [build.gradle](build.gradle) |
+| Smartspacer SDK | 1.0.11 | Integration with Smartspacer smart widgets | [build.gradle](build.gradle) |
+| Libsu | 6.0.0 | Root shell helper library | [build.gradle](build.gradle) |
 
 ### 3) Development Toolchain
 
 | Tool | Purpose | Evidence |
 |------|---------|----------|
-| Android Gradle Plugin 8.5.2 | Android build orchestration | [gradle/libs.versions.toml](/home/nana/Documents/pulse_launcher/gradle/libs.versions.toml) |
-| Kotlin 2.0.0 | Language compiler | [gradle/libs.versions.toml](/home/nana/Documents/pulse_launcher/gradle/libs.versions.toml) |
-| KSP 2.0.0-1.0.24 | Annotation processing for Hilt and Room | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts), [gradle/libs.versions.toml](/home/nana/Documents/pulse_launcher/gradle/libs.versions.toml) |
-| AndroidJUnitRunner | Instrumented test runner declaration | [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts) |
+| Android Gradle Plugin 8.5.2 | Android build orchestration | [build.gradle](build.gradle) |
+| Kotlin Compiler 2.0.10 | Kotlin compilation with Compose compiler integration | [build.gradle](build.gradle) |
+| KSP 2.0.10-1.0.24 | Kotlin Symbol Processing for Room compilation | [build.gradle](build.gradle) |
+| Spotless 6.25.0 | Code formatting (Google Java Format for Java, KtLint for Kotlin) | [build.gradle](build.gradle) |
+| Protobuf Gradle Plugin 0.9.4 | Compiles protobuf schemas | [build.gradle](build.gradle) |
 
 ### 4) Key Commands
 
 ```bash
+# Build Pulse Launcher Debug APK (convention task that runs assembleLawnWithQuickstepGithubDebug)
 ./gradlew assembleDebug
-./gradlew test
-./gradlew connectedAndroidTest
+
+# Build specific variants directly
+./gradlew assembleLawnWithQuickstepGithubDebug
+
+# Run linters and format checks
 ./gradlew lint
+./gradlew spotlessCheck
 ```
 
 ### 5) Environment and Config
 
-- Config sources: [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts), [app/src/main/AndroidManifest.xml](/home/nana/Documents/pulse_launcher/app/src/main/AndroidManifest.xml), [app/src/main/java/app/pulse/launcher/di/AppModule.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/di/AppModule.kt), [app/src/main/java/app/pulse/launcher/data/repository/PulsePreferencesRepository.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/repository/PulsePreferencesRepository.kt)
-- Required env vars: [TODO] no environment-variable reads were detected in the scan output or inspected files
-- Deployment/runtime constraints: Android app with HOME intent handling, overlay permission, notification listener permission, and minSdk 31
+- **Config sources:** Root [build.gradle](build.gradle) holds build types, flavors, and dependencies. [AndroidManifest-common.xml](AndroidManifest-common.xml) holds common Android declarations, while [lawnchair/AndroidManifest.xml](lawnchair/AndroidManifest.xml) and [quickstep/AndroidManifest.xml](quickstep/AndroidManifest.xml) contain flavor-specific configurations.
+- **Required env vars:** `CI` (optional, to agreements/build scans), `GITHUB_REF` / `GITHUB_RUN_NUMBER` (optional, used in CI builds for version names).
+- **Deployment/runtime constraints:** Android device running minSdk 31 (Android 12) or above. Requires the app to be set as default launcher:
+  ```bash
+  adb install -r lawnchair/build/outputs/apk/lawnWithQuickstepGithub/debug/Lawnchair.14.0.0-Beta-3.lawnWithQuickstepGithub.debug.apk
+  adb shell cmd package set-home-activity app.lawnchair.debug/com.android.launcher3.Launcher
+  ```
 
 ### 6) Evidence
 
-- [build.gradle.kts](/home/nana/Documents/pulse_launcher/build.gradle.kts)
-- [settings.gradle.kts](/home/nana/Documents/pulse_launcher/settings.gradle.kts)
-- [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts)
-- [app/src/main/AndroidManifest.xml](/home/nana/Documents/pulse_launcher/app/src/main/AndroidManifest.xml)
-- [app/src/main/java/app/pulse/launcher/di/AppModule.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/di/AppModule.kt)
-
+- [build.gradle](build.gradle)
+- [settings.gradle](settings.gradle)
+- [gradle.properties](gradle.properties)
+- [lawnchair/AndroidManifest.xml](lawnchair/AndroidManifest.xml)

@@ -26,8 +26,8 @@ allprojects {
         android {
             compileSdk 35
             defaultConfig {
-                minSdk 26
-                targetSdk 34
+                minSdk 31
+                targetSdk 35
                 vectorDrawables.useSupportLibrary = true
             }
             lint {
@@ -228,6 +228,11 @@ android {
         coreLibraryDesugaringEnabled true
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = false
+    }
+
     dependenciesInfo {
         includeInApk = false
         includeInBundle = false
@@ -243,7 +248,7 @@ android {
 
         withQuickstep {
             dimension "recents"
-            minSdk 26
+            minSdk 31
         }
 
         github {
@@ -285,6 +290,10 @@ android {
             }
         }
 
+        test {
+            java.srcDirs = ['lawnchair/testUnit']
+        }
+
         lawnWithQuickstepGithub {
             manifest.srcFile "quickstep/AndroidManifest-launcher.xml"
         }
@@ -317,6 +326,8 @@ androidComponents {
         }
     }
 }
+
+// removed assembleDebug alias because it conflicts with AGP 8+ built-in assembleDebug
 
 addFrameworkJar('framework-14.jar')
 
@@ -421,6 +432,13 @@ dependencies {
     }
 
     implementation("com.github.android:renderscript-intrinsics-replacement-toolkit:b6363490c3")
+
+    // Pulse: JVM unit tests (fast, no emulator/device required)
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1'
+
+    // Pulse: secure API-key storage for the assistant (Android Keystore-backed)
+    implementation 'androidx.security:security-crypto:1.1.0-alpha06'
 }
 
 ksp {
@@ -436,7 +454,7 @@ spotless {
         removeUnusedImports()
     }
     kotlin {
-        target("lawnchair/src/**/*.kt")
+        target("lawnchair/src/**/*.kt", "lawnchair/testUnit/**/*.kt")
         ktlint().customRuleSets([
             "io.nlopez.compose.rules:ktlint:0.4.10",
         ]).editorConfigOverride([

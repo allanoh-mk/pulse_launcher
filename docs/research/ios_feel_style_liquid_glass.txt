@@ -1,0 +1,45 @@
+===============================================================================
+RESEARCH FINDINGS: iOS Feel, SF Fonts, Liquid Animations, and Liquid Glass (iOS 27)
+===============================================================================
+
+--- [STEP-BY-STEP RESEARCH OUTLINE] ---
+1. Apple Human Interface Guidelines (HIG) - Core visual, spatial, and motion paradigms.
+2. SF Pro Fonts - Typography scales, weights, tracking, and optical sizing.
+3. Liquid Animations - Natural fluid motion, spring math, and physical-damping constants.
+4. Liquid Glass (iOS 26 -> 27 WWDC 2026 Tuning) - The exact layout formulas, diffusion variables, darkened borders, and transparency settings.
+
+--- [SECTION 1: iOS DESIGN FEEL & PARADIGMS] ---
+* SPATIAL DEPTH: Elements are stacked logically on a Z-axis. Modals and overlays float over backgrounds with defined light sources, creating soft, drop-shadow falloffs.
+* TEXTURE & MATTE: Materials act as physical layers (such as translucent, frosted glass) that dynamic content scrolls under.
+* UNIFIED CORNER RADII: Standardized squircles (continuous curvature curves) maintain visual balance. 
+
+--- [SECTION 2: APPLE TYPOGRAPHY (SF PRO)] ---
+* SYSTEM FONTS: SF Pro Text (body text up to 19pt) and SF Pro Display (headings 20pt and above).
+* DESIGN TOKENS:
+  - Letter-Spacing / Tracking: Auto-scaled according to size. Displays use tighter spacing, while Text body items use wider tracking to maintain legibility.
+  - Weights: Thin, Light, Regular, Medium, Semibold, Bold, Heavy, Black.
+  - Optical Sizing: Dynamically changes line height and tracking properties depending on the screen resolution and font scale.
+
+--- [SECTION 3: LIQUID MOTION & INTERPOLATION] ---
+* MOTION METRICS: Transitions mimic liquid-like momentum. No linear transitions.
+* SPRING EQUATIONS: High damping ratio (~0.8 to 0.9) to prevent spring oscillation while maintaining rapid initial response (high stiffness/tension, low mass).
+* GESTURE CHOREOGRAPHY: Elements dynamically morph and stretch slightly during drag events, mimicking a physical fluid surface before snapping into place.
+
+--- [SECTION 4: WWDC 2026 RETUNED LIQUID GLASS (iOS 27)] ---
+With iOS 27, Apple retuned Liquid Glass to address legibility and user customization:
+1. CUSTOMIZABLE TRANSPARENCY SLIDER:
+   - System-wide slider introduces `--ios27-glass-transparency` (ranging from fully clear to fully tinted/opaque), replacing the old binary "Reduce Transparency" accessibility toggle.
+2. STRONGER DIFFUSION METRICS:
+   - Frost/blur radii are raised substantially. Busy backgrounds resolve to a calmer, diffused matte field.
+3. DARKENED OUTLINING:
+   - A subtle, semi-translucent dark border (`--ios27-glass-edge-color` with opacity ~0.15) surrounds glass cards to improve visual contrast against both white and black backgrounds.
+4. BRIGHTER SPECULARlit RIM:
+   - A high-contrast specular edge light highlight on the topmost border of the glass card conveys real lighting reflections rather than a uniform sheet.
+5. LAYERED APP ICONS:
+   - Custom app icons feature multi-layered glass layouts. Interactive refraction and gyroscope-derived shimmer have been refined into subtle lighting gradients.
+
+--- [SECTION 5: VERIFIABLE REPOSITORIES & SOURCES] ---
+* [1] https://github.com/seunghan91/ios27-design-system (iOS 27 / iPadOS 27 copy-paste tokens, liquid glass presets, specifications)
+* [2] Apple Developer HIG (Human Interface Guidelines) for Materials and Glass effects.
+* [3] WWDC 2026 Session: "Platforms State of the Union" & HI Design Keynote details.
+* [4] Cult of Mac Analysis (iOS 27 Liquid Glass design improvements).

@@ -1,14 +1,83 @@
 
 === DIRECTORY TREE (max depth 3, source files only) ===
-app
-app/build.gradle.kts
-app/src
-app/src/main
-app/src/main/AndroidManifest.xml
-app/src/main/assets
-app/src/main/java
-app/src/main/res
-build.gradle.kts
+.editorconfig
+.gitattributes
+.gitignore
+.gitmodules
+.gradle
+.gradle/8.10
+.gradle/8.10/checksums
+.gradle/8.10/checksums/checksums.lock
+.gradle/8.10/expanded
+.gradle/8.10/fileChanges
+.gradle/8.10/fileChanges/last-build.bin
+.gradle/8.10/fileHashes
+.gradle/8.10/fileHashes/fileHashes.bin
+.gradle/8.10/fileHashes/fileHashes.lock
+.gradle/8.10/gc.properties
+.gradle/8.10/vcsMetadata
+.gradle/buildOutputCleanup
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/buildOutputCleanup/cache.properties
+.gradle/configuration-cache
+.gradle/configuration-cache/818krhoihi0lg4lxrkt1y0j53
+.gradle/configuration-cache/configuration-cache.lock
+.gradle/configuration-cache/gc.properties
+.gradle/file-system.probe
+.gradle/vcs-1
+.gradle/vcs-1/gc.properties
+.unlazy
+.unlazy/locks
+Android.bp
+AndroidManifest-common.xml
+AndroidManifest.xml
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+CleanSpec.mk
+GATES.md
+GITHUB_CHANGELOG.md
+LICENSE.txt
+OWNERS
+PREUPLOAD.cfg
+README.md
+SECURITY.md
+TELEGRAM_CHANGELOG.txt
+baseline-profile
+baseline-profile/build.gradle
+baseline-profile/src
+baseline-profile/src/main
+baseline-profile/src/main/java
+buglist.txt
+buglist_unique.txt
+build.gradle
+ci.py
+commitlist.txt
+compatLib
+compatLib/README.md
+compatLib/build.gradle
+compatLib/compatLibVQ
+compatLib/compatLibVQ/build.gradle
+compatLib/compatLibVQ/src
+compatLib/compatLibVQ/src/main
+compatLib/compatLibVR
+compatLib/compatLibVR/build.gradle
+compatLib/compatLibVR/src
+compatLib/compatLibVR/src/main
+compatLib/compatLibVS
+compatLib/compatLibVS/build.gradle
+compatLib/compatLibVS/src
+compatLib/compatLibVS/src/main
+compatLib/compatLibVT
+compatLib/compatLibVT/build.gradle
+compatLib/compatLibVT/src
+compatLib/compatLibVT/src/main
+compatLib/compatLibVU
+compatLib/compatLibVU/build.gradle
+compatLib/compatLibVU/src
+compatLib/compatLibVU/src/main
+compatLib/src
+compatLib/src/main
+compatLib/src/main/java
 docs
 docs/00-launcher-comparison-and-feasibility.md
 docs/01-home-screen.md
@@ -29,6 +98,13 @@ docs/PROJECT_DOCUMENT.md
 docs/README.md
 docs/codebase
 docs/codebase/.codebase-scan.txt
+docs/codebase/ARCHITECTURE.md
+docs/codebase/CONCERNS.md
+docs/codebase/CONVENTIONS.md
+docs/codebase/INTEGRATIONS.md
+docs/codebase/STACK.md
+docs/codebase/STRUCTURE.md
+docs/codebase/TESTING.md
 docs/concept_images
 docs/concept_images/2048.jpeg
 docs/concept_images/9gnjriyjxbkh1.webp
@@ -81,6 +157,13 @@ docs/concept_images/what-does-your-control-center-look-like-v0-mj2p0n7a1pee1.web
 docs/concept_images/what-does-your-control-center-look-like-v0-uzh4a4p0jtee1.webp
 docs/concept_images/what-is-the-difference-between-nova-launcher-and-smart-v0-jwd7f9ce5tqd1.webp
 docs/tiles-manifesto.md
+ext_tests
+ext_tests/res
+ext_tests/res/values
+ext_tests/res/values/overrides.xml
+ext_tests/src
+ext_tests/src/com
+ext_tests/src/com/android
 extracted
 extracted/01_home_feed.png
 extracted/02_home_tiles.png
@@ -117,110 +200,305 @@ extracted/stitch_pulse_launcher_design_system/icon_studio_settings/code.html
 extracted/stitch_pulse_launcher_design_system/icon_studio_settings/screen.png
 extracted/stitch_pulse_launcher_design_system/image.png_1
 extracted/stitch_pulse_launcher_design_system/image.png_1/screen.png
-extracted/stitch_pulse_launcher_design_system/image.png_2
-extracted/stitch_pulse_launcher_design_system/image.png_2/screen.png
-extracted/stitch_pulse_launcher_design_system/image.png_3
-extracted/stitch_pulse_launcher_design_system/image.png_3/screen.png
-extracted/stitch_pulse_launcher_design_system/image.png_4
-extracted/stitch_pulse_launcher_design_system/image.png_4/screen.png
-extracted/stitch_pulse_launcher_design_system/main_settings_screen
-extracted/stitch_pulse_launcher_design_system/main_settings_screen/code.html
-extracted/stitch_pulse_launcher_design_system/main_settings_screen/screen.png
-extracted/stitch_pulse_launcher_design_system/pulse_launcher
-extracted/stitch_pulse_launcher_design_system/pulse_launcher/DESIGN.md
-extracted/stitch_pulse_launcher_design_system/richtext_converted_to_markdown.md
-extracted/stitch_pulse_launcher_design_system/unified_search_overlay
-extracted/stitch_pulse_launcher_design_system/unified_search_overlay/code.html
-extracted/stitch_pulse_launcher_design_system/unified_search_overlay/screen.png
-files.zip
-gradle
-gradle/libs.versions.toml
-gradle.properties
-settings.gradle.kts
-stitch_pulse_launcher_design_system.zip
 
 === STACK DETECTION (manifest files) ===
 
---- build.gradle.kts ---
+--- build.gradle ---
+import app.cash.licensee.LicenseeTask
+import com.android.build.gradle.api.AndroidBasePlugin
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.kotlin.compose) apply false
-    alias(libs.plugins.ksp) apply false
-    alias(libs.plugins.hilt) apply false
+    id 'com.android.application' version "8.5.2"
+    id 'com.android.library' version "8.5.2" apply false
+    id 'com.android.test' version '8.5.2' apply false
+    id 'androidx.baselineprofile' version '1.2.4'
+    id 'org.jetbrains.kotlin.android' version "2.0.10"
+    id 'org.jetbrains.kotlin.plugin.compose' version "2.0.10"
+    id 'org.jetbrains.kotlin.plugin.parcelize' version "2.0.10"
+    id 'org.jetbrains.kotlin.plugin.serialization' version "2.0.10"
+    id "com.google.devtools.ksp" version "2.0.10-1.0.24"
+    id 'com.google.protobuf' version "0.9.4"
+    id 'app.cash.licensee' version "1.11.0"
+    id 'dev.rikka.tools.refine' version "4.4.0"
+    id 'org.gradle.android.cache-fix' version '3.0.1'
+    id 'com.diffplug.spotless' version '6.25.0'
 }
 
---- gradle.properties ---
-android.useAndroidX=true
-android.nonTransitiveRClass=true
-kotlin.code.style=official
-android.enableJetifier=false
-org.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8
-org.gradle.parallel=true
-org.gradle.caching=true
+allprojects {
+    plugins.withType(AndroidBasePlugin).configureEach {
+        apply plugin: 'org.gradle.android.cache-fix'
 
---- settings.gradle.kts ---
+        android {
+            compileSdk 35
+            defaultConfig {
+                minSdk 31
+                targetSdk 35
+                vectorDrawables.useSupportLibrary = true
+            }
+            lint {
+                abortOnError true
+                checkReleaseBuilds false
+            }
+        }
+        dependencies {
+            implementation 'androidx.core:core-ktx:1.13.1'
+            implementation 'androidx.appcompat:appcompat:1.7.0'
+        }
+    }
+
+    plugins.withId('com.google.protobuf') {
+        def protocVersion = '4.27.3'
+        protobuf {
+            // Configure the protoc executable
+            protoc {
+                artifact = "com.google.protobuf:protoc:${protocVersion}"
+            }
+            generateProtoTasks {
+                all().configureEach { task ->
+                    task.builtins {
+                        remove java
+                        java {
+                            option "lite"
+                        }
+                    }
+                }
+            }
+        }
+        dependencies {
+            implementation "com.google.protobuf:protobuf-javalite:$protocVersion"
+        }
+    }
+
+    plugins.withType(JavaBasePlugin).configureEach {
+        java {
+            toolchain.languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
+    tasks.withType(KotlinCompile).configureEach {
+        compilerOptions.freeCompilerArgs.add(
+            "-Xjvm-default=all",
+        )
+    }
+
+    ext {
+        FRAMEWORK_PREBUILTS_DIR = "$rootDir/prebuilts/libs"
+
+[TRUNCATED] Showing first 80 of 463 lines.
+--- gradle.properties ---
+# Disable buildFeatures flags by default
+android.defaults.buildfeatures.resvalues=false
+android.defaults.buildfeatures.shaders=false
+android.useAndroidX=true
+android.enableHiddenApiCheck=false
+android.hideApiWarning=false
+
+kotlin.code.style=official
+
+org.gradle.caching=true
+org.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8 -XX:+UseParallelGC
+org.gradle.parallel=true
+org.gradle.configuration-cache=true
+
+--- settings.gradle ---
 pluginManagement {
     repositories {
-        google { content { includeGroupByRegex("com\\.android.*"); includeGroupByRegex("com\\.google.*"); includeGroupByRegex("androidx.*") } }
-        mavenCentral()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         gradlePluginPortal()
     }
 }
+
+// https://docs.gradle.com/enterprise/gradle-plugin/
+plugins {
+    id "com.gradle.develocity" version "3.18"
+}
+
+def isCI = providers.environmentVariable('CI').present
+
+develocity {
+    buildScan {
+        termsOfUseUrl = "https://gradle.com/terms-of-service"
+        termsOfUseAgree = "yes"
+        publishing {
+            onlyIf { isCI }
+        }
+    }
+}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
-        maven { url = uri("https://jitpack.io") }
+        maven { url 'https://jitpack.io' }
     }
 }
-rootProject.name = "PulseLauncher"
-include(":app")
+
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+include ':iconloaderlib'
+project(':iconloaderlib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/iconloaderlib')
+
+include ':searchuilib'
+project(':searchuilib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/searchuilib')
+
+include ':animationlib'
+project(':animationlib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/animationlib')
+
+include ':hidden-api'
+include ':systemUIShared'
+include ':systemUIPlugin'
+include ':systemUIPluginCore'
+include ':systemUICommon'
+include ':systemUILog'
+include ':systemUIAnim'
+include ':systemUnFold'
+include ':systemUIViewCapture'
+
+include ':compatLib'
+include ':compatLib:compatLibVQ'
+include ':compatLib:compatLibVR'
+include ':compatLib:compatLibVS'
+include ':compatLib:compatLibVT'
+include ':compatLib:compatLibVU'
+
+include ':baseline-profile'
 
 
 === ENTRY POINTS ===
 No common entry points found. Check 'main' or 'scripts.start' in manifest files above.
 
 === LINTING AND FORMATTING CONFIG ===
-No linting or formatting config files found in project root.
+Found: .editorconfig
 
 === ENVIRONMENT VARIABLE TEMPLATES ===
 No .env.example or .env.template found. Identify required environment variables by searching the code and config for environment variable reads.
 
 === TODO / FIXME / HACK (production code only, test dirs excluded) ===
-app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt:59: // TODO: Move PulseTheme to a separate file app.pulse.launcher.ui.theme.Theme.kt
-app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt:67: // TODO: Move WorkspaceScreen to a separate file app.pulse.launcher.launcher.WorkspaceScreen.kt
+AndroidManifest-common.xml:140: TODO: Add proper permissions
+lawnchair/src/com/android/systemui/plugins/BcSmartspaceConfigPlugin.kt:19: // TODO(b/265360975): Evaluate this plugin approach.
+lawnchair/src/app/lawnchair/util/Padding.kt:20: // TODO: https://mrmans0n.github.io/compose-rules/rules/#avoid-modifier-extension-factory-functions
+lawnchair/src/app/lawnchair/util/LawnchairLockedStateController.kt:130: // TODO Implement this, when the app is uninstalled
+lawnchair/src/app/lawnchair/util/Temperature.kt:29: // TODO: Use Unit directly after https://github.com/pinterest/ktlint/issues/2353 is fixed.
+lawnchair/src/app/lawnchair/util/SmartBorder.kt:57: // TODO: https://mrmans0n.github.io/compose-rules/rules/#avoid-modifier-extension-factory-functions
+lawnchair/src/app/lawnchair/search/adapter/SearchTargetFactory.kt:313: // TODO find a way to properly provide tag/provide ids to search target
+lawnchair/src/app/lawnchair/bugreport/UploaderService.kt:26: TODO("not implemented")
+lawnchair/src/app/lawnchair/ui/placeholder/Placeholder.kt:106: // TODO: need to migrate to Modifier.Node, see https://mrmans0n.github.io/compose-rules/rules/#avoid-modifier-extension-factory-functions
+lawnchair/src/app/lawnchair/ui/preferences/components/SearchSuggestionPreference.kt:269: onClick = { /*TODO*/ },
+lawnchair/src/app/lawnchair/ui/preferences/components/layout/PreferenceLayout.kt:47: * TODO: use DSL to represent all preferences
+lawnchair/src/app/lawnchair/ui/preferences/components/layout/PreferenceLayout.kt:94: * TODO: use DSL to represent all preferences
+lawnchair/src/app/lawnchair/ui/preferences/components/layout/NestedScrollStretch.kt:25: * TODO: Allow horizontal stretch
+lawnchair/src/app/lawnchair/ui/preferences/components/layout/LazyColumnGrid.kt:21: * TODO: use [LazyVerticalGrid]
+lawnchair/src/app/lawnchair/ui/preferences/destinations/SearchPreferences.kt:208: // TODO refactor permission handling of all files access
+lawnchair/src/app/lawnchair/preferences/PreferenceManager.kt:79: // TODO REMOVE
+lawnchair/res/values-de-rDE/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-bs-rBA/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-lt-rLT/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-hr-rHR/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-sk-rSK/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-ca-rES/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-pt-rBR/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-tr-rTR/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-az-rAZ/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-bn-rBD/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-hu-rHU/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-ja-rJP/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-sl-rSI/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-zh-rCN/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-in-rID/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-pl-rPL/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-cs-rCZ/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-es-rES/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-fa-rIR/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-pt-rPT/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-sq-rAL/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-uz-rUZ/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-ur-rPK/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-th-rTH/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-en-rCA/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-et-rEE/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values/strings.xml:19: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-ru-rRU/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-el-rGR/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-zh-rTW/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-it-rIT/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-nl-rNL/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-no-rNO/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-fil-rPH/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-ko-rKR/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-hi-rIN/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-ta-rIN/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-te-rIN/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-am-rET/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-ar-rSA/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-ro-rRO/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-fi-rFI/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-iw-rIL/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/values-uk-rUA/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
 
 === GIT RECENT COMMITS (last 20) ===
-No commits found.
+4598741 pulse: establish Lawnchair 14 foundation
 
 === HIGH-CHURN FILES (last 90 days, top 20) ===
-None found.
+   1 .editorconfig
+   1 .gitattributes
+   1 .gitignore
+   1 .gitmodules
+   1 Android.bp
+   1 AndroidManifest-common.xml
+   1 AndroidManifest.xml
+   1 CODE_OF_CONDUCT.md
+   1 CONTRIBUTING.md
+   1 CleanSpec.mk
+   1 GATES.md
+   1 GITHUB_CHANGELOG.md
+   1 LICENSE.txt
+   1 OWNERS
+   1 PREUPLOAD.cfg
+   1 README.md
+   1 SECURITY.md
+   1 TELEGRAM_CHANGELOG.txt
+   1 baseline-profile/build.gradle
+   1 baseline-profile/src/main/java/app/lawnchair/baseline/BaselineProfileGenerator.kt
 
 === MONOREPO SIGNALS ===
 No monorepo signals detected.
 
 === CODE METRICS ===
-Total files scanned: 176
-Total lines of code: 6072
+Total files scanned: 3257
+Total lines of code: 425889
 
 Files by language:
-  Other: 122
-  Kotlin: 54
+  Other: 1536
+  Java: 1121
+  Kotlin: 595
+  Python: 5
 
 Top 10 largest files:
-stitch_pulse_launcher_design_system.zip: 2838.5KB
-files.zip: 2044.9KB
-docs/concept_images/unnamed (20).webp: 715.5KB
-docs/concept_images/unnamed (12).webp: 536.1KB
-extracted/04_island_compact.png: 527.0KB
-extracted/stitch_pulse_launcher_design_system/dynamic_island_compact/screen.png: 527.0KB
-extracted/07_control_center.png: 419.8KB
-extracted/stitch_pulse_launcher_design_system/control_center_overlay/screen.png: 419.8KB
-docs/concept_images/unnamed (6).webp: 398.4KB
-extracted/stitch_pulse_launcher_design_system/image.png_1/screen.png: 389.4KB
+prebuilts/libs/framework-14.jar: 39321.7KB
+prebuilts/libs/framework-13.jar: 37808.4KB
+prebuilts/libs/framework-12l.jar: 37722.2KB
+prebuilts/libs/seeder.jar: 37545.7KB
+prebuilts/libs/framework-12.jar: 36501.9KB
+prebuilts/libs/framework-11.jar: 30481.5KB
+prebuilts/libs/framework-10.jar: 26263.2KB
+prebuilts/libs/WindowManager-Shell-14.jar: 2068.0KB
+lawnchair/assets/google_fonts.json: 1718.2KB
+prebuilts/libs/WindowManager-Shell.jar: 1517.5KB
 
 === CI/CD PIPELINES ===
 No CI/CD pipelines detected.
@@ -229,7 +507,7 @@ No CI/CD pipelines detected.
 No containerization configs detected.
 
 === SECURITY & COMPLIANCE ===
-No security configs detected.
+Security: SECURITY.md
 
 === PERFORMANCE & TESTING ===
 No performance testing configs detected.

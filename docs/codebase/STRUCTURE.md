@@ -6,40 +6,46 @@
 
 | Path | Purpose | Evidence |
 |------|---------|----------|
-| `app/` | Android application module | [settings.gradle.kts](/home/nana/Documents/pulse_launcher/settings.gradle.kts) |
-| `docs/` | Product and design documentation | [docs/README.md](/home/nana/Documents/pulse_launcher/docs/README.md), [docs/12-roadmap.md](/home/nana/Documents/pulse_launcher/docs/12-roadmap.md) |
-| `extracted/` | Design extraction artifacts and screenshots | [scan output](/home/nana/Documents/pulse_launcher/docs/codebase/.codebase-scan.txt) |
-| `gradle/` | Version catalog and wrapper support files | [gradle/libs.versions.toml](/home/nana/Documents/pulse_launcher/gradle/libs.versions.toml) |
-| `build.gradle.kts`, `settings.gradle.kts`, `gradle.properties` | Root Gradle configuration | [scan output](/home/nana/Documents/pulse_launcher/docs/codebase/.codebase-scan.txt) |
+| `src/` | Primary AOSP Launcher3 source directory | [build.gradle](build.gradle) main sourceSet |
+| `lawnchair/` | Main Lawnchair custom codebase | [build.gradle](build.gradle) lawn sourceSet, [lawnchair/AndroidManifest.xml](lawnchair/AndroidManifest.xml) |
+| `lawnchair/src/app/lawnchair/` | Root package for Lawnchair's additions and customizations | [LawnchairApp.kt](lawnchair/src/app/lawnchair/LawnchairApp.kt) |
+| `lawnchair/src/app/lawnchair/pulse/` | Custom Pulse Launcher features (e.g. 3-slide system) | [PulseWorkspaceHost.kt](lawnchair/src/app/lawnchair/pulse/workspace/PulseWorkspaceHost.kt) |
+| `quickstep/` | Quickstep integration for Recents / gestures | [build.gradle](build.gradle) withQuickstep sourceSet |
+| `platform_frameworks_libs_systemui/` | Extracted AOSP libraries (e.g. `iconloaderlib`, `searchuilib`, `animationlib`) | [settings.gradle](settings.gradle) |
+| `compatLib/` | QuickSwitch compat libraries for Android versions Q to U | [settings.gradle](settings.gradle) |
+| `tests/` | Android instrumented / TAPL test cases and resources | [tests/src/com/android/launcher3/](tests/src/com/android/launcher3/) |
+| `docs/` | Original design specs, comparison matrices, and roadmaps | [docs/README.md](docs/README.md) |
+| `extracted/` | Design assets and Stitch UI screens of Pulse Launcher | [extracted/PULSE_LAUNCHER_PROJECT.md](extracted/PULSE_LAUNCHER_PROJECT.md) |
 
 ### 2) Entry Points
 
-- Main runtime entry: [app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt)
-- Secondary entry points: [app/src/main/java/app/pulse/launcher/settings/PulseSettingsActivity.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/settings/PulseSettingsActivity.kt), [app/src/main/java/app/pulse/launcher/island/service/IslandService.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/island/service/IslandService.kt), [app/src/main/java/app/pulse/launcher/notifications/PulseNotificationListenerService.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/notifications/PulseNotificationListenerService.kt), [app/src/main/java/app/pulse/launcher/utils/BootReceiver.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/utils/BootReceiver.kt)
-- How entry is selected: HOME/LAUNCHER intent filter on `PulseLauncherActivity` in the manifest
+- **Main runtime entry:** `com.android.launcher3.Launcher` (specifically `app.lawnchair.LawnchairLauncher` which inherits from `com.android.launcher3.uioverrides.QuickstepLauncher` -> `com.android.launcher3.Launcher`).
+- **How entry is selected:** Triggered when the system handles the `android.intent.action.MAIN` and `android.intent.category.HOME` intent filters defined in [quickstep/AndroidManifest-launcher.xml](quickstep/AndroidManifest-launcher.xml).
+- **Secondary entry points:**
+  - `app.lawnchair.preferences.PreferenceActivity` / `PreferenceActivity2` (Settings UI entry)
+  - `com.android.launcher3.LauncherReceiver` (boot and package status changes)
 
 ### 3) Module Boundaries
 
+Since the root project acts as the main application module via Android Gradle sourceSets, boundaries are defined by packages and source directories:
+
 | Boundary | What belongs here | What must not be here |
 |----------|-------------------|-----------------------|
-| `launcher/` | Launcher shell and home activity wiring | Business logic that belongs to reusable repositories or services |
-| `workspace/` | Three-slide home surface and slide navigation | Persistence code and system services |
-| `feed/`, `tiles/`, `list/` | Slide-specific UI and view models | App startup wiring |
-| `search/`, `controlcenter/`, `island/` | Overlays and interaction surfaces | Database schema definitions |
-| `data/` | Room entities, DAOs, repositories, DataStore access | UI composables |
-| `di/` | Dependency wiring | Feature logic |
-| `ui/theme/` | Shared theme tokens and styling helpers | Feature-specific state |
+| `com.android.launcher3.*` (`src/`) | Stock Launcher3 core activity lifecycle, drag layer, and loading mechanisms | Composed custom screens, high-level Pulse settings, or custom overlays |
+| `app.lawnchair.*` (`lawnchair/src/`) | Lawnchair specific preferences, launcher integrations, and UI custom overlays | System SystemUI internal implementation details |
+| `app.lawnchair.pulse.*` | The 3-slide workspace pages, Dynamic Island, and other Pulse-specific features | Upstream Launcher3/Lawnchair unmodified utilities |
+| `com.android.quickstep.*` (`quickstep/src/`) | System gesture tracking, Recents view integration, and task overlays | High-level icon overriding and app list filters |
 
 ### 4) Naming and Organization Rules
 
-- File naming pattern: PascalCase Kotlin files by feature, e.g. `PulseLauncherActivity.kt`, `ControlCenterOverlay.kt`
-- Directory organization pattern: feature-first package layout under `app.pulse.launcher.*`
-- Import aliasing or path conventions: no path aliases were detected in the inspected Kotlin/Gradle files; packages map directly to folders
+- **File naming pattern:** PascalCase Kotlin files matching the primary class/type declared, e.g., `PulseWorkspaceHost.kt`, `LawnchairLauncher.kt`.
+- **Directory organization pattern:** Multi-level folder structure mapping exactly to standard Java/Kotlin package layouts (e.g. `lawnchair/src/app/lawnchair/pulse/workspace/`).
+- **Path conventions:** Source directories are absolute under root but dynamically compiled depending on flavor dimensions (`lawn`, `withQuickstep`, `github`).
 
 ### 5) Evidence
 
-- [app/src/main/AndroidManifest.xml](/home/nana/Documents/pulse_launcher/app/src/main/AndroidManifest.xml)
-- [app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt)
-- [app/src/main/java/app/pulse/launcher/workspace/WorkspaceScreen.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/workspace/WorkspaceScreen.kt)
-- [docs/codebase/.codebase-scan.txt](/home/nana/Documents/pulse_launcher/docs/codebase/.codebase-scan.txt)
-
+- [build.gradle](build.gradle)
+- [settings.gradle](settings.gradle)
+- [lawnchair/AndroidManifest.xml](lawnchair/AndroidManifest.xml)
+- [quickstep/AndroidManifest-launcher.xml](quickstep/AndroidManifest-launcher.xml)
+- [lawnchair/src/app/lawnchair/pulse/workspace/PulseWorkspaceHost.kt](lawnchair/src/app/lawnchair/pulse/workspace/PulseWorkspaceHost.kt)

@@ -4,46 +4,50 @@
 
 ### 1) Test Stack and Commands
 
-- Primary test framework: [TODO] no test framework files were detected in the scan output
-- Assertion/mocking tools: [TODO] not detectable from current repo files
-- Commands:
+- **Primary test frameworks:** JUnit 4, Android Testing Support Library, Mockito.
+- **UI Interaction testing:** **TAPL (Test Accessibility Protocol Library)** under `tests/tapl/` and Android UI Automator are used to simulate user actions (dragging, swiping, launching apps).
+- **Test Runner:** `androidx.test.runner.AndroidJUnitRunner`
+- **Commands:**
+  ```bash
+  # Run unit tests on local JVM
+  ./gradlew test
 
-```bash
-./gradlew test
-./gradlew connectedAndroidTest
-./gradlew testDebugUnitTest
-./gradlew lint
-```
+  # Run instrumented UI / TAPL tests on connected emulator or physical device
+  ./gradlew connectedAndroidTest
+  ```
 
 ### 2) Test Layout
 
-- Test file placement pattern: [TODO] no `src/test` or `src/androidTest` files were detected in the scan output
-- Naming convention: [TODO] not established in the inspected repository files
-- Setup files and where they run: [TODO] no shared test setup was found
+- **Test file placement:** All test code resides in the root `tests/src/com/android/launcher3/` directory.
+- **File statistics:** Contains **119 test-related files** (90 Java files and 29 Kotlin files).
+- **Naming convention:** Standard test files end with the `Test` suffix (e.g., `LauncherPrefsTest.kt`, `DisplayControllerTest.kt`, `IconCacheTest.java`).
+- **Base classes:** Base test setups are orchestrated by classes like `AbstractLauncherUiTest.java` (for TAPL interactions) and `AbstractWorkspaceModelTest.kt` (for loading mock databases).
 
 ### 3) Test Scope Matrix
 
 | Scope | Covered? | Typical target | Notes |
 |-------|----------|----------------|-------|
-| Unit | [TODO] | ViewModels, repositories, reducers | No unit tests were detected |
-| Integration | [TODO] | Room/DataStore/system service boundaries | No integration tests were detected |
-| E2E | [TODO] | Home flow, overlays, search, gestures | No end-to-end tests were detected |
+| Unit | Yes | Specifications, preferences, helper math, string matchers | Tested on JVM using standard Mockito/JUnit (e.g. `LauncherPrefsTest.kt`, `StringMatcherUtilityTest.java`). |
+| Integration | Yes | Model tasks, DB queries, grid-size migrations | Tests like `GridSizeMigrationUtilTest.kt` inspect offline SQLite migration scripts. |
+| UI/E2E | Yes | Home app launcher swipes, icon placement, drag-and-drop, App drawer UI | Driven using TAPL (`tests/tapl/`) and UI Automator on physical/virtual test devices. |
 
 ### 4) Mocking and Isolation Strategy
 
-- Main mocking approach: [TODO] no mocking convention was found
-- Isolation guarantees: [TODO] not defined in repo files
-- Common failure mode in tests: [TODO] unknown because no tests are present
+- **Context Mocking:** Mock classes and custom providers (like `TestCommandProvider.java` / `TestCommandReceiver.java`) intercept launcher intents and isolate performance metrics.
+- **Mockito helpers:** Standard Kotlin-Mockito wrappers (`KotlinMockitoHelpers.kt`) simplify mocking functions and suspending coroutines inside Kotlin unit tests.
 
-### 5) Coverage and Quality Signals
+### 5) Quality and Lint Signals
 
-- Coverage tool + threshold: [TODO] none detected
-- Current reported coverage: [TODO] none detected
-- Known gaps/flaky areas: [TODO] no historical test suite was found
+- **Lint Baseline Configurations:** The repository maintains extensive Android Lint baseline rules to manage and track warnings over time:
+  - [lint-baseline.xml](lint-baseline.xml)
+  - [lint-baseline-launcher3.xml](lint-baseline-launcher3.xml)
+  - [lint-baseline-res-lib.xml](lint-baseline-res-lib.xml)
+- **Pulse Coverage Gaps:** Currently, there are no custom test suites written specifically for the added `pulse/` package (such as verifying `PulseWorkspace` settled pages or the haptic integration).
 
 ### 6) Evidence
 
-- [scan output](/home/nana/Documents/pulse_launcher/docs/codebase/.codebase-scan.txt)
-- [app/build.gradle.kts](/home/nana/Documents/pulse_launcher/app/build.gradle.kts)
-- [settings.gradle.kts](/home/nana/Documents/pulse_launcher/settings.gradle.kts)
-
+- [build.gradle](build.gradle)
+- [tests/src/com/android/launcher3/util/KotlinMockitoHelpers.kt](tests/src/com/android/launcher3/util/KotlinMockitoHelpers.kt)
+- [tests/src/com/android/launcher3/LauncherPrefsTest.kt](tests/src/com/android/launcher3/LauncherPrefsTest.kt)
+- [tests/src/com/android/launcher3/model/GridSizeMigrationUtilTest.kt](tests/src/com/android/launcher3/model/GridSizeMigrationUtilTest.kt)
+- [tests/tapl/](tests/tapl/)

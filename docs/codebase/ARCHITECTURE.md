@@ -1,57 +1,78 @@
-# Architecture
+# Architectural Patterns
 
 ## Core Sections (Required)
 
-### 1) Architectural Style
+### 1) Layers and System Boundaries
 
-- Primary style: feature-oriented Android app with a layered data/UI split
-- Why this classification: UI, repositories, persistence, dependency injection, and system components are separated into distinct packages, but the app is still organized primarily by launcher feature rather than by a formal clean architecture boundary
-- Primary constraints: Android HOME activity requirements, overlay/service permissions, local-only persistence
+Pulse Launcher integrates custom Jetpack Compose-based launcher pages over the traditional Android View-based AOSP Launcher3 layout:
 
-### 2) System Flow
-
-```text
-HOME intent -> PulseLauncherActivity -> Compose workspace/overlays -> ViewModels/Repositories -> Room/DataStore/system services -> UI update
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        Jetpack Compose Hierarchy                       │
+│                                                                        │
+│   ┌───────────────┐        ┌──────────────────┐        ┌───────────┐   │
+│   │   FeedPage    │        │   TileGridPage   │        │ ListPage  │   │
+│   │   (Slide 1)   │        │    (Slide 2)     │        │ (Slide 3) │   │
+│   └───────┬───────┘        └────────┬─────────┘        └─────┬─────┘   │
+│           │                         │                        │         │
+│           └─────────────────────────┼────────────────────────┘         │
+│                                     ▼                                  │
+│                    HorizontalPager (PulseWorkspace)                    │
+└─────────────────────────────────────┬──────────────────────────────────┘
+                                      │ (ComposeView.attach)
+                                      ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                LawnchairLauncher (Android View / Activity)             │
+│                                                                        │
+│               dragLayer (AOSP DragLayer / ViewGroup container)        │
+│                                                                        │
+│   ┌────────────────────────────────────────────────────────────────┐   │
+│   │  LauncherAppState / LauncherModel / LoaderTask                 │   │
+│   │  (Loads apps, shortcut bindings, and SQLite databases)         │   │
+│   └────────────────────────────────────────────────────────────────┘   │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
-1. The system starts through the HOME/LAUNCHER activity declared in the manifest. [app/src/main/AndroidManifest.xml](/home/nana/Documents/pulse_launcher/app/src/main/AndroidManifest.xml)
-2. `PulseLauncherActivity` installs Compose content and hands off to `WorkspaceScreen`. [app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt)
-3. `WorkspaceScreen` uses a pager to switch between feed, tiles, and list surfaces and triggers haptics/search behaviors. [app/src/main/java/app/pulse/launcher/workspace/WorkspaceScreen.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/workspace/WorkspaceScreen.kt)
-4. Feature view models and repositories expose state for tiles, feed, theme, gestures, and focus mode. [app/src/main/java/app/pulse/launcher/data/repository/PulseRepository.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/repository/PulseRepository.kt), [app/src/main/java/app/pulse/launcher/data/repository/PulsePreferencesRepository.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/repository/PulsePreferencesRepository.kt)
-5. Room and DataStore persist launcher configuration and recent state locally. [app/src/main/java/app/pulse/launcher/data/db/PulseDatabase.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/db/PulseDatabase.kt)
-6. Overlays and services extend the same app shell for island, notification listening, control center, and boot handling. [app/src/main/AndroidManifest.xml](/home/nana/Documents/pulse_launcher/app/src/main/AndroidManifest.xml)
+- **Compose Overlay Integration Layer:** `PulseWorkspaceHost` inserts a `ComposeView` into the `dragLayer` of the main `LawnchairLauncher` activity upon startup. This completely bypasses the stock Launcher3 grid rendering, layering our three-slide workspace directly on top.
+- **Swipe Navigation Controller:** `WorkspaceController.kt` handles horizontal paging between the three slides, updates the system `WallpaperManager` offset to provide parallax scrolling, and emits light tactile tick haptics when page settlement occurs.
+- **AOSP Core Data Layer:** Background loading is orchestrated by `LauncherModel` via `LoaderTask` which parses package installs, queries system user profiles, and prepares app info objects for presentation.
 
-### 3) Layer/Module Responsibilities
+### 2) Core Data Flows
 
-| Layer or module | Owns | Must not own | Evidence |
-|-----------------|------|--------------|----------|
-| `launcher/` | Activity bootstrapping and home entry behavior | Persistence schema | [PulseLauncherActivity.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt) |
-| `workspace/` | The 3-slide home shell and pager navigation | DB creation and service setup | [WorkspaceScreen.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/workspace/WorkspaceScreen.kt) |
-| `data/db/` | Room entities, DAOs, type converters, database | UI logic | [PulseDatabase.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/db/PulseDatabase.kt) |
-| `data/repository/` | Mapping between persistence and UI-facing models | Compose rendering | [PulseRepository.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/repository/PulseRepository.kt) |
-| `di/` | App-wide object provisioning | Feature business logic | [AppModule.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/di/AppModule.kt) |
-| `island/`, `search/`, `controlcenter/` | Overlay UX surfaces | App startup config | [IslandOverlay.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/island/IslandOverlay.kt), [SearchOverlay.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/search/SearchOverlay.kt), [ControlCenterOverlay.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/controlcenter/ControlCenterOverlay.kt) |
+#### App Loading Data Flow
+1. **Device Boot or Install Event:** AOSP listeners (`com.android.launcher3.LauncherAppState`) detect application package changes.
+2. **Background Loading (`LoaderTask`):** Triggered by `LauncherModel`, runs on a dedicated loader thread, queries the system Package Manager, and populates `BgDataModel` containing `AppInfo` lists.
+3. **Main Thread Callback:** `BgDataModel` update events are dispatched back to the UI thread, prompting our custom screens to refresh their lists.
 
-### 4) Reused Patterns
+#### Wallpaper Parallax Scrolling Flow
+1. **Horizontal Scroll Event:** The user swipes horizontally in our Compose-based `PulseWorkspace` (defined in `WorkspaceController.kt`).
+2. **Fractional Position Monitoring:** `snapshotFlow` continuously samples `pagerState.currentPage` and `pagerState.currentPageOffsetFraction`.
+3. **System Dispatch:** The normalized fractional value is calculated and passed to `WallpaperManager.getInstance(context).setWallpaperOffsets(...)` using the window token of the current active view, creating smooth background wallpaper shifts.
 
-| Pattern | Where found | Why it exists |
-|---------|-------------|---------------|
-| Repository | `data/repository/PulseRepository.kt` | Decouples UI-facing model shape from Room entities |
-| DataStore preferences | `data/repository/PulsePreferencesRepository.kt` | Stores small launcher state without needing a relational table |
-| Hilt injection | `di/AppModule.kt` and `@HiltAndroidApp` | Centralizes access to DB, DataStore, and network clients |
-| Room | `data/db/PulseDatabase.kt` | Stores tiles, feed items, theme, gestures, focus mode, and icon overrides |
-| Compose overlays | `search/`, `controlcenter/`, `island/` | Builds layered launcher surfaces in a single app shell |
+### 3) Key Creational and Behavioral Patterns
 
-### 5) Known Architectural Risks
+- **Singleton Managers:** Core states like `LauncherAppState` are managed as singletons initialized lazily on the main thread via AOSP initialization providers.
+- **Observer/Flow Pattern:** Compose-based states utilize Kotlin Coroutines `Flow` and Compose `snapshotFlow` to reactively stream settings modifications from Datastore/Room to the UI.
+- **Composite Layout Pattern:** The `ComposeView` is composite-mounted into the traditional `DragLayer` frame layout, acting as a bridge between the new Jetpack Compose hierarchy and the legacy Android View hierarchy.
 
-- The current `AppModule` provisions a Retrofit client with a placeholder base URL, which suggests unfinished or speculative network integration.
-- `PulseLauncherActivity` still contains TODOs for moving theme and workspace code out into separate files, which hints that the top-level composition is not fully settled yet.
+### 4) Intent vs. Reality Divergences
 
-### 6) Evidence
+There is a substantial divergence between the **Intent** (described in the product documentation) and the **Reality** (what is actually implemented in the code so far):
 
-- [app/src/main/AndroidManifest.xml](/home/nana/Documents/pulse_launcher/app/src/main/AndroidManifest.xml)
-- [app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt)
-- [app/src/main/java/app/pulse/launcher/workspace/WorkspaceScreen.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/workspace/WorkspaceScreen.kt)
-- [app/src/main/java/app/pulse/launcher/data/db/PulseDatabase.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/db/PulseDatabase.kt)
-- [app/src/main/java/app/pulse/launcher/di/AppModule.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/di/AppModule.kt)
+| Feature | Stated Intent (Design Documents) | Current Reality (Codebase) |
+|---------|──────────────────────────────────|───────────────────────────|
+| **3-Slide Workspace** | Feed, Bento-Grid Tiles, Vertical list page | Implemented as a horizontal pager, but individual pages are currently static text placeholders (`PulseEmptyPage`). |
+| **Dynamic Island Overlay** | System overlay (`TYPE_APPLICATION_OVERLAY`) with live activities, music controls, and assistant | Not yet implemented in the codebase. No service, overlay, or state machine exists. |
+| **Digital Assistant** | Gemini/Ollama LLM integrated inside Dynamic Island and search results | Not yet implemented. No API connection or assistant logic is present. |
+| **Icon Studio / Font Studio** | Global styling pipeline rendering dynamic drawables with custom post-processing styles | Stock Lawnchair icon pack picker and font loading exist, but the advanced unified Studio pipeline is not yet implemented. |
+| **Control Center Overlay** | Custom system quick-setting panel slide-down | Not yet implemented. |
+| **Unified Search** | Universal search box covering apps, contacts, calendar, files, and web results | Upstream Lawnchair / Launcher3 search-in-drawer is present, but the unified overlay is not yet implemented. |
 
+### 5) Evidence
+
+- [lawnchair/src/app/lawnchair/LawnchairLauncher.kt](lawnchair/src/app/lawnchair/LawnchairLauncher.kt) (calling `PulseWorkspaceHost.attach`)
+- [lawnchair/src/app/lawnchair/pulse/workspace/PulseWorkspaceHost.kt](lawnchair/src/app/lawnchair/pulse/workspace/PulseWorkspaceHost.kt)
+- [lawnchair/src/app/lawnchair/pulse/workspace/WorkspaceController.kt](lawnchair/src/app/lawnchair/pulse/workspace/WorkspaceController.kt)
+- [lawnchair/src/app/lawnchair/pulse/workspace/FeedPage.kt](lawnchair/src/app/lawnchair/pulse/workspace/FeedPage.kt)
+- [src/com/android/launcher3/LauncherModel.java](src/com/android/launcher3/LauncherModel.java)
+- [extracted/PULSE_LAUNCHER_PROJECT.md](extracted/PULSE_LAUNCHER_PROJECT.md) (mission & keeper/remover guidelines)

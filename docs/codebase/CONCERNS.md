@@ -6,54 +6,36 @@
 
 | Severity | Concern | Evidence | Impact | Suggested action |
 |----------|---------|----------|--------|------------------|
-| high | The repo has no detected test suite, which makes launcher and overlay changes risky to ship | [scan output](/home/nana/Documents/pulse_launcher/docs/codebase/.codebase-scan.txt) | Regressions in the HOME activity, overlays, and persistence could go unnoticed | Add at least unit tests for repositories/view models and one smoke instrumentation flow |
-| high | `AppModule` configures Retrofit with a placeholder base URL | [AppModule.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/di/AppModule.kt) | Any network-backed feature is currently incomplete or non-functional | Replace placeholder config with a real source or remove the unused client until needed |
-| high | `PulseLauncherActivity` still contains TODOs for theme and workspace extraction | [PulseLauncherActivity.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt) | Core UI composition remains tangled at the top level | Split those composables into their intended feature files |
-| medium | `PulseDatabase` uses `fallbackToDestructiveMigration()` | [PulseDatabase.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/db/PulseDatabase.kt) | Data loss is possible whenever schema changes are introduced | Add explicit migrations before storing user-important launcher state |
-| medium | The manifest requests many sensitive permissions, including overlay, contacts, calendar, camera, location, Bluetooth, and notification access | [AndroidManifest.xml](/home/nana/Documents/pulse_launcher/app/src/main/AndroidManifest.xml) | Permission surface is broad, so user trust and runtime failures matter | Keep a strict permission-by-feature matrix and request only when needed |
+| high | **Massive Feature / Code Gap** | Source files [pulse/workspace/](lawnchair/src/app/lawnchair/pulse/workspace/) vs [PULSE_LAUNCHER_PROJECT.md](extracted/PULSE_LAUNCHER_PROJECT.md) | The code currently consists only of horizontal pager skeletons (`FeedPage.kt`, `ListPage.kt`, `TileGridPage.kt`). Major must-have features (Dynamic Island service, LLM Assistant integration, custom Control Center, Icon Studio pipeline) are entirely missing. | Formulate a staged implementation plan starting with the Dynamic Island overlay service and the Room-backed Icon Studio pipeline. |
+| high | **Broad Permissions Footprint** | [AndroidManifest-common.xml](AndroidManifest-common.xml), [lawnchair/AndroidManifest.xml](lawnchair/AndroidManifest.xml) | The merged manifest requests extremely sensitive permissions (Overlay window, Notification access, Contacts, Calendar, Location). Broad surfaces increase security vulnerability vectors. | Maintain strict runtime permission check gating and prompt the user with clear explanations before requesting permission. |
+| medium | **No Custom Test Suites for Pulse** | [tests/src/](tests/src/) folder has 119 tests, but none target `app.lawnchair.pulse` | Regressions in custom horizontal workspace scrolling, haptic page settling, or page offsets may slip through undetected. | Create a modular test package under `tests/src/com/android/launcher3/pulse` and implement basic Compose UI unit tests. |
+| medium | **Extensive Legacy/Translation Churn** | [strings.xml files in over 30 languages](lawnchair/res/) | Lawnchair includes translation assets that are out of scope for a single-user personal app and increase codebase complexity. | Disable / strip translation pipelines and unused `values-*` localization resource folders as outlined in `PULSE_LAUNCHER_PROJECT.md` under REMOVE guidelines. |
 
 ### 2) Technical Debt
 
 | Debt item | Why it exists | Where | Risk if ignored | Suggested fix |
 |-----------|---------------|-------|-----------------|---------------|
-| Placeholder UI stubs | Features are scaffolded before being fully implemented | `workspace/`, `island/`, `search/`, `controlcenter/` | Users may assume the documented experience already exists | Mark unfinished surfaces clearly and finish the core flows incrementally |
-| Overloaded root activity | Fast iteration put UI bootstrapping and helper composables in one file | `PulseLauncherActivity.kt` | The startup path becomes harder to reason about | Move composables into dedicated files as the TODOs suggest |
-| Destructive database migrations | Simplicity over schema safety | `PulseDatabase.kt` | Persistent config can be wiped on app update | Introduce versioned migrations and migration tests |
+| Static UI Stubs | Placed to sketch the horizontal pager layout | [FeedPage.kt](lawnchair/src/app/lawnchair/pulse/workspace/FeedPage.kt), [ListPage.kt](lawnchair/src/app/lawnchair/pulse/workspace/ListPage.kt), [TileGridPage.kt](lawnchair/src/app/lawnchair/pulse/workspace/TileGridPage.kt) | Core workspace slides do not render functional app lists, bento grids, or widgets | Implement custom layout bindings inside these stub pages. |
+| `AndroidManifest-common.xml` TODO | Declares a placeholder security permission | [AndroidManifest-common.xml:140](AndroidManifest-common.xml) | Security parameters for providers might be loose or misconfigured | Review required signature permissions and lock down access. |
+| Unimplemented Bug Uploader | Lawnchair's default crash/bug tool was not finalized | [UploaderService.kt:26](lawnchair/src/app/lawnchair/bugreport/UploaderService.kt) | Throws `TODO("not implemented")` when executed | Replace with lightweight local file logging or remove crash uploading entirely since this is a private offline app. |
 
 ### 3) Security Concerns
 
-| Risk | OWASP category (if applicable) | Evidence | Current mitigation | Gap |
-|------|--------------------------------|----------|--------------------|-----|
-| Broad permission request surface | A05: Security Misconfiguration | [AndroidManifest.xml](/home/nana/Documents/pulse_launcher/app/src/main/AndroidManifest.xml) | Android runtime permission gating | No clear per-feature permission strategy is documented |
-| Placeholder network endpoint | A05 / N/A | [AppModule.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/di/AppModule.kt) | 15s timeouts on OkHttp | No real endpoint or transport policy is defined |
-| Notification/overlay behavior without visible hardening | A01 / A05 | [AndroidManifest.xml](/home/nana/Documents/pulse_launcher/app/src/main/AndroidManifest.xml) | Uses Android service permissions | No abuse-prevention or permission rationale layer is visible |
+- **`SYSTEM_ALERT_WINDOW` (Overlay) Permission:** To render the planned iOS-level Dynamic Island and custom slide-down Control Center, the app must request draw-over-other-apps permission. Malicious or misconfigured overlay views can intercept screen touches (tapjacking). Secure layout attributes (`FLAG_NOT_TOUCH_MODAL`, `FLAG_NOT_FOCUSABLE`) must be verified once implemented.
+- **Notification Access (`NotificationListenerService`):** Crucial for feed summary and dynamic island activity notifications, but grants full visibility into all device notification payloads (potentially exposing OTPs, messages, and codes). Gating/hashing of local buffers is recommended.
 
 ### 4) Performance and Scaling Concerns
 
-| Concern | Evidence | Current symptom | Scaling risk | Suggested improvement |
-|---------|----------|-----------------|-------------|-----------------------|
-| Home screen overlays and blur effects can be expensive on low-end devices | [SearchOverlay.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/search/SearchOverlay.kt), [ControlCenterOverlay.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/controlcenter/ControlCenterOverlay.kt) | Heavy translucent layers and animations are used | Jank on older devices or when multiple overlays stack | Profile recomposition and GPU cost, then simplify expensive effects |
-| The app stores many launcher states locally without a migration strategy | [PulseDatabase.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/data/db/PulseDatabase.kt) | No non-destructive migration path is visible | Update-time resets may frustrate users | Add migrations and backup/restore validation |
+- **Wallpaper Rendering Overhead:** `setWallpaperOffsets()` is called dynamically during horizontal swiping. If horizontal pager sampling is too frequent, rapid swipes could overload the system's window manager and cause frame drops (jank) on high-refresh-rate displays.
+- **Complex Blur Effects:** The design documents request extensive blurred glass/frosty overlays (One UI 9 / iOS style). Composables that use deep real-time rendering blur layers (such as Haze or custom RenderEffect) consume substantial GPU resources on older devices. Baseline profiling is needed once the control center or island is added.
 
 ### 5) Fragile/High-Churn Areas
 
-| Area | Why fragile | Churn signal | Safe change strategy |
-|------|-------------|-------------|----------------------|
-| `app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt` | Startup path and helper composables are colocated | Scan shows explicit TODOs in production code | Move one concern at a time and keep the activity thin |
-| `app/src/main/java/app/pulse/launcher/data/db/PulseDatabase.kt` | Schema changes affect all persisted launcher settings | Database centralizes many feature types | Add migrations and tests before changing entities |
-| `app/src/main/java/app/pulse/launcher/di/AppModule.kt` | DI is the app's wiring hub | Placeholder Retrofit config suggests active churn | Replace speculative wiring with real integration only when needed |
+- **`LawnchairLauncher.kt`:** The central activity handling window layout, app states, and theme initialization. It has now been modified to host our Compose overlay. This file is highly complex and any edits inside its lifecycle methods carry high regression risks.
+- **`build.gradle`:** Root build config contains compile SDKs, task overrides, and flavor dimensions. Changes to dependency versions can break the Gradle build cache or introduce annotation processor (KSP) collisions.
 
 ### 6) `[ASK USER]` Questions
 
-1. [ASK USER] Do you want this project to stay personal/private as the docs say, or should we prepare it for broader distribution and support?
-2. [ASK USER] Should I treat the roadmap docs as the source of truth for future work, even when the current code has not implemented those features yet?
-3. [ASK USER] Do you want me to turn the biggest gaps I found into a concrete next-step implementation plan?
-
-### 7) Evidence
-
-- [scan output](/home/nana/Documents/pulse_launcher/docs/codebase/.codebase-scan.txt)
-- [docs/README.md](/home/nana/Documents/pulse_launcher/docs/README.md)
-- [docs/PROJECT_DOCUMENT.md](/home/nana/Documents/pulse_launcher/docs/PROJECT_DOCUMENT.md)
-- [app/src/main/AndroidManifest.xml](/home/nana/Documents/pulse_launcher/app/src/main/AndroidManifest.xml)
-- [app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt](/home/nana/Documents/pulse_launcher/app/src/main/java/app/pulse/launcher/launcher/PulseLauncherActivity.kt)
-
+1. **[ASK USER]** Since the custom Pulse Launcher features (Dynamic Island, Assistant, Control Center, Icon/Font Studio) are completely unimplemented, would you like me to start by developing the core overlay foreground service for the Dynamic Island, or focus on a different feature first?
+2. **[ASK USER]** Do you want to strip out the unused system localization files (`res/values-*`) and translation hooks now to declutter and speed up compilations, or keep them for now?
+3. **[ASK USER]** For the digital assistant integration, should we write code that integrates with a remote Gemini/Ollama API via Retrofit, or do you prefer a local offline-only command runner first?

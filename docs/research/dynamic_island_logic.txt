@@ -1,0 +1,36 @@
+===============================================================================
+RESEARCH FINDINGS: Dynamic Island Logic, States, & Android Lifecycle
+===============================================================================
+
+--- [STEP-BY-STEP RESEARCH OUTLINE] ---
+1. Dynamic Island State Machine - Transitions between Hidden, Minimal, Compact, and Expanded states.
+2. Android System Overlay (`TYPE_APPLICATION_OVERLAY`) - Foreground services and window managers.
+3. Live Activity Contract - Data feeds, timers, media sessions, and charging indicators.
+4. Gesture Routing - Touch intercepting, click expansion, and spring morph animations.
+
+--- [SECTION 1: THE DYNAMIC ISLAND STATE MACHINE] ---
+The island operates on a reactive, event-driven state machine based on active events:
+1. **HIDDEN:** No active background processes (calls, media, timers). The island shrinks/fades to 0 opacity.
+2. **COMPACT:** Single background activity is active (e.g. music playing). Island expands into a horizontal pill:
+   - Left side: Album art/icon.
+   - Right side: Dynamic waveform/visualizer.
+3. **MINIMAL:** Two background activities are concurrent (e.g., media playing AND an active stopwatch). Island splits:
+   - Primary pill: Primary activity info (music art).
+   - Secondary dot: Isolated secondary activity icon (stopwatch icon).
+4. **EXPANDED:** Triggered by user interaction (long-press or touch). Morph-animates into a large card showcasing media scrubbers, assistant chats, or detailed navigation instructions.
+
+--- [SECTION 2: ANDROID INTERACTION OVERLAY LAYER] ---
+* SYSTEM WINDOW ACCESS: Uses `WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY`. Requires the `SYSTEM_ALERT_WINDOW` permission.
+* LAYOUT PARAMS FLAGS:
+  - `FLAG_NOT_FOCUSABLE`: Allows touch events to fall through to the home screen or apps beneath.
+  - `FLAG_NOT_TOUCH_MODAL`: Keeps touch bounds localized to the island's active frame boundaries.
+* SERVICE HOOKS: Run as a foreground service with a persistent notification to prevent Android's Low Memory Killer (LMK) from reclaiming the process.
+
+--- [SECTION 3: LIVE ACTIVITY INTEGRATIONS] ---
+* MEDIA SESSIONS: Registers a `MediaSessionManager.OnActiveSessionsChangedListener` to bind with active media outputs (Spotify, YouTube).
+* TIMERS: Hooks into system alert managers or internal thread tickers.
+* PRIVACY ALERTS: Hooks into accessibility/camera services to flash a small green/orange dot whenever active hardware resources are accessed.
+
+--- [SECTION 4: SOURCES] ---
+* [1] iOS Dynamic Island Developer Guidelines (Apple HIG).
+* [2] Open-source Android overlay helper repositories (such as DynamicSpot and standard overlay layouts).

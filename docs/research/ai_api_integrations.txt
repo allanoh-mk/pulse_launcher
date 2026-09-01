@@ -1,0 +1,38 @@
+===============================================================================
+RESEARCH FINDINGS: AI API Integrations (OpenAI, Anthropic, Gemini, Ollama, DeepSeek, Groq)
+===============================================================================
+
+--- [STEP-BY-STEP RESEARCH OUTLINE] ---
+1. AI API REST Client Architectures - Configuring OkHttp, Retrofit, and streaming responses (SSE).
+2. Provider Specifications - OpenAI Chat Completions, Anthropic Messages API, Gemini REST, Ollama Local API, DeepSeek, and Groq.
+3. Security & Key Handling - Storing secrets safely in Android (Keystore/EncryptedSharedPreferences).
+4. Local Offline Models - Local model runners (Llama.cpp, Ollama) on Android.
+
+--- [SECTION 1: REST CLIENT WITH SERVER-SENT EVENTS (SSE)] ---
+* STEAMING RESPONSES: To provide instant, typewriter-style visual updates, the assistant must handle Server-Sent Events (SSE). OkHttp's `okhttp3.sse.EventSourceListener` intercepts stream chunks and updates the Jetpack Compose state in real time.
+* CONCURRENCY CONTROLS: API requests run in specialized Coroutine dispatchers (`Dispatchers.IO`) to protect the main thread from framing drops.
+
+--- [SECTION 2: PROVIDER API SCHEMAS] ---
+1. **OPENAI & DEEPSEEK:**
+   - Endpoint: `POST /v1/chat/completions` (DeepSeek matches OpenAI's schema).
+   - Core Fields: `model`, `messages` (role: system/user/assistant, content), `stream: true`.
+2. **ANTHROPIC:**
+   - Endpoint: `POST /v1/messages`
+   - Core Fields: `model`, `messages`, `system` (separate system prompt), `max_tokens`, `stream: true`.
+3. **GOOGLE GEMINI REST:**
+   - Endpoint: `POST /v1beta/models/{model}:generateContent`
+   - Core Fields: `contents`, `generationConfig` (temperature, maxOutputTokens).
+4. **OLLAMA (LOCAL):**
+   - Endpoint: `POST /api/chat` (running locally on local network or on-device ports).
+   - Core Fields: `model`, `messages`, `stream: true`. Supports offline hosting with lightweight quantized GGUF weights.
+5. **GROQ:**
+   - Endpoint: `POST /openai/v1/chat/completions` (OpenAI compatible, specialized for low-latency Llama 3 / Mixtral inference).
+
+--- [SECTION 3: SECURE KEY HANDLING ON ANDROID] ---
+* ANDROID KEYSTORE SYSTEM: Keys should never be hardcoded or checked into repositories. Secure keys are stored in `EncryptedSharedPreferences` backed by the hardware-isolated Android KeyStore (using AES-GCM encryption), preventing access on rooted or compromised devices.
+
+--- [SECTION 4: SOURCES] ---
+* [1] OpenAI API Reference (https://platform.openai.com/docs/api-reference).
+* [2] Anthropic Messages API Guidelines.
+* [3] Ollama Developer Docs (https://github.com/ollama/ollama).
+* [4] OkHttp SSE library specifications.

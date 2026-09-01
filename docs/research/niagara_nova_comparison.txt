@@ -1,0 +1,27 @@
+===============================================================================
+RESEARCH FINDINGS: Niagara Launcher vs. Nova Launcher
+===============================================================================
+
+--- [STEP-BY-STEP RESEARCH OUTLINE] ---
+1. Niagara Launcher Core Concept - Minimalist linear efficiency, thumb-reach vertical list, and the Wave Alphabet.
+2. Nova Launcher Core Concept - Traditional desktop-grid metaphor, infinite layout depth, and pixel-precise sizing.
+3. Feature Comparison - Layout, navigation, accessibility, and performance differences.
+4. Open-Source Analogs - Re-implementing these layouts using modern Jetpack Compose.
+
+--- [SECTION 1: NIAGARA LAUNCHER] ---
+* THE VERTICAL WAVE ALPHABET: Instead of horizontal pages, Niagara lists apps in a single vertical list. A sidebar alphabetic scrollbar features a physical "Wave" animation following the user's thumb, smoothly magnifying current letter-groups.
+* CONTEXTUAL NOTIFICATIONS: Notification streams are appended directly beneath app labels on the home screen. Clicks expand them inline.
+* THUMB-CENTRIC FLOW: Perfect one-handed usability; everything is easily reachable within a 5-inch sweep.
+
+--- [SECTION 2: NOVA LAUNCHER] ---
+* THE GRID STANDARD: Built on the classic desktop metaphor. Icons are arranged on an arbitrary grid (e.g. 5x6 or 12x12), with sub-grid positioning allowing precise placement.
+* UNLIMITED GESTURES: Supports multi-finger gestures, long-press popups, dock pages, and scrolling docks.
+* PLACEMENT DEPTH: Heavy use of standard AppWidgetHost to render rich widgets and complex custom layout folders.
+
+--- [SECTION 3: ARCHITECTURAL DIFFERENCES] ---
+* Niagara: Standardizes on high-performance vertical scrolling. Uses low-draw layouts which run extremely fast on lightweight/Go platforms.
+* Nova: Focuses on granular item coordinate databases (`launcher.db`) and custom View drag-and-drop orchestration.
+
+--- [SECTION 4: SOURCES] ---
+* [1] Niagara Launcher Design Blog & Specifications (https://niagaralauncher.app/).
+* [2] Nova Launcher Customization Manuals and AOSP Launcher3 base references.

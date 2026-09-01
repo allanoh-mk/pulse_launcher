@@ -1,0 +1,32 @@
+===============================================================================
+RESEARCH FINDINGS: Google Pixel Material Design (Material You / M3)
+===============================================================================
+
+--- [STEP-BY-STEP RESEARCH OUTLINE] ---
+1. Material Design 3 (M3) Specification - Visual foundations, responsive shapes, and margins.
+2. Material You Dynamic Color - The Monet engine, HCT color space, and color palettes.
+3. System Typography - Google Sans, Roboto, and Jetpack Compose text styles.
+4. Pixel Launcher Transitions - Motion behaviors, system gestures, and layout corners.
+
+--- [SECTION 1: MATERIAL DESIGN 3 (M3) PRINCIPLES] ---
+* RADICAL ROUNDNESS: Corners use large, expressive radii. Cards typically use 12dp, 16dp, or 28dp, and buttons are shaped as capsules or rounded rectangles.
+* ELEVATION BY COLOR: Rather than using deep, physical dropshadows, M3 relies on tonal color overlays to convey stack height and layout hierarchies.
+* GRID SPACING: Formulated around an 8dp grid system, with 16dp and 24dp margins for container padding.
+
+--- [SECTION 2: DYNAMIC COLOR & MONET ENGINE] ---
+* HCT COLOR SPACE: Material You utilizes Hue, Chroma, and Tone (HCT) rather than RGB or HSL, maintaining consistent visual contrast across dark and light modes.
+* PALETTE EXTRACTION:
+  - Wallpaper extraction parses colors using Palette KTX (`androidx.palette:palette-ktx`).
+  - Core engine selects a primary seed color based on prominence and colorfulness.
+  - Dynamically constructs five tonal palettes: Accent 1, Accent 2, Accent 3, Neutral 1, Neutral 2.
+  - Tonal steps (e.g. Tone 10, Tone 20... Tone 90) determine background and outline mappings.
+
+--- [SECTION 3: PIXEL MOTION & SPRING TRANSLATIONS] ---
+* PIXEL ANIMATIONS: UI scaling uses overshoot and dampening springs, ensuring that dragging an icon or expanding a panel feels connected to the finger.
+* COLLAPSIBLE SEARCH BAR (QSB): Quick Search Bar morphs seamlessly from a pill in the dock into a full-screen search view using shared element bounds.
+
+--- [SECTION 4: OPEN-SOURCE REFERENCES & SOURCES] ---
+* [1] Android Open Source Project (AOSP) Launcher3 base files.
+* [2] Material Design 3 Guidelines (https://m3.material.io/)
+* [3] material-color-utilities (https://github.com/material-foundation/material-color-utilities) - Official Google library for wallpaper color palettes and HCT calculations.
+* [4] ColorKt library [dev.kdrag0n:colorkt] for color space transformations.

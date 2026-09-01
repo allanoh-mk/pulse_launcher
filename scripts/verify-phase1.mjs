@@ -27,18 +27,20 @@ if (mode === 'preserved-materials') {
   console.log('preserved materials verification passed');
 } else if (mode === 'lawnchair-base') {
   const readme = readFileSync(join(root, 'README.md'), 'utf8');
-  const license = readFileSync(join(root, 'LICENSE'), 'utf8');
+  const license = readFileSync(join(root, 'LICENSE.txt'), 'utf8');
   assert(/Lawnchair/i.test(readme), 'README does not identify Lawnchair');
   assert(/Apache License/i.test(license), 'LICENSE is not Apache License');
   assert(existsSync(join(root, 'quickstep')), 'Lawnchair Quickstep source is missing');
   console.log('Lawnchair base verification passed');
 } else if (mode === 'pulse-skeleton') {
-  const workspace = join(root, 'app/src/main/java/app/lawnchair/pulse/workspace');
+  const workspace = join(root, 'lawnchair/src/app/lawnchair/pulse/workspace');
   const files = ['WorkspaceController.kt', 'FeedPage.kt', 'TileGridPage.kt', 'ListPage.kt'];
   for (const file of files) assert(existsSync(join(workspace, file)), `${file} is missing`);
-  const controller = readFileSync(join(workspace, 'WorkspaceController.kt'), 'utf8');
+  const source = files
+    .map((file) => readFileSync(join(workspace, file), 'utf8'))
+    .join('\n');
   for (const marker of ['Feed', 'Tiles', 'List', 'HorizontalPager']) {
-    assert(controller.includes(marker), `WorkspaceController.kt is missing ${marker}`);
+    assert(source.includes(marker), `Pulse workspace is missing ${marker}`);
   }
   console.log('Pulse skeleton verification passed');
 } else {

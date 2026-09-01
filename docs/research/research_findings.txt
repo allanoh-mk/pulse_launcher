@@ -1,0 +1,136 @@
+===============================================================================
+                       PULSE LAUNCHER - MASTER RESEARCH FINDINGS
+===============================================================================
+
+This master research index compiles the findings, outline steps, and technical
+specifications for the ten design, performance, and functional concepts
+integral to the construction of Pulse Launcher.
+
+Individual, highly detailed findings documents have been created for each topic:
+1. ios_feel_style_liquid_glass.txt
+2. google_pixel_material_design.txt
+3. samsung_one_ui_goodlock.txt
+4. android_compat_go.txt
+5. mur_launcher.txt
+6. niagara_nova_comparison.txt
+7. dynamic_island_logic.txt
+8. home_screen_widgets.txt
+9. ai_api_integrations.txt
+10. smooth_animations.txt
+
+All research is stored in: pulse_launcher/docs/research/
+
+Below is a consolidated summary of topics, steps, and key findings:
+
+-------------------------------------------------------------------------------
+1. iOS Feel, Style, and Liquid Glass (iOS 27)
+-------------------------------------------------------------------------------
+* Topics to Research: squircle corner curves, SF Pro display-to-text tracking scale,
+  liquid motion, and WWDC 2026 Liquid Glass changes.
+* Research Steps:
+  - Step 1: Investigate Apple's Human Interface Guidelines (HIG).
+  - Step 2: Extract Apple's WWDC 2026 Material specifications.
+  - Step 3: Analyze the design-token copy-paste frameworks.
+* Key Findings: iOS 27 retunes Liquid Glass by introducing an active system-wide
+  transparency slider (--ios27-glass-transparency), stronger diffusion blurs,
+  darkened card edge outlines, and prominent specular rim highlights.
+
+-------------------------------------------------------------------------------
+2. Google Pixel Material Design (Material You)
+-------------------------------------------------------------------------------
+* Topics to Research: M3 guidelines, HCT color spaces, dynamic wallpaper extraction,
+  and the Monet engine palette generator.
+* Research Steps:
+  - Step 1: Analyze material-color-utilities algorithms.
+  - Step 2: Implement dynamic Palette KTX extractors in Android.
+* Key Findings: Material You relies on Hue-Chroma-Tone (HCT) color space. Dynamic
+  palette extraction parses wall files to yield 5 tonal palettes, which are mapped
+  natively to dark/light themes.
+
+-------------------------------------------------------------------------------
+3. Samsung One UI 9 & Good Lock Modules
+-------------------------------------------------------------------------------
+* Topics to Research: Thumb-reach ergonomics, Good Lock module hooks (Theme Park,
+  Home Up, QuickStar), and layout overrides.
+* Research Steps:
+  - Step 1: Study One UI reachability matrices.
+  - Step 2: Investigate how Theme Park injects resource shape masks.
+* Key Findings: One UI prioritizes thumb-reach zones. Modules like Theme Park allow
+  mass overriding of system shapes, icon dimensions, and quick toggles.
+
+-------------------------------------------------------------------------------
+4. Android 12+ & Android Go Compatibility
+-------------------------------------------------------------------------------
+* Topics to Research: SplashScreen API, Low Memory Killer (LMK) triggers, Java 8
+  desugaring, and memory footprinting.
+* Research Steps:
+  - Step 1: Audit target SDK 35 requirements.
+  - Step 2: Analyze low-RAM (2GB or less) device performance constraints.
+* Key Findings: Android Go enforces strict resource thresholds. Complex blurs (Haze)
+  must be disabled on Go Edition devices to prevent system jank and LMK reclaims.
+
+-------------------------------------------------------------------------------
+5. Mur Launcher
+-------------------------------------------------------------------------------
+* Topics to Research: Live bento-tile systems, resizable grids, folder dashboards,
+  and on-device offline AI summaries (V1.2).
+* Research Steps:
+  - Step 1: Analyze Mur Launcher (club.incendiarypigs.mur) UI.
+  - Step 2: Study its press kit features and open-source models.
+* Key Findings: Mur Launcher re-envisions Windows Phone's active tile layout on
+  modern Android, implementing long-press dashboards and offline notification briefings.
+
+-------------------------------------------------------------------------------
+6. Niagara Launcher vs. Nova Launcher
+-------------------------------------------------------------------------------
+* Topics to Research: Vertical linear alphabetical lists, Wave Alphabet sidebars,
+  vs. arbitrary coordinate grids and deep widget hosts.
+* Research Steps:
+  - Step 1: Contrast list-centric ergonomics vs desk-grid coordinates.
+  - Step 2: Profile touch-scrolling optimization curves.
+* Key Findings: Niagara maximizes single-handed linear efficiency. Nova maximizes
+  desktop customization depth using traditional coordinate database layouts.
+
+-------------------------------------------------------------------------------
+7. Dynamic Island Logic & Lifecycle
+-------------------------------------------------------------------------------
+* Topics to Research: Overlay layouts (TYPE_APPLICATION_OVERLAY), foreground service
+  priority, transition state controllers, and active Media Session bindings.
+* Research Steps:
+  - Step 1: Design a state machine covering Hidden -> Compact -> Minimal -> Expanded.
+  - Step 2: Setup a persistent Android service layer with proper window flags.
+* Key Findings: The Dynamic Island runs as a persistent system foreground overlay.
+  It reacts to device events, morphing dynamically based on active notifications.
+
+-------------------------------------------------------------------------------
+8. Home Screen Widgets
+-------------------------------------------------------------------------------
+* Topics to Research: RemoteViews process boundaries vs. native local Jetpack
+  Compose tiles, grid scaling, and drag-and-sort interfaces.
+* Research Steps:
+  - Step 1: Contrast RemoteViews restrictions with local Compose rendering.
+  - Step 2: Integrate reorderable bento-grid cell arrays.
+* Key Findings: Bypassing legacy RemoteViews hosts allows launcher projects to render
+  widgets natively as fast, local Compose composables with rich animation flows.
+
+-------------------------------------------------------------------------------
+9. AI API Integrations
+-------------------------------------------------------------------------------
+* Topics to Research: Retrofit/OkHttp SSE listeners, OpenAI Completions, Anthropic
+  Messages, Gemini REST, local on-device Ollama servers, DeepSeek, and Groq.
+* Research Steps:
+  - Step 1: Detail request/response schemas for each model provider.
+  - Step 2: Incorporate secure key management using Android Keystore.
+* Key Findings: Integrating multiple AI engines requires SSE streaming adapters,
+  standardized Chat Completion message models, and isolated keystore storage.
+
+-------------------------------------------------------------------------------
+10. Animation Smoothness & Spring Physics
+-------------------------------------------------------------------------------
+* Topics to Research: Hooke's Law spring math, damping ratios, stiffness constants,
+  and Android Choreographer VSYNC syncing (120Hz LTPO display adaptation).
+* Research Steps:
+  - Step 1: Implement custom spring dampening formulas.
+  - Step 2: Optimize frame-rate tick scaling using delta time.
+* Key Findings: Natural motion relies on underdamped spring formulas (damping ratio
+  ~0.75) compiled with delta time to remain stable across high frame-rate panels.

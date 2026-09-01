@@ -1,0 +1,34 @@
+===============================================================================
+RESEARCH FINDINGS: Samsung One UI 9 & Good Lock Extensibility
+===============================================================================
+
+--- [STEP-BY-STEP RESEARCH OUTLINE] ---
+1. One UI 9 Design Guidelines - Comfort, thumb-reachability, and visual layout.
+2. Good Lock Customization Module Framework - Deep architectural customization options.
+3. Good Lock: Theme Park - Custom palette generation, icon overlays, and custom shape masks.
+4. Good Lock: Home Up & QuickStar - Grid density, folder configurations, and custom quick panels.
+
+--- [SECTION 1: ONE UI 9 CORE PHILOSOPHY] ---
+* THUMB-REACHABILITY: The upper third of the screen is typically reserved for passive content (headers, illustrations), while the lower two-thirds are dedicated to interactive elements (buttons, selectors, list entries).
+* SMOOTH INTERPOLATIONS: Sliding menus and panels use non-linear, organic curves that feel lightweight.
+* DETAILED BLUR SHADES: Employs heavy real-time glass diffusion blurs for drawer backgrounds and control screens.
+
+--- [SECTION 2: GOOD LOCK CUSTOMIZATION FRAMEWORK] ---
+Samsung's Good Lock suite provides modular APK plugins that override default One UI settings via system reflection and resource overrides.
+1. THEME PARK:
+   - Allows users to build entire system themes from scratch using custom color schemes.
+   - Outputs customized icon shapes (Circle, Squircle, Rounded Square, Leaf, Heart, Hexagon) applied uniformly across all apps.
+   - Allows direct configuration of individual icon size, colors, labels, and styles.
+2. HOME UP:
+   - Customizes layout grids for the home screen (from 4x4 up to 7x7) and app drawer.
+   - Sets custom folder layouts, grid pages, background blur levels, and folder animations.
+   - Adds custom vertical layout transitions to the Recents screen.
+3. QUICKSTAR:
+   - Configures the quick panel (toggle grid, notification shade).
+   - Allows customizing individual toggle bubble colors, active state highlights, borders, and transparency settings.
+   - Controls visibility of system status bar icons (hiding Wi-Fi, cellular, battery, etc.).
+
+--- [SECTION 3: RELEVANT IMPLEMENTATIONS & SOURCES] ---
+* [1] Samsung Good Lock Suite Specifications (Theme Park, Home Up, QuickStar modules).
+* [2] One UI Design Guidelines (https://developer.samsung.com/one-ui)
+* [3] Open-source AOSP modules demonstrating system-level resource overlays (RRO).

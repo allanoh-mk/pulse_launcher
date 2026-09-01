@@ -1,0 +1,30 @@
+===============================================================================
+RESEARCH FINDINGS: Android 12+ APIs & Android Go Compatibility
+===============================================================================
+
+--- [STEP-BY-STEP RESEARCH OUTLINE] ---
+1. Android 12+ (SDK 31 to 35) API Changes - Splash screen, permissions, notification trampolines.
+2. Android Go Edition Constraints - Low memory handling, single-core limits, background service limits.
+3. Performance Benchmarks - Profiling on RAM-constrained boards.
+4. Launcher Compatibility - Gating features depending on device capabilities.
+
+--- [SECTION 1: ANDROID 12+ SPECIFIC FEATURES] ---
+* STANDARD SPLASH SCREEN: Android 12 introduced a system-managed `SplashScreen` API. Standard launch themes must inherit from `Theme.SplashScreen` to prevent duplicate startup animations.
+* NOTIFICATION TRAMPOLINES: Direct launching from notification intents is blocked; clicks must activate activities directly instead of intermediate background receivers.
+* EXTENSIVE PERMISSIONS GATEWAY: Gated runtime permissions are required for sensitive categories like bluetooth, locations, and notification access.
+
+--- [SECTION 2: ANDROID GO EDITION SYSTEM CONSTRAINTS] ---
+Android Go Edition is designed for ultra-affordable devices with 2GB of RAM or less:
+* HEAVY MEMORY THROTTLING: Background services and inactive tasks are aggressively reclaimed by the Low Memory Killer (LMK).
+* RENDER LIMITATIONS: Complex real-time blurs (e.g., RenderEffect, Haze) are disabled or default to flat gray panels.
+* MULTI-THREADING CAP: CPU cores are restricted. High-concurrency operations can block the main UI thread.
+* SYSTEM DESUGARING: Uses Java 8 desugaring (`com.android.tools:desugar_jdk_libs`) to support modern Java APIs on older platforms.
+
+--- [SECTION 3: PFE/PROFILING STRATEGY] ---
+* TRACE ANALYSIS: System tracing tools (Perfetto) can profile recomposition frequencies in Jetpack Compose to avoid thread locking.
+* MEMORY PROFILING: Guard against memory leaks in `ComposeView` contexts by properly disposing of scopes (`ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed`).
+
+--- [SECTION 4: SOURCES] ---
+* [1] Android Developer Documentation (Low-RAM Optimization guidelines).
+* [2] Android Go Edition Developer specifications.
+* [3] Jetpack Compose Performance optimization references (https://developer.android.com/develop/ui/compose/performance).

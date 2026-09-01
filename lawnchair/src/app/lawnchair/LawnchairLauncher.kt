@@ -56,6 +56,7 @@ import app.lawnchair.gestures.config.GestureHandlerConfig
 import app.lawnchair.nexuslauncher.OverlayCallbackImpl
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.pulse.workspace.PulseWorkspaceHost
 import app.lawnchair.root.RootHelperManager
 import app.lawnchair.root.RootNotAvailableException
 import app.lawnchair.theme.ThemeProvider
@@ -291,6 +292,8 @@ class LawnchairLauncher :
         }
 
         colorScheme = themeProvider.colorScheme
+
+        PulseWorkspaceHost.attach(this)
 
         showQuickstepWarningIfNecessary()
 
