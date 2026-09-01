@@ -1,5 +1,7 @@
 
 === DIRECTORY TREE (max depth 3, source files only) ===
+.claude
+.claude/settings.local.json
 .editorconfig
 .gitattributes
 .gitignore
@@ -8,29 +10,56 @@
 .gradle/8.10
 .gradle/8.10/checksums
 .gradle/8.10/checksums/checksums.lock
+.gradle/8.10/checksums/md5-checksums.bin
+.gradle/8.10/checksums/sha1-checksums.bin
+.gradle/8.10/dependencies-accessors
+.gradle/8.10/dependencies-accessors/7950a5358c9b88631ff3a4063c6bfac7726fd5a5
+.gradle/8.10/dependencies-accessors/gc.properties
+.gradle/8.10/executionHistory
+.gradle/8.10/executionHistory/executionHistory.bin
+.gradle/8.10/executionHistory/executionHistory.lock
 .gradle/8.10/expanded
+.gradle/8.10/expanded/expanded.lock
 .gradle/8.10/fileChanges
 .gradle/8.10/fileChanges/last-build.bin
 .gradle/8.10/fileHashes
 .gradle/8.10/fileHashes/fileHashes.bin
 .gradle/8.10/fileHashes/fileHashes.lock
+.gradle/8.10/fileHashes/resourceHashesCache.bin
 .gradle/8.10/gc.properties
 .gradle/8.10/vcsMetadata
 .gradle/buildOutputCleanup
 .gradle/buildOutputCleanup/buildOutputCleanup.lock
 .gradle/buildOutputCleanup/cache.properties
+.gradle/buildOutputCleanup/outputFiles.bin
 .gradle/configuration-cache
 .gradle/configuration-cache/818krhoihi0lg4lxrkt1y0j53
+.gradle/configuration-cache/alhf4jcrpipsargmkbraz5rl4
+.gradle/configuration-cache/alhf4jcrpipsargmkbraz5rl4/buildfingerprint.bin
+.gradle/configuration-cache/alhf4jcrpipsargmkbraz5rl4/entry.bin
+.gradle/configuration-cache/alhf4jcrpipsargmkbraz5rl4/projectfingerprint.bin
+.gradle/configuration-cache/alhf4jcrpipsargmkbraz5rl4/work.bin
 .gradle/configuration-cache/configuration-cache.lock
 .gradle/configuration-cache/gc.properties
 .gradle/file-system.probe
+.gradle/kotlin
+.gradle/kotlin/errors
+.gradle/kotlin/errors/errors-1788217790117.log
 .gradle/vcs-1
 .gradle/vcs-1/gc.properties
+.gradle/workspace-id.txt
+.gradle/workspace-id.txt.lock
+.kotlin
+.kotlin/errors
+.kotlin/errors/errors-1788217790117.log
+.kotlin/sessions
 .unlazy
 .unlazy/locks
 Android.bp
 AndroidManifest-common.xml
 AndroidManifest.xml
+Black_ink_writing_Pulse_202609010218.mp4
+Black_ink_writing_pulse_2K_202609010218.jpeg
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 CleanSpec.mk
@@ -101,6 +130,7 @@ docs/codebase/.codebase-scan.txt
 docs/codebase/ARCHITECTURE.md
 docs/codebase/CONCERNS.md
 docs/codebase/CONVENTIONS.md
+docs/codebase/IMPLEMENTATION_PLAN.md
 docs/codebase/INTEGRATIONS.md
 docs/codebase/STACK.md
 docs/codebase/STRUCTURE.md
@@ -156,50 +186,20 @@ docs/concept_images/what-does-your-control-center-look-like-v0-0iag841smtee1.web
 docs/concept_images/what-does-your-control-center-look-like-v0-mj2p0n7a1pee1.webp
 docs/concept_images/what-does-your-control-center-look-like-v0-uzh4a4p0jtee1.webp
 docs/concept_images/what-is-the-difference-between-nova-launcher-and-smart-v0-jwd7f9ce5tqd1.webp
+docs/research
+docs/research/ai_api_integrations.txt
+docs/research/android_compat_go.txt
+docs/research/dynamic_island_logic.txt
+docs/research/google_pixel_material_design.txt
+docs/research/home_screen_widgets.txt
+docs/research/ios_feel_style_liquid_glass.txt
+docs/research/mur_launcher.txt
+docs/research/niagara_nova_comparison.txt
+docs/research/research_findings.txt
+docs/research/samsung_one_ui_goodlock.txt
+docs/research/smooth_animations.txt
 docs/tiles-manifesto.md
 ext_tests
-ext_tests/res
-ext_tests/res/values
-ext_tests/res/values/overrides.xml
-ext_tests/src
-ext_tests/src/com
-ext_tests/src/com/android
-extracted
-extracted/01_home_feed.png
-extracted/02_home_tiles.png
-extracted/03_home_applist.png
-extracted/04_island_compact.png
-extracted/05_island_expanded.png
-extracted/06_search_overlay.png
-extracted/07_control_center.png
-extracted/08_icon_studio.png
-extracted/09_settings.png
-extracted/PULSE_LAUNCHER_PROJECT.md
-extracted/stitch_pulse_launcher_design_system
-extracted/stitch_pulse_launcher_design_system/control_center_overlay
-extracted/stitch_pulse_launcher_design_system/control_center_overlay/code.html
-extracted/stitch_pulse_launcher_design_system/control_center_overlay/screen.png
-extracted/stitch_pulse_launcher_design_system/design.md
-extracted/stitch_pulse_launcher_design_system/dynamic_island_compact
-extracted/stitch_pulse_launcher_design_system/dynamic_island_compact/code.html
-extracted/stitch_pulse_launcher_design_system/dynamic_island_compact/screen.png
-extracted/stitch_pulse_launcher_design_system/dynamic_island_expanded
-extracted/stitch_pulse_launcher_design_system/dynamic_island_expanded/code.html
-extracted/stitch_pulse_launcher_design_system/dynamic_island_expanded/screen.png
-extracted/stitch_pulse_launcher_design_system/home_app_list_slide_3
-extracted/stitch_pulse_launcher_design_system/home_app_list_slide_3/code.html
-extracted/stitch_pulse_launcher_design_system/home_app_list_slide_3/screen.png
-extracted/stitch_pulse_launcher_design_system/home_feed_slide_1
-extracted/stitch_pulse_launcher_design_system/home_feed_slide_1/code.html
-extracted/stitch_pulse_launcher_design_system/home_feed_slide_1/screen.png
-extracted/stitch_pulse_launcher_design_system/home_tiles_slide_2
-extracted/stitch_pulse_launcher_design_system/home_tiles_slide_2/code.html
-extracted/stitch_pulse_launcher_design_system/home_tiles_slide_2/screen.png
-extracted/stitch_pulse_launcher_design_system/icon_studio_settings
-extracted/stitch_pulse_launcher_design_system/icon_studio_settings/code.html
-extracted/stitch_pulse_launcher_design_system/icon_studio_settings/screen.png
-extracted/stitch_pulse_launcher_design_system/image.png_1
-extracted/stitch_pulse_launcher_design_system/image.png_1/screen.png
 
 === STACK DETECTION (manifest files) ===
 
@@ -285,7 +285,7 @@ allprojects {
     ext {
         FRAMEWORK_PREBUILTS_DIR = "$rootDir/prebuilts/libs"
 
-[TRUNCATED] Showing first 80 of 463 lines.
+[TRUNCATED] Showing first 80 of 475 lines.
 --- gradle.properties ---
 # Disable buildFeatures flags by default
 android.defaults.buildfeatures.resvalues=false
@@ -318,6 +318,7 @@ pluginManagement {
 // https://docs.gradle.com/enterprise/gradle-plugin/
 plugins {
     id "com.gradle.develocity" version "3.18"
+    id "org.gradle.toolchains.foojay-resolver-convention" version "0.8.0"
 }
 
 def isCI = providers.environmentVariable('CI').present
@@ -405,87 +406,89 @@ lawnchair/src/app/lawnchair/ui/preferences/components/layout/NestedScrollStretch
 lawnchair/src/app/lawnchair/ui/preferences/components/layout/LazyColumnGrid.kt:21: * TODO: use [LazyVerticalGrid]
 lawnchair/src/app/lawnchair/ui/preferences/destinations/SearchPreferences.kt:208: // TODO refactor permission handling of all files access
 lawnchair/src/app/lawnchair/preferences/PreferenceManager.kt:79: // TODO REMOVE
-lawnchair/res/values-de-rDE/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-bs-rBA/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-lt-rLT/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-hr-rHR/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-sk-rSK/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-ca-rES/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-pt-rBR/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-tr-rTR/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-az-rAZ/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-bn-rBD/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-hu-rHU/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-ja-rJP/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-sl-rSI/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-zh-rCN/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-in-rID/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-pl-rPL/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-cs-rCZ/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-es-rES/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-fa-rIR/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-pt-rPT/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-sq-rAL/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-uz-rUZ/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-ur-rPK/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-th-rTH/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-en-rCA/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-et-rEE/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
 lawnchair/res/values/strings.xml:19: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-ru-rRU/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-el-rGR/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-zh-rTW/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-it-rIT/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-nl-rNL/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-no-rNO/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-fil-rPH/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-ko-rKR/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-hi-rIN/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-ta-rIN/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-te-rIN/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-am-rET/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-ar-rSA/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-ro-rRO/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-fi-rFI/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-iw-rIL/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
-lawnchair/res/values-uk-rUA/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+lawnchair/res/layout-v30/task_desktop.xml:33: TODO(b249371338): DesktopTaskView extends from TaskView. TaskView expects TaskThumbnailView
+lawnchair/res/values-sw-rKE/strings.xml:18: <!-- TODO: Rename all strings to follow CONTRIBUTING.md guidelines -->
+systemUIViewCapture/src/com/android/app/viewcapture/ViewCapture.java:244: * TODO: b/262585897: If further memory optimization is required, an effective one would be to
+systemUIViewCapture/src/com/android/app/viewcapture/ViewCapture.java:248: * TODO: b/262585897: Another memory optimization could be to store all integer, float, and
+platform_frameworks_libs_systemui/iconloaderlib/src/com/android/launcher3/icons/DotRenderer.java:78: // TODO
+platform_frameworks_libs_systemui/iconloaderlib/src/com/android/launcher3/icons/FixedScaleDrawable.java:17: // TODO b/33553066 use the constant defined in MaskableIconDrawable
+platform_frameworks_libs_systemui/iconloaderlib/src/com/android/launcher3/icons/cache/BaseIconCache.java:152: // TODO: entry.bitmap can never be null, so this should not happen at all.
+src_shortcuts_overrides/com/android/launcher3/model/WidgetsModel.java:150: // TODO: after figuring out a repro step, introduce a dirty bit to check when
+systemUnFold/src/com/android/systemui/unfold/compat/ScreenSizeFoldProvider.kt:26: * TODO(b/232369816): use Jetpack WM library when non-activity contexts supported b/169740873
+src/com/android/launcher3/LauncherPrefs.kt:38: * TODO(b/262721340): Replace all direct SharedPreference refs with LauncherPrefs / Item methods.
+src/com/android/launcher3/LauncherPrefs.kt:39: * TODO(b/274501660): Fix ReorderWidgets#simpleReorder test before enabling
+src/com/android/launcher3/InterruptibleInOutAnimator.java:65: // TODO: This isn't really necessary, but is here to help diagnose a bug in the drag viz
+src/com/android/launcher3/InterruptibleInOutAnimator.java:90: // TODO: We don't really need to do the animation if startValue == toValue, but
+src/com/android/launcher3/PagedView.java:772: // TODO(b/246283207): Remove logging once root cause of flake detected.
+src/com/android/launcher3/PagedView.java:1562: // TODO: Make this decision more intelligent.
+src/com/android/launcher3/Launcher.java:381: // TODO: See if we can remove this later
+src/com/android/launcher3/Launcher.java:538: // TODO: move the SearchConfig to SearchState when new LauncherState is created.
+src/com/android/launcher3/Launcher.java:2264: // TODO: Remove this method
+src/com/android/launcher3/Launcher.java:2288: // TODO(hyunyoungs)
+src/com/android/launcher3/Launcher.java:2298: // TODO: When can workspace be null?
+src/com/android/launcher3/LauncherState.java:115: * TODO: Create a separate class for NORMAL state.
+src/com/android/launcher3/DefaultLayoutParser.java:51: // TODO: Remove support for this broadcast, instead use widget options to send bind time options
+src/com/android/launcher3/CellLayout.java:677: // TODO b/194414754 clean this up, reconcile with cellToRect
+src/com/android/launcher3/CellLayout.java:2347: // TODO(adamcohen) b/151776141 use the items visual center for the direction
+src/com/android/launcher3/WorkspaceLayoutManager.java:142: // TODO: This branch occurs when the workspace is adding views
+src/com/android/launcher3/Workspace.java:1731: // TODO: Update the accessibility flags appropriately when dragging.
+src/com/android/launcher3/Workspace.java:3544: // TODO(b/128460496) Potential race condition where layout is not yet loaded
+src/com/android/launcher3/DeviceProfile.java:330: /** TODO: Once we fully migrate to staged split, remove "isMultiWindowMode" */
+src/com/android/launcher3/DeviceProfile.java:355: // TODO(b/241386436): shouldn't change any launcher behaviour
+src/com/android/launcher3/DeviceProfile.java:447: // TODO(b/259893832): Revert to use maxWallpaperScale to calculate bottomSheetDepth
+src/com/android/launcher3/DeviceProfile.java:1026: * TODO: Move this to the builder as part of setMultiWindowMode
+src/com/android/launcher3/DeviceProfile.java:1142: // TODO(b/235886078): workaround needed because of this bug
+src/com/android/launcher3/DeviceProfile.java:1154: // TODO(b/235886078): workaround needed because of this bug
+src/com/android/launcher3/AppWidgetsRestoredReceiver.java:79: // TODO(b/234700507): Remove the logs after the bug is fixed
+src/com/android/launcher3/AppWidgetsRestoredReceiver.java:111: // TODO(b/234700507): Remove the logs after the bug is fixed
+src/com/android/launcher3/util/WallpaperOffsetInterpolator.java:72: * TODO: do different behavior if it's a live wallpaper?
+src/com/android/launcher3/util/DisplayController.java:74: // TODO(b/254119092) remove all logs with this tag
+src/com/android/launcher3/util/DisplayController.java:187: // TODO: unregister broadcast receiver
+src/com/android/launcher3/util/DisplayController.java:415: // TODO(b/258604917): Once ENABLE_TASKBAR_PINNING is enabled, remove usage of
+src/com/android/launcher3/util/SplitConfigurationOptions.java:107: * TODO(b/254378592): We really need to consolidate this
+src/com/android/launcher3/util/SplitConfigurationOptions.java:158: // TODO: Create a more reliable check, or refactor how splitting works on devices
+src/com/android/launcher3/icons/IconCache.java:559: // TODO: entry.bitmap can never be null, so this should not happen at all.
+src/com/android/launcher3/anim/PendingAnimation.java:38: * TODO: Find a better name
 
 === GIT RECENT COMMITS (last 20) ===
+f9d88d8 Update
+7106f32 first commit
 4598741 pulse: establish Lawnchair 14 foundation
 
 === HIGH-CHURN FILES (last 90 days, top 20) ===
-   1 .editorconfig
-   1 .gitattributes
-   1 .gitignore
-   1 .gitmodules
-   1 Android.bp
-   1 AndroidManifest-common.xml
-   1 AndroidManifest.xml
-   1 CODE_OF_CONDUCT.md
-   1 CONTRIBUTING.md
-   1 CleanSpec.mk
-   1 GATES.md
-   1 GITHUB_CHANGELOG.md
-   1 LICENSE.txt
-   1 OWNERS
-   1 PREUPLOAD.cfg
-   1 README.md
-   1 SECURITY.md
-   1 TELEGRAM_CHANGELOG.txt
-   1 baseline-profile/build.gradle
-   1 baseline-profile/src/main/java/app/lawnchair/baseline/BaselineProfileGenerator.kt
+   2 GATES.md
+   2 build.gradle
+   2 docs/codebase/.codebase-scan.txt
+   2 docs/codebase/ARCHITECTURE.md
+   2 docs/codebase/CONCERNS.md
+   2 docs/codebase/CONVENTIONS.md
+   2 docs/codebase/INTEGRATIONS.md
+   2 docs/codebase/STACK.md
+   2 docs/codebase/STRUCTURE.md
+   2 docs/codebase/TESTING.md
+   2 lawnchair/AndroidManifest.xml
+   2 lawnchair/res/drawable-ru/ic_yandex.xml
+   2 lawnchair/res/drawable-ru/ic_yandex_tinted.xml
+   2 lawnchair/res/values-af-rZA/strings.xml
+   2 lawnchair/res/values-af/strings.xml
+   2 lawnchair/res/values-am-rET/strings.xml
+   2 lawnchair/res/values-am/strings.xml
+   2 lawnchair/res/values-ar-rSA/strings.xml
+   2 lawnchair/res/values-ar-rXB/strings.xml
+   2 lawnchair/res/values-ar/strings.xml
 
 === MONOREPO SIGNALS ===
 No monorepo signals detected.
 
 === CODE METRICS ===
-Total files scanned: 3257
-Total lines of code: 425889
+Total files scanned: 3235
+Total lines of code: 397604
 
 Files by language:
-  Other: 1536
-  Java: 1121
-  Kotlin: 595
+  Other: 1450
+  Java: 1142
+  Kotlin: 638
   Python: 5
 
 Top 10 largest files:
@@ -496,9 +499,9 @@ prebuilts/libs/seeder.jar: 37545.7KB
 prebuilts/libs/framework-12.jar: 36501.9KB
 prebuilts/libs/framework-11.jar: 30481.5KB
 prebuilts/libs/framework-10.jar: 26263.2KB
-prebuilts/libs/WindowManager-Shell-14.jar: 2068.0KB
-lawnchair/assets/google_fonts.json: 1718.2KB
-prebuilts/libs/WindowManager-Shell.jar: 1517.5KB
+.gradle/8.10/executionHistory/executionHistory.bin: 6521.1KB
+Black_ink_writing_Pulse_202609010218.mp4: 3297.1KB
+Black_ink_writing_pulse_2K_202609010218.jpeg: 2984.8KB
 
 === CI/CD PIPELINES ===
 No CI/CD pipelines detected.
