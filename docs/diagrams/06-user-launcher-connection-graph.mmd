@@ -1,0 +1,13 @@
+flowchart LR
+USER[User]
+USER --> ACTIONS[Explicit Actions]
+USER --> CONTEXT[Optional Context]
+ACTIONS --> EVENTS[Local Event Store]
+CONTEXT --> EVENTS
+EVENTS --> GRAPH[Decayed Personal Graph]
+GRAPH --> REC[Recommendations]
+REC --> WHY[Why this?]
+WHY --> USER
+USER --> CONTROLS[Privacy / Block / Reset]
+CONTROLS --> EVENTS
+CONTROLS --> GRAPH
