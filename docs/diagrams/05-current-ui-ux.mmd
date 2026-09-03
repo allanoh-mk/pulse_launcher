@@ -1,0 +1,13 @@
+flowchart TB
+LC[LawnchairLauncher.onCreate]
+LC --> HOST[PulseWorkspaceHost.attach]
+HOST --> CV[ComposeView on dragLayer]
+CV --> WS[PulseWorkspace]
+WS --> PAGER[HorizontalPager: 3 pages]
+PAGER --> FEED[FeedPage]
+PAGER --> TILE[TileGridPage]
+PAGER --> LIST[ListPage]
+CV --> SEARCH[UnifiedSearchOverlay]
+CV --> CONTROL[ControlCenterOverlay]
+CV --> SPLASH[PulseSplashScreen]
+LEGACY[Legacy Lawnchair Overlay / FeedBridge] -. parallel .-> LC
