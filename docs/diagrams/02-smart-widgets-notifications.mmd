@@ -1,0 +1,11 @@
+flowchart TB
+N[Notification Listener] --> NORM[Normalize + Privacy Filter]
+W[Widget Providers] --> WM[Widget State]
+C[User Context] --> G[Local Context Graph]
+NORM --> G
+WM --> G
+G --> SUM[Notification Digest]
+G --> RANK[Smart Widget Ranking]
+SUM --> FEED[Feed / Reply Card]
+RANK --> BENTO[Bento Suggestions]
+P[User Feedback] --> G
