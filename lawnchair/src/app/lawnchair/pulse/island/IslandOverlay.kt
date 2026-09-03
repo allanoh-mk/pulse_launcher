@@ -6,22 +6,43 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.GraphicEq
+import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.SkipNext
+import androidx.compose.material.icons.filled.SkipPrevious
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import app.lawnchair.pulse.music.PulseMusicEngine
+import app.lawnchair.pulse.music.ui.PulseWavyProgressBar
+import coil.compose.AsyncImage
 
 /**
  * Renders the current [IslandVisualState] as a capsule that morphs shape/size
@@ -32,10 +53,12 @@ import androidx.compose.ui.unit.dp
 fun IslandOverlay(
     state: IslandVisualState,
     onTap: () -> Unit,
-    onDismissExpanded: () -> Unit,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     AnimatedContent(
         targetState = state,
+        modifier = modifier,
         transitionSpec = {
             androidx.compose.animation.fadeIn(
                 animationSpec = spring(dampingRatio = 0.8f, stiffness = Spring.StiffnessMedium),
@@ -43,13 +66,13 @@ fun IslandOverlay(
                 animationSpec = spring(dampingRatio = 0.8f, stiffness = Spring.StiffnessMedium),
             )
         },
-        label = "island-state",
+        label = "islandStateTransition",
     ) { visualState ->
         when (visualState) {
-            is IslandVisualState.Hidden -> Spacer(modifier = Modifier.size(0.dp))
+            is IslandVisualState.Hidden -> Unit
             is IslandVisualState.Compact -> CompactPill(visualState.activity, onTap)
             is IslandVisualState.Minimal -> MinimalPill(visualState.primary, visualState.secondary, onTap)
-            is IslandVisualState.Expanded -> ExpandedCard(visualState, onDismissExpanded)
+            is IslandVisualState.Expanded -> ExpandedCard(visualState, onDismiss)
         }
     }
 }
@@ -64,12 +87,21 @@ private fun CompactPill(activity: IslandActivity, onTap: () -> Unit) {
             .pointerInput(activity.id) { detectTapGestures(onTap = { onTap() }) }
             .padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
-        Box(
-            modifier = Modifier
-                .size(16.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primary),
-        )
+        if (activity.type == IslandActivityType.MEDIA) {
+            Icon(
+                imageVector = Icons.Default.GraphicEq,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(16.dp),
+            )
+        } else {
+            Box(
+                modifier = Modifier
+                    .size(16.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primary),
+            )
+        }
         Spacer(modifier = Modifier.width(8.dp))
         Text(text = activity.title, color = androidx.compose.ui.graphics.Color.White, maxLines = 1)
     }
@@ -100,13 +132,89 @@ private fun ExpandedCard(state: IslandVisualState.Expanded, onDismiss: () -> Uni
             .pointerInput(state.primary.id) { detectTapGestures(onTap = { onDismiss() }) }
             .padding(20.dp),
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            if (state.primary.type == IslandActivityType.ASSISTANT) {
-                AssistantChatBubble()
-            } else {
+        if (state.primary.type == IslandActivityType.ASSISTANT) {
+            AssistantChatBubble()
+        } else if (state.primary.type == IslandActivityType.MEDIA) {
+            val musicState by PulseMusicEngine.state.collectAsState()
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .size(54.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(MaterialTheme.colorScheme.primaryContainer),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        if (musicState.currentTrack?.coverUri != null && musicState.currentTrack!!.coverUri!!.isNotEmpty()) {
+                            AsyncImage(
+                                model = musicState.currentTrack!!.coverUri,
+                                contentDescription = "Cover",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop,
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.GraphicEq,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = state.primary.title,
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                        )
+                        Text(
+                            text = state.primary.subtitle ?: "Pulse Music",
+                            color = Color.White.copy(alpha = 0.7f),
+                            style = MaterialTheme.typography.bodySmall,
+                            maxLines = 1,
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+                PulseWavyProgressBar(
+                    progress = musicState.progressFraction,
+                    isPlaying = musicState.isPlaying,
+                    onSeek = { fraction ->
+                        val seekPos = (musicState.durationMs * fraction).toLong()
+                        PulseMusicEngine.seekTo(seekPos)
+                    },
+                    barHeight = 20.dp,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    IconButton(onClick = { PulseMusicEngine.previous() }) {
+                        Icon(Icons.Default.SkipPrevious, contentDescription = "Previous", tint = Color.White)
+                    }
+                    IconButton(
+                        onClick = { PulseMusicEngine.togglePlayPause() },
+                        modifier = Modifier.size(44.dp).background(Color.White, CircleShape),
+                    ) {
+                        Icon(
+                            if (musicState.isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                            contentDescription = if (musicState.isPlaying) "Pause" else "Play",
+                            tint = Color.Black,
+                        )
+                    }
+                    IconButton(onClick = { PulseMusicEngine.next() }) {
+                        Icon(Icons.Default.SkipNext, contentDescription = "Next", tint = Color.White)
+                    }
+                }
+            }
+        } else {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     modifier = Modifier.size(48.dp).clip(RoundedCornerShape(12.dp))
-                        .background(MaterialTheme.colorScheme.primary)
+                        .background(MaterialTheme.colorScheme.primary),
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Box {

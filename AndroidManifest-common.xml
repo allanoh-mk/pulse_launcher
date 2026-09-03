@@ -188,5 +188,9 @@
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             tools:node="remove" />
-    </application>
+            <activity
+            android:name="app.lawnchair.pulse.canvas.CanvasActivity"
+            android:theme="@style/Theme.Lawnchair"
+            android:exported="false" />
+</application>
 </manifest>

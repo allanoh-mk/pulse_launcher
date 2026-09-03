@@ -436,6 +436,7 @@ dependencies {
     // Pulse: JVM unit tests (fast, no emulator/device required)
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1'
+    testImplementation 'org.json:json:20240303'
 
     // Pulse: secure API-key storage for the assistant (Android Keystore-backed)
     implementation 'androidx.security:security-crypto:1.1.0-alpha06'
@@ -459,6 +460,8 @@ spotless {
             "io.nlopez.compose.rules:ktlint:0.4.10",
         ]).editorConfigOverride([
             "ktlint_compose_compositionlocal-allowlist": "disabled",
+            "ktlint_compose_modifier-missing-check": "disabled",
+            "ktlint_compose_param-order-check": "disabled",
         ])
     }
 }

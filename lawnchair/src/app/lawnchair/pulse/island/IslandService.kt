@@ -3,7 +3,6 @@ package app.lawnchair.pulse.island
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager as AndroidNotificationManager
-import android.app.PendingIntent
 import android.app.Service
 import android.content.ComponentName
 import android.content.Context
@@ -15,6 +14,7 @@ import android.provider.Settings
 import android.view.Gravity
 import android.view.WindowManager
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.Lifecycle
@@ -98,8 +98,8 @@ class IslandService :
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-                    WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR,
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR,
             PixelFormat.TRANSLUCENT,
         ).apply {
             gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
@@ -132,7 +132,7 @@ class IslandService :
             IslandOverlay(
                 state = visualState,
                 onTap = { userRequestedExpand.value = !userRequestedExpand.value },
-                onDismissExpanded = { userRequestedExpand.value = false },
+                onDismiss = { userRequestedExpand.value = false },
             )
         }
     }
@@ -184,4 +184,4 @@ private fun <T> combine(
 
 @androidx.compose.runtime.Composable
 private fun <T> kotlinx.coroutines.flow.Flow<T>.collectAsComposeState(initial: T) =
-    androidx.compose.runtime.collectAsState(initial = initial)
+    this.collectAsState(initial = initial)

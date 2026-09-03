@@ -27,7 +27,7 @@ object KeystoreHelper {
             val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEYSTORE)
             val keySpec = KeyGenParameterSpec.Builder(
                 KEY_ALIAS,
-                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT,
             )
                 .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
@@ -49,11 +49,11 @@ object KeystoreHelper {
         cipher.init(Cipher.ENCRYPT_MODE, getSecretKey())
         val iv = cipher.iv
         val encryptedData = cipher.doFinal(data.toByteArray(Charsets.UTF_8))
-        
+
         val combined = ByteArray(iv.size + encryptedData.size)
         System.arraycopy(iv, 0, combined, 0, iv.size)
         System.arraycopy(encryptedData, 0, combined, iv.size, encryptedData.size)
-        
+
         return Base64.encodeToString(combined, Base64.DEFAULT)
     }
 
@@ -63,11 +63,11 @@ object KeystoreHelper {
             val combined = Base64.decode(encrypted, Base64.DEFAULT)
             val iv = combined.copyOfRange(0, IV_LENGTH)
             val encryptedData = combined.copyOfRange(IV_LENGTH, combined.size)
-            
+
             val cipher = Cipher.getInstance(TRANSFORMATION)
             val spec = GCMParameterSpec(TAG_LENGTH, iv)
             cipher.init(Cipher.DECRYPT_MODE, getSecretKey(), spec)
-            
+
             val decryptedData = cipher.doFinal(encryptedData)
             String(decryptedData, Charsets.UTF_8)
         } catch (e: Exception) {

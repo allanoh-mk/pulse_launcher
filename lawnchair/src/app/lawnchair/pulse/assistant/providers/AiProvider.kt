@@ -17,6 +17,6 @@ interface AiProvider {
     val displayName: String
     var apiKey: String // Will be stored encrypted via KeystoreHelper
     var modelId: String
-    
+
     fun streamChat(history: List<ChatMessage>): Flow<ChatStreamEvent>
 }

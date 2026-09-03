@@ -1,8 +1,8 @@
 package app.lawnchair.pulse.data.db
 
+import androidx.compose.runtime.Immutable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.compose.runtime.Immutable
 
 /**
  * One cell in the bento-grid Tile workspace slide.
@@ -30,6 +30,8 @@ enum class TileType {
     WEATHER,
     ASSISTANT,
     CLOCK,
+    DIGITAL_WELLBEING,
+    CLIPBOARD,
 }
 
 /**

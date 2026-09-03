@@ -1,8 +1,6 @@
 package app.lawnchair.pulse.search
 
 import android.content.Context
-import android.content.pm.LauncherApps
-import android.os.Process
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
@@ -18,10 +16,16 @@ class SearchViewModel(private val context: Context) : ViewModel() {
     val state: StateFlow<SearchState> = _state.asStateFlow()
     private var searchJob: Job? = null
 
-    private val launcherApps = context.getSystemService(LauncherApps::class.java)
+    private val dispatcher = SearchDispatcher(context)
 
     fun setVisible(visible: Boolean) {
-        _state.update { it.copy(isVisible = visible, query = if (visible) it.query else "", results = if (visible) it.results else emptyList()) }
+        _state.update {
+            it.copy(
+                isVisible = visible,
+                query = if (visible) it.query else "",
+                results = if (visible) it.results else emptyList(),
+            )
+        }
     }
 
     fun onQueryChange(query: String) {
@@ -32,30 +36,10 @@ class SearchViewModel(private val context: Context) : ViewModel() {
             return
         }
         searchJob = viewModelScope.launch {
-            delay(300) // Debounce
-            performSearch(query)
+            // Debounce
+            delay(200)
+            val results = dispatcher.search(query)
+            _state.update { it.copy(results = results, isLoading = false) }
         }
-    }
-
-    private fun performSearch(query: String) {
-        val results = mutableListOf<SearchResult>()
-        
-        // App search
-        val user = Process.myUserHandle()
-        val activities = launcherApps.getActivityList(null, user)
-        val matchingApps = activities.filter { 
-            it.label.toString().contains(query, ignoreCase = true) 
-        }.take(5).map {
-            SearchResult(
-                id = it.applicationInfo.packageName,
-                title = it.label.toString(),
-                type = ResultType.APP
-            )
-        }
-        results.addAll(matchingApps)
-        
-        // Contacts and Files would be added here
-        
-        _state.update { it.copy(results = results, isLoading = false) }
     }
 }

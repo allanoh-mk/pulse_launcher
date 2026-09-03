@@ -1,0 +1,492 @@
+====================================================================================================
+  ██████╗ ██╗   ██╗██╗     ███████╗███████╗    ██╗      █████╗ ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗███████╗██████╗
+  ██╔══██╗██║   ██║██║     ██╔════╝██╔════╝    ██║     ██╔══██╗██║   ██║████╗  ██║██╔════╝██║  ██║██╔════╝██╔══██╗
+  ██████╔╝██║   ██║██║     ███████╗█████╗      ██║     ███████║██║   ██║██╔██╗ ██║██║     ███████║█████╗  ██████╔╝
+  ██╔═══╝ ██║   ██║██║     ╚════██║██╔══╝      ██║     ██╔══██║██║   ██║██║╚██╗██║██║     ██╔══██║██╔══╝  ██╔══██╗
+  ██║     ╚██████╔╝███████╗███████║███████╗    ███████╗██║  ██║╚██████╔╝██║ ╚████║╚██████╗██║  ██║███████╗██║  ██║
+  ╚═╝      ╚═════╝ ╚══════╝╚══════╝╚══════╝    ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+====================================================================================================
+                        MASTER IMPLEMENTATION PLAN & ARCHITECTURAL BLUEPRINT
+                                       Target: Personal Android 15 (API 35)
+====================================================================================================
+
+[ TABLE OF CONTENTS ]
+----------------------------------------------------------------------------------------------------
+  1. MISSION & CORE ARCHITECTURAL PHILOSOPHY
+  2. CODEBASE AUDIT & UNFINISHED STUBS REMEDIATION
+  3. 3-SLIDE WORKSPACE ARCHITECTURE (FEED / BENTO TILES / VERTICAL LIST)
+  4. MASTER FEATURE CATALOG (50+ TABLE-STAKES & 20 DIFFERENTIATORS)
+  5. SYSTEM COMPONENT DEEP DIVES
+     5.1. DYNAMIC ISLAND & MULTI-PROVIDER AI ENGINE
+     5.2. ICON STUDIO & SHADER PIPELINE
+     5.3. UNIVERSAL SEARCH ENGINE & MICRO-COMPLICATIONS
+     5.4. CUSTOM CONTROL CENTER & SYSTEM OVERLAYS
+     5.5. FONT STUDIO & ADVANCED MATERIAL YOU THEMING
+  6. 7-MILESTONE PHASED EXECUTION ROADMAP & DEPENDENCY GRAPH
+  7. RIGOROUS UNLAZY ACCEPTANCE GATES & VERIFICATION MATRIX
+  8. BUILD, DEPLOYMENT & DEVELOPER RUNBOOK
+----------------------------------------------------------------------------------------------------
+
+
+====================================================================================================
+1. MISSION & CORE ARCHITECTURAL PHILOSOPHY
+====================================================================================================
+
+Pulse Launcher is a bespoke, high-performance personal Android launcher forked from Lawnchair /
+Launcher3, engineered exclusively for a single user on modern Android hardware (minSdk 31, targetSdk 35).
+
+It fuses the strongest paradigms of modern mobile interfaces:
+  * Mur Launcher: Bento tile grid, modular dashboards, and universal inline search answers.
+  * Niagara Launcher: Vertical alphabetical app list, ergonomics, one-handed wave scroll.
+  * Nova Launcher: Deep styling flexibility, micro-results search, robust backup system.
+  * iOS / One UI: Fluid Dynamic Island overlay, spring-physics motion language, rich Control Center.
+
+CORE TENETS:
+  * Zero Bloat / Personal Focus: Strips all telemetry, multi-user workspaces, work profiles, and
+    legacy AOSP widget host cruft in favor of tailored, highly integrated components.
+  * Jetpack Compose + Launcher3 Backbone: Keeps rock-solid AOSP lifecycle, recents/quickstep
+    integration, and icon cache while replacing user-facing UI layers with Jetpack Compose.
+  * Single Style Pipeline: A single central theme definition dynamically cascades across icons,
+    typography, island overlays, control centers, and workspace slides.
+  * Spring-Driven Physics: Universal spring curves (stiffness: 300, damping: 28) with a global
+    personality slider (Subtle / Balanced / Expressive).
+
+
+====================================================================================================
+2. CODEBASE AUDIT & UNFINISHED STUBS REMEDIATION
+====================================================================================================
+
+The codebase audit identified critical gaps and placeholder stubs across existing modules.
+Below is the definitive remediation plan for every identified gap:
+
++----------------------+---------------------------------+------------------------------------------+
+| Module / Component   | Identified Stub / Deprecation   | Architectural Remediation Strategy       |
++----------------------+---------------------------------+------------------------------------------+
+| Universal Search     | App name substring only;        | Implement asynchronous multi-source      |
+| SearchViewModel.kt   | Missing Contacts, Files, Web,   | query dispatcher with Coroutines:        |
+|                      | and Math evaluator.             | - ContactsContract.CommonDataKinds.Phone |
+|                      |                                 | - MediaStore.Files indexed query         |
+|                      |                                 | - Offline Math expression evaluator (Eval) |
+|                      |                                 | - Direct deep shortcuts via LauncherApps |
++----------------------+---------------------------------+------------------------------------------+
+| Bento Tile Grid      | Static text boxes rendering     | Build dynamic TileComplicationRenderer:  |
+| TileGridPage.kt      | tile type name without data.    | - Live Digital/Analog Clock complication |
+|                      |                                 | - Open-Meteo live weather radar card     |
+|                      |                                 | - MediaSessionManager controller tile    |
+|                      |                                 | - Interactive 3D flip card animation     |
++----------------------+---------------------------------+------------------------------------------+
+| Feed Page            | Static time hero + raw list of  | Enrich FeedCardComposables:              |
+| FeedPage.kt          | system notification cards.      | - Real-time Weather summary card         |
+|                      |                                 | - CalendarContract next agenda card      |
+|                      |                                 | - On-device AI notification digest       |
+|                      |                                 | - Digital Wellbeing screen-time graph    |
++----------------------+---------------------------------+------------------------------------------+
+| Dynamic Island       | Morphing capsule with empty     | Full Live Activity state machine:        |
+| IslandOverlay.kt     | placeholder colored boxes.      | - CountDownTimer live ticking UI         |
+|                      |                                 | - TelecomManager call duration & hangup  |
+|                      |                                 | - BatteryManager charging pulse shader   |
+|                      |                                 | - AppOpsManager Mic/Camera privacy dots  |
++----------------------+---------------------------------+------------------------------------------+
+| AI Providers         | Dummy token echo stub in        | Resilient Multi-Provider Client Chain:   |
+| AssistantViewModel   | LocalAiProvider; partial OpenAI.| - Anthropic (Claude 3.5/3.7/Opus) SSE    |
+|                      |                                 | - OpenAI (GPT-4o), Gemini, Groq, Ollama  |
+|                      |                                 | - Automatic 429/500 retry failover chain |
+|                      |                                 | - Hardware KeyStore + EncryptedDataStore |
++----------------------+---------------------------------+------------------------------------------+
+| Control Center       | Deprecated wifiManager toggling;| Modern Android System Bridge:            |
+| ControlCenterVM.kt   | Missing Flashlight & Rotation.  | - Settings.Panel.ACTION_WIFI fallback    |
+|                      |                                 | - CameraManager flashlight API           |
+|                      |                                 | - Settings.System auto-rotate toggle     |
+|                      |                                 | - Media playback seekbar & audio routing |
++----------------------+---------------------------------+------------------------------------------+
+| Icon Studio          | Only 4 basic canvas shaders;    | Expand IconRenderer AGSL Pipeline:       |
+| IconRenderer.kt      | Missing Duotone & Holographic.  | - DUOTONE, HOLOGRAPHIC, FILM_GRAIN,      |
+|                      |                                 |   and MATERIAL_YOU dynamic styles        |
+|                      |                                 | - SQLite Room mapping for per-app icons  |
++----------------------+---------------------------------+------------------------------------------+
+
+
+====================================================================================================
+3. 3-SLIDE WORKSPACE ARCHITECTURE
+====================================================================================================
+
+The workspace abandons the traditional static icon grid in favor of three specialized, high-intent
+slides connected via horizontal swipe with 0.7x parallax wallpaper offset:
+
+                     [ 3-SLIDE INTERFACE TOPOLOGY ]
+
+  +-------------------+    +-------------------+    +-------------------+
+  |   SLIDE 1: FEED   |    |  SLIDE 2: TILES   |    |   SLIDE 3: LIST   |
+  | (Glance & Digest) |    | (Bento Dashboard) |    | (Niagara A-Z App) |
+  |                   |    |                   |    |                   |
+  | [ Weather Hero  ] |    | [2x2] [1x1] [1x1] |    | (A) Audible       |
+  | [ Agenda Card   ] |    | [Music] [Bt] [Cam]|    | (B) Brave Browser |
+  | [ AI Notif Sum. ] |    | [2x1 Clock/Date ] |    | (C) Camera        |
+  | [ Screen Time   ] |    | [4x2 App Folder ] |    | (D) Discord       |
+  |                   |    | [1x1] [1x1] [2x1] |    | (E) Email         |
+  +-------------------+    +-------------------+    +-------------------+
+            <------------------- Swipe ------------------->
+
+* SLIDE 1 (FEED):
+  - Dynamic Time & Weather Hero header with dynamic gradient backdrop.
+  - Next Calendar Agenda complication reading from device calendar.
+  - Notification Catch-Up: Grouped, prioritized notification cards with AI one-line summarization.
+  - Digital Wellbeing: Interactive bar chart tracking daily unlocks and screen time.
+
+* SLIDE 2 (BENTO TILES):
+  - Highly configurable modular grid supporting 1x1, 2x1, 2x2, and 4x2 cell spans.
+  - Sub-pixel drag & drop with magnetic snap-to-grid alignment and haptic ticks.
+  - Interactive 3D flip cards: Tap or swipe to toggle between primary status and secondary controls.
+  - Themed Folder Dashboards: Expanding an app cluster blooms into a frosted glass sheet.
+
+* SLIDE 3 (VERTICAL APP LIST):
+  - Ergonomic Niagara-style single-column list for lightning-fast thumb access.
+  - Tactile Wave Fast-Scroll: Draggable vertical A-Z rail with magnification physics and haptic curve.
+  - Smart App Suggestions: Contextual row at top predicting next app based on time, day, and Wi-Fi.
+  - Biometric Private Space: Gated section for protected apps via Android 15 PrivateSpace API.
+
+
+====================================================================================================
+4. MASTER FEATURE CATALOG (50+ TABLE-STAKES & 20 DIFFERENTIATORS)
+====================================================================================================
+
+--- [ 50+ TABLE-STAKES LAUNCHER CAPABILITIES ] ---
+[Home Screen & Grid]
+  01. Independent X/Y Grid Density (3x3 up to 10x10)
+  02. Per-Page Grid Density Overrides
+  03. Infinite Looping Page Navigation Toggle
+  04. Vertical Paginated Scroll Mode
+  05. Multi-Style Page Indicators (Pill, Dot Matrix, Hidden)
+  06. Desktop Snapping Rulers & Alignment Guidelines
+  07. Multi-Select Lasso for Batch Tile/Icon Movement
+  08. Dedicated Portrait vs Landscape Layouts
+  09. Dynamic Page Creation upon Boundary Drag
+  10. Per-Slide Dedicated Wallpapers with Cross-Fade
+
+[Icons & Badges]
+  11. Standard Icon Pack Support (Apex/Nova/ADW)
+  12. Per-App Custom Icon Override
+  13. Custom Shape Masks (Squircle, Teardrop, Hexagon, Pebble)
+  14. Dynamic Elevation & Drop Shadow Intensity
+  15. Continuous Icon Scale Slider (32dp to 72dp)
+  16. Wallpaper-Tinted Notification Accent Dots
+  17. Numeric Unread Badges from NotificationListener
+  18. Material You Dynamic Themed Monochrome Icons
+  19. Typography, Sizing & Color Customization for Labels
+  20. Global & Per-Icon App Label Visibility Toggles
+
+[App Drawer & Navigation]
+  21. Alphabetical Wave Fast-Scroll Index with Spring Physics
+  22. Real-Time Gaussian Blur Drawer Background (RenderEffect)
+  23. Drawer Grid vs Vertical List Instant Toggle
+  24. Automated Category Tabs (Social, Media, Tools, Games)
+  25. Hidden Apps Blacklist Management
+  26. Biometric Gated Private Space (Android 15)
+  27. Trigram / Fuzzy Search-as-you-Type
+  28. Time-of-Day Predictive App Row
+  29. Managed Work Profile Separation & Quick Pause
+  30. Multi-Attribute Sorting (Name, Install Date, Usage)
+
+[Gestures & System Actions]
+  31. Comprehensive 1/2 Finger Swipe Mapping (Up/Down/Left/Right)
+  32. Double-Tap Screen Sleep (AccessibilityService / Admin)
+  33. Two-Finger Pinch-to-Edit Overview
+  34. Two-Finger Quick App Switcher Trigger
+  35. Screen Border Edge-Swipe Gesture Dispatcher
+  36. Radial Spring-Animated Long-Press Context Menu
+
+[Folders & Dashboards]
+  37. Synchronized Folder Shape Masking
+  38. Frosted Glass Modal Background Blur
+  39. Multi-Level Nested Sub-Folders
+  40. Smart Rule-Based Auto-Categorization on Install
+  41. 2x2 Mini-Grid & Stack Folder Previews
+
+[Universal Search Engine]
+  42. Async Parallel Search (Apps, Contacts, Files, Settings, Web)
+  43. Search Engine Provider Switcher (Google, DDG, Brave, Bing)
+  44. In-App Deep Shortcuts via LauncherApps.getShortcuts()
+  45. Built-In Offline Math Calculator & Unit Conversions
+  46. Local Search Query History with Privacy Flush
+
+[Backup, Restore & Migration]
+  47. Complete JSON Settings & Layout Export/Import
+  48. Cloud & Local WebDAV Backup Connector
+  49. Resolution-Independent Coordinate Normalization
+  50. Nova Launcher Backup (.novabackup) Database Parser
+
+[Accessibility & Display]
+  51. Granular SP Font Scale Slider
+  52. Colorblind Palette Filters (Protan, Deutan, Tritan)
+  53. One-Handed Reachability Workspace Drop
+  54. Tactile Haptic Vibration Intensity Adjustment
+  55. Comprehensive Bidirectional RTL Layout Mirroring
+
+[Widgets & Live Cards]
+  56. Live Interactive Border Resize Handles
+  57. Stacked Multi-Widget Vertical Flip Containers
+  58. Unified Themed Frosted Glass Widget Enclosures
+  59. Context-Aware Smart Widget Swapping
+  60. High-Resolution Weather & Clock Complications
+
+
+--- [ 20 DIFFERENTIATORS & SUPERPOWERS ] ---
+  01. Scheduled Focus Modes: Auto-hide distracting tiles and notifications by schedule.
+  02. Gesture-Based App Launching: Canvas overlay for drawing letters (e.g., 'S' for Spotify).
+  03. Live Activities Contract: IPC endpoint for sideloaded apps to render Dynamic Island cards.
+  04. Monet-Aware AI Wallpaper Engine: Prompt-based generation matching active color scheme.
+  05. Contextual Workspace Pages: Auto-switch layout based on connected Wi-Fi SSID.
+  06. AI Notification Digest: Local or cloud LLM bulleted summary of missed notifications.
+  07. Battery-Aware Throttling: 3-tier render degradation (disables blur under 20% battery).
+  08. Launcher Digital Wellbeing: Native screen time analytics directly in Slide 1.
+  09. Injected Status Bar Complications: Custom weather, battery ring, and network stats.
+  10. Exportable Theme Bundles (.pulse-theme): Packaged fonts, shaders, and configs.
+  11. Voice-Triggered Hotword: Offline keyword listener for instant launcher commands.
+  12. Sensor 3D Tilt Parallax: Gyroscope-driven 3D depth on wallpaper and card layers.
+  13. Radial Long-Press Wheel: Spring-physics radial menu for quick app uninstalls & info.
+  14. Persistent Clipboard Tile: Secure Bento clipboard manager with one-tap paste.
+  15. Lock Screen Shortcut Editor: Direct configurator for device lock screen quick slots.
+  16. Fast Profile Switcher: Instant user switching tile for shared family devices.
+  17. App Pair Shortcuts: One-tap split-screen multi-window launcher icons.
+  18. Circadian Dynamic Accent: Automatic morning-to-night temperature shift for UI colors.
+  19. Offline App Metadata Cache: High-speed local cache eliminating search lag.
+  20. Extensible Mini-App SDK: Open Kotlin interface for custom personal Bento tiles.
+
+
+====================================================================================================
+5. SYSTEM COMPONENT DEEP DIVES
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+5.1. DYNAMIC ISLAND & MULTI-PROVIDER AI ENGINE
+----------------------------------------------------------------------------------------------------
+
+The Dynamic Island operates as an independent system overlay (`TYPE_APPLICATION_OVERLAY`) running in
+a persistent foreground service. It morphs seamlessly across three physical states:
+
+  +-----------------------+     +-------------------------------+
+  |   COMPACT (36dp pill) | --> |   EXPANDED (280dp rich card)  |
+  | [Icon] Title  [Wave]  |     |  [Album Art]  Track Title     |
+  +-----------------------+     |  Artist Name - Album Name     |
+                                |  [<<]   [ || ]   [>>]  (Vol)  |
+                                +-------------------------------+
+
+LIVE ACTIVITY STATE ENGINES:
+  * Media Playback: Audio wave visualizer, seek scrubber, metadata, and play/pause controls.
+  * Active Timer / Stopwatch: Millisecond live counter, pause/reset, and finish alarms.
+  * Phone Call Tracker: Ongoing call duration, caller avatar, and one-tap hangup action.
+  * Battery Charging Pulse: Animated AGSL liquid glow reacting to charging wattage.
+  * Privacy Dots: Hardware indicators (Green = Camera, Orange = Mic) directly inside island margin.
+
+MULTI-PROVIDER AI ARCHITECTURE:
+  * Unified `AiProviderClient` interface supporting Server-Sent Events (SSE) streaming.
+  * Built-in Providers: Anthropic Claude (3.5/3.7/Opus), OpenAI (GPT-4o), Google Gemini, Groq, Ollama.
+  * Failover Circuit Breaker: Automatically cascades down the provider chain upon 429 rate limit
+    or network failure without dropping the active chat context.
+  * KeyStore Security: Master API keys encrypted using Android KeyStore AES-GCM and stored in DataStore.
+
+
+----------------------------------------------------------------------------------------------------
+5.2. ICON STUDIO & SHADER PIPELINE
+----------------------------------------------------------------------------------------------------
+
+Icon Studio executes a real-time GPU shader pipeline (`IconRenderer.kt`) generating consistent
+visual styles across any installed icon pack:
+
+  [ Raw App Icon ] ---> [ Mask Geometry ] ---> [ AGSL Shader Pass ] ---> [ Rendered Surface ]
+                             |                           |
+                             +-- Squircle / Circle       +-- Liquid Glass
+                             +-- Hexagon / Pebble        +-- Holographic
+                             +-- Teardrop / Star         +-- Duotone Matrix
+                                                         +-- Film Grain / Neon
+
+STYLES SUPPORTED:
+  1. MATERIAL_YOU: Dynamic tonal extraction matching wallpaper luminance and chrominance.
+  2. LIQUID_GLASS: Refractive specular lighting with normal map highlights.
+  3. NEON_GLOW: High-saturation edge glow with dark inner contrast.
+  4. EMBOSSED: Skeuomorphic directional bevel lighting with soft drop shadows.
+  5. DUOTONE: High-contrast dual-color palette mapped to icon luminance.
+  6. HOLOGRAPHIC: Animated iridescent color-shifting shimmer effect.
+  7. FILM_GRAIN: Tactile analog noise texture overlay with subtle chromatic aberration.
+
+
+----------------------------------------------------------------------------------------------------
+5.3. UNIVERSAL SEARCH ENGINE & MICRO-COMPLICATIONS
+----------------------------------------------------------------------------------------------------
+
+Universal Search (`SearchViewModel.kt`) activates via swipe-down or search bar tap, orchestrating
+concurrent asynchronous queries across 5 indexed domains:
+
+  [ Search Query Input ]
+            |
+            +---> [1] Local Apps (Fuzzy Levenshtein & Trigram matching)
+            +---> [2] Device Contacts (ContactsContract resolver)
+            +---> [3] Media Files (MediaStore indexed search)
+            +---> [4] In-App Deep Shortcuts (LauncherApps API)
+            +---> [5] Offline Math Evaluator & Unit Converter
+            +---> [6] Web Search Intent (Google, DuckDuckGo, Brave, Startpage)
+
+INLINE MICRO-RESULTS:
+  * Direct calculations (e.g. `24 * 1024` -> `24,576`).
+  * Currency & Timezone conversions (e.g. `$50 to EUR`, `10am EST to CET`).
+  * Direct contact calling and SMS actions directly from search results.
+
+
+----------------------------------------------------------------------------------------------------
+5.4. CUSTOM CONTROL CENTER & SYSTEM OVERLAYS
+----------------------------------------------------------------------------------------------------
+
+Swiping down from the top-right corner opens the blurred Control Center modal sheet:
+  * Network Connectivity: Wi-Fi toggle with `Settings.Panel` fallback, Bluetooth manager.
+  * Media Hub: Unified audio output selector and interactive seekbar.
+  * Hardware Controls: Flashlight intensity (`CameraManager`), Auto-Rotate, DND mode, Airplane mode.
+  * Brightness & Volume Sliders: Continuous gesture sliders with haptic end-stop clicks.
+  * Quick Focus Switcher: One-tap toggles for Work, Deep Focus, and Sleep modes.
+
+
+----------------------------------------------------------------------------------------------------
+5.5. FONT STUDIO & ADVANCED MATERIAL YOU THEMING
+----------------------------------------------------------------------------------------------------
+
+Typography and colors are controlled from a single centralized theme provider:
+  * Font Studio: Dynamic Google Fonts catalog downloader and custom TTF/OTF loader.
+  * Type Pairing Presets: Modern Sans (Inter), Editorial Serif, Monospace, and Expressive Display.
+  * HCT Palette Fine-Tuning: Custom sliders to override Chroma, Tone, and Hue on extracted Monet colors.
+  * Circadian Color Temperature: Automatic day-to-night temperature shift for eye comfort.
+
+
+====================================================================================================
+6. 7-MILESTONE PHASED EXECUTION ROADMAP & DEPENDENCY GRAPH
+====================================================================================================
+
+                       [ MILESTONE DEPENDENCY FLOW ]
+
+  [M1: Core Stubs & Fixes] ----> [M2: Universal Search] ----> [M3: Dynamic Island & AI]
+                                                                        |
+  [M6: Gestures & Private] <---- [M5: Bento Tiles Grid] <---- [M4: Icon/Font Studio]
+             |
+             v
+  [M7: Backups & Adaptive GPU Engine]
+
+----------------------------------------------------------------------------------------------------
+MILESTONE 1: CORE STUBS & UNFINISHED LOGIC RESOLUTION
+----------------------------------------------------------------------------------------------------
+Scope: Fix legacy API deprecations and turn stub pages into data-bound components.
+Deliverables:
+  * Integrate live Open-Meteo weather and CalendarContract agenda into FeedPage.kt.
+  * Wire dynamic clock, weather, and media renderers into TileGridPage.kt cells.
+  * Modernize ControlCenterViewModel.kt with CameraManager flashlight & Settings.Panel Wi-Fi.
+  * Implement wave sensitivity and tactile vibration curves in AlphabetRail.kt.
+
+----------------------------------------------------------------------------------------------------
+MILESTONE 2: UNIVERSAL SEARCH & MEDIA COMPLICATIONS
+----------------------------------------------------------------------------------------------------
+Scope: Expand SearchViewModel into an offline/online universal query powerhouse.
+Deliverables:
+  * Add ContactsContract and MediaStore file querying with background Coroutines.
+  * Embed offline math expression evaluator and unit conversion engine in query bar.
+  * Implement dynamic web search intents and in-app shortcuts via LauncherApps.
+
+----------------------------------------------------------------------------------------------------
+MILESTONE 3: DYNAMIC ISLAND & MULTI-PROVIDER AI ENGINE
+----------------------------------------------------------------------------------------------------
+Scope: Deliver morphing Island overlay and resilient multi-provider AI streaming.
+Deliverables:
+  * Implement Anthropic Claude, OpenAI, Gemini, Groq, and Ollama SSE client adapters.
+  * Build automatic 429/500 retry failover chain and KeyStore encrypted storage.
+  * Build live Timer countdown, Stopwatch, Call status, and Mic/Camera privacy indicators.
+
+----------------------------------------------------------------------------------------------------
+MILESTONE 4: ICON/FONT STUDIO PIPELINE & THEMING ENGINE
+----------------------------------------------------------------------------------------------------
+Scope: Complete custom GPU shader post-processing and typography system.
+Deliverables:
+  * Implement DUOTONE, HOLOGRAPHIC, FILM_GRAIN, and MATERIAL_YOU shaders in IconRenderer.kt.
+  * Add Room DB tables for per-app icon and shape mask overrides.
+  * Build Font Studio Google Fonts downloader and custom TTF/OTF loader.
+  * Implement HCT fine-tuning sliders for wallpaper-derived Material You colors.
+
+----------------------------------------------------------------------------------------------------
+MILESTONE 5: BENTO TILE ECOSYSTEM & LIVE DASHBOARDS
+----------------------------------------------------------------------------------------------------
+Scope: Expand modular widget grid with resizing handles and 3D flip transitions.
+Deliverables:
+  * Build magnetic snap-to-grid resize handles with tactile haptic feedback.
+  * Implement 3D flip card animations for multi-view tiles (e.g. Weather <-> 5-Day Forecast).
+  * Build specialized Clipboard History and Digital Wellbeing Bento tiles.
+  * Implement full-screen frosted glass Folder Dashboards.
+
+----------------------------------------------------------------------------------------------------
+MILESTONE 6: POWER GESTURES, FOCUS MODES & PRIVATE SPACE
+----------------------------------------------------------------------------------------------------
+Scope: Implement gesture dispatcher, biometric app locking, and focus modes.
+Deliverables:
+  * Build comprehensive 1/2-finger gesture dispatcher and letter-draw app launcher.
+  * Implement scheduled Focus Modes hiding distracting tiles during work hours.
+  * Integrate Android 15 PrivateSpace and biometric prompt gating for hidden apps.
+
+----------------------------------------------------------------------------------------------------
+MILESTONE 7: BACKUPS, PERFORMANCE & 3-TIER ADAPTIVE GPU ENGINE
+----------------------------------------------------------------------------------------------------
+Scope: Finalize data portability, 3-tier GPU fallback, and performance benchmarks.
+Deliverables:
+  * Build full JSON backup/restore engine and Nova Launcher backup parser.
+  * Implement 3-Tier Adaptive GPU renderer (Full AGSL -> Static Effects -> Flat Alpha).
+  * Run Perfetto frame-drop audits and enforce 100% Spotless lint cleanliness.
+
+
+====================================================================================================
+7. RIGOROUS UNLAZY ACCEPTANCE GATES & VERIFICATION MATRIX
+====================================================================================================
+
+In adherence to /unlazy engineering discipline, every milestone is strictly gated by runnable,
+testable automated checks. Completion is proven against evidence, never assumptions.
+
++---------+----------------------------+---------------------------------------------+-----------------------------------+
+| Gate ID | Functional Area            | Runnable Check Command                      | Expected Outcome                  |
++---------+----------------------------+---------------------------------------------+-----------------------------------+
+| GATE-01 | Codebase Integrity         | ./gradlew testDebugUnitTest --tests "*Pulse*"| BUILD SUCCESSFUL; all tests pass  |
+| GATE-02 | Universal Search Engine    | ./gradlew testDebugUnitTest --tests "*Search*"| Contacts, Math & Apps parsed      |
+| GATE-03 | AI Multi-Provider Failover | ./gradlew testDebugUnitTest --tests "*Ai*"  | 429 failover triggers secondary   |
+| GATE-04 | Icon Studio Shaders        | ./gradlew testDebugUnitTest --tests "*Icon*"| 7 shader styles render Bitmaps    |
+| GATE-05 | Code Formatting & Lint     | ./gradlew spotlessCheck                     | BUILD SUCCESSFUL; 0 violations    |
+| GATE-06 | Full APK Compilation       | ./gradlew assembleDebug --console=plain     | BUILD SUCCESSFUL; app-debug.apk   |
++---------+----------------------------+---------------------------------------------+-----------------------------------+
+
+
+====================================================================================================
+8. BUILD, DEPLOYMENT & DEVELOPER RUNBOOK
+====================================================================================================
+
+[ ENVIRONMENT PREREQUISITES ]
+  * JDK 17+ (Temurin / OpenJDK)
+  * Android SDK Build-Tools 35.0.0
+  * Android NDK (for AGSL shader compilation verification)
+
+[ BUILD COMMANDS ]
+  # Clean build
+  ./gradlew clean
+
+  # Run all unit tests
+  ./gradlew testDebugUnitTest
+
+  # Run Spotless formatting check
+  ./gradlew spotlessCheck
+  ./gradlew spotlessApply
+
+  # Compile Debug APK
+  ./gradlew assembleDebug
+
+[ DEPLOYMENT & TESTING ON HARDWARE ]
+  # Sideload APK to connected phone
+  adb install -r build/outputs/apk/debug/app-debug.apk
+
+  # Set Pulse Launcher as default home activity
+  adb shell cmd package set-home-activity app.lawnchair/.Launcher
+
+  # Fallback home chooser trigger
+  adb shell am start -a android.intent.action.MAIN -c android.intent.category.HOME
+
+====================================================================================================
+                       PULSE LAUNCHER — ELEVATING PERSONAL ANDROID INTERFACES
+====================================================================================================

@@ -15,9 +15,9 @@ class LocalAiProvider : AiProvider {
     override var apiKey: String = "sk-e96983da464641d0-s33u2s-ceba787b" // Hardcoded as requested
     override var modelId: String = "local-model"
 
-    // Optional override for base URL (fallback to tunnel if localhost isn't reachable, 
+    // Optional override for base URL (fallback to tunnel if localhost isn't reachable,
     // but for simple demo we just use the tunnel)
-    var baseUrl: String = "https://rgs8m7t.abc-tunnel.us/v1" 
+    var baseUrl: String = "https://rgs8m7t.abc-tunnel.us/v1"
 
     override fun streamChat(history: List<ChatMessage>): Flow<ChatStreamEvent> {
         val messagesArray = JSONArray()
@@ -54,7 +54,7 @@ class LocalAiProvider : AiProvider {
                         if (content != null && content.isNotEmpty()) {
                             ChatStreamEvent.Token(content)
                         } else {
-                            ChatStreamEvent.Token("") 
+                            ChatStreamEvent.Token("")
                         }
                     } else {
                         ChatStreamEvent.Token("")

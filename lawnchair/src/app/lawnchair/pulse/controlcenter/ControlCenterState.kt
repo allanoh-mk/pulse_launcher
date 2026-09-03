@@ -6,5 +6,7 @@ data class ControlCenterState(
     val volume: Float = 0.5f,
     val isWifiEnabled: Boolean = true,
     val isDndEnabled: Boolean = false,
-    val isBluetoothEnabled: Boolean = false
+    val isBluetoothEnabled: Boolean = false,
+    val isFlashlightOn: Boolean = false,
+    val isAutoRotateEnabled: Boolean = false,
 )

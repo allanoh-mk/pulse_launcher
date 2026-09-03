@@ -5,7 +5,16 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -18,15 +27,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.platform.LocalContext
 import com.android.launcher3.R
 
 @Composable
 fun ControlCenterOverlay(
     viewModel: ControlCenterViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -34,7 +43,7 @@ fun ControlCenterOverlay(
         visible = state.isVisible,
         enter = slideInVertically(initialOffsetY = { -it }),
         exit = slideOutVertically(targetOffsetY = { -it }),
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
     ) {
         val isLowEnd = !app.lawnchair.pulse.core.DeviceCapabilities.current(LocalContext.current).supportsRealtimeBlur
         val overlayBg = if (isLowEnd) Color.Black else Color.Black.copy(alpha = 0.4f)
@@ -44,7 +53,7 @@ fun ControlCenterOverlay(
             modifier = Modifier
                 .fillMaxSize()
                 .background(overlayBg)
-                .clickable { viewModel.setVisible(false) }
+                .clickable { viewModel.setVisible(false) },
         ) {
             Column(
                 modifier = Modifier
@@ -54,42 +63,42 @@ fun ControlCenterOverlay(
                     .background(panelBg)
                     .clickable(enabled = false) {}
                     .padding(24.dp),
-                verticalArrangement = Arrangement.spacedBy(24.dp)
+                verticalArrangement = Arrangement.spacedBy(24.dp),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                    horizontalArrangement = Arrangement.SpaceEvenly,
                 ) {
                     ToggleButton(
                         label = "Wi-Fi",
                         isActive = state.isWifiEnabled,
-                        iconRes = R.drawable.ic_setting, // Placeholder
-                        onClick = { viewModel.toggleWifi() }
+                        iconRes = R.drawable.ic_setting,
+                        onClick = { viewModel.toggleWifi() },
                     )
                     ToggleButton(
                         label = "Bluetooth",
                         isActive = state.isBluetoothEnabled,
-                        iconRes = R.drawable.ic_setting, // Placeholder
-                        onClick = { viewModel.toggleBluetooth() }
+                        iconRes = R.drawable.ic_setting,
+                        onClick = { viewModel.toggleBluetooth() },
                     )
                     ToggleButton(
                         label = "DND",
                         isActive = state.isDndEnabled,
-                        iconRes = R.drawable.ic_setting, // Placeholder
-                        onClick = { viewModel.toggleDnd() }
+                        iconRes = R.drawable.ic_setting,
+                        onClick = { viewModel.toggleDnd() },
                     )
                 }
 
                 SliderControl(
                     label = "Brightness",
                     value = state.brightness,
-                    onValueChange = { viewModel.setBrightness(it) }
+                    onValueChange = { viewModel.setBrightness(it) },
                 )
 
                 SliderControl(
                     label = "Volume",
                     value = state.volume,
-                    onValueChange = { viewModel.setVolume(it) }
+                    onValueChange = { viewModel.setVolume(it) },
                 )
             }
         }
@@ -101,7 +110,7 @@ private fun ToggleButton(
     label: String,
     isActive: Boolean,
     iconRes: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     val bgColor = if (isActive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
     val contentColor = if (isActive) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
@@ -113,13 +122,13 @@ private fun ToggleButton(
                 .clip(RoundedCornerShape(24.dp))
                 .background(bgColor)
                 .clickable { onClick() },
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Icon(
                 painter = painterResource(id = iconRes),
                 contentDescription = label,
                 tint = contentColor,
-                modifier = Modifier.size(28.dp)
+                modifier = Modifier.size(28.dp),
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -131,14 +140,14 @@ private fun ToggleButton(
 private fun SliderControl(
     label: String,
     value: Float,
-    onValueChange: (Float) -> Unit
+    onValueChange: (Float) -> Unit,
 ) {
     Column {
         Text(text = label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurface)
         Slider(
             value = value,
             onValueChange = onValueChange,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }

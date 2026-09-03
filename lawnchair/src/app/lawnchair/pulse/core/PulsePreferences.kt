@@ -81,6 +81,12 @@ class PulsePreferences private constructor(context: Context) : PreferenceManager
         defaultValue = "SYSTEM_DEFAULT",
     )
 
+    /** Weather precise location toggle. OFF by default (IP location). */
+    val weatherUsePreciseLocation = preference(
+        key = booleanPreferencesKey("weather_use_precise_location"),
+        defaultValue = false,
+    )
+
     fun resolvedBlurEnabled(deviceProfile: DeviceCapabilities.Profile): Boolean =
         deviceProfile.supportsRealtimeBlur && !forceDisableBlur.firstBlocking()
 

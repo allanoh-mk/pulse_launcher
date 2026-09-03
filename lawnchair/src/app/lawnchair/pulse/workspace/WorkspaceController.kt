@@ -5,6 +5,7 @@ import android.os.VibrationEffect
 import android.os.VibratorManager
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
@@ -14,16 +15,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import app.lawnchair.pulse.controlcenter.ControlCenterViewModel
+import app.lawnchair.pulse.search.SearchViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filter
-
-import app.lawnchair.pulse.controlcenter.ControlCenterViewModel
-import app.lawnchair.pulse.search.SearchViewModel
-import androidx.compose.foundation.gestures.detectVerticalDragGestures
-import androidx.compose.ui.input.pointer.pointerInput
 
 private const val PAGE_COUNT = 3
 private const val WALLPAPER_PARALLAX = 0.7f
@@ -32,7 +31,7 @@ private const val WALLPAPER_PARALLAX = 0.7f
 @Composable
 fun PulseWorkspace(
     controlCenterViewModel: ControlCenterViewModel,
-    searchViewModel: SearchViewModel
+    searchViewModel: SearchViewModel,
 ) {
     val context = LocalContext.current
     val view = LocalView.current
@@ -83,7 +82,7 @@ fun PulseWorkspace(
                             }
                             change.consume()
                         }
-                    }
+                    },
                 )
             },
     ) {

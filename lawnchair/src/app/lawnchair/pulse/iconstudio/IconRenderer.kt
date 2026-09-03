@@ -60,6 +60,10 @@ object IconRenderer {
             IconStyle.LIQUID_GLASS -> applyLiquidGlass(canvas, paint)
             IconStyle.NEON -> applyNeon(canvas, paint)
             IconStyle.EMBOSSED -> applyEmbossed(canvas, paint)
+            IconStyle.DUOTONE -> applyDuotone(canvas, paint)
+            IconStyle.HOLOGRAPHIC -> applyHolographic(canvas, paint)
+            IconStyle.FILM_GRAIN -> applyFilmGrain(canvas, paint)
+            IconStyle.MATERIAL_YOU -> applyMaterialYou(canvas, paint)
         }
         canvas.restore()
 
@@ -102,7 +106,10 @@ object IconRenderer {
         paint.reset()
         paint.isAntiAlias = true
         paint.shader = LinearGradient(
-            0f, 0f, 0f, size,
+            0f,
+            0f,
+            0f,
+            size,
             Color.argb(90, 255, 255, 255),
             Color.argb(0, 255, 255, 255),
             Shader.TileMode.CLAMP,
@@ -110,7 +117,10 @@ object IconRenderer {
         canvas.drawRect(0f, 0f, size, size * 0.5f, paint)
 
         paint.shader = LinearGradient(
-            0f, size * 0.7f, 0f, size,
+            0f,
+            size * 0.7f,
+            0f,
+            size,
             Color.argb(0, 0, 0, 0),
             Color.argb(60, 0, 0, 0),
             Shader.TileMode.CLAMP,
@@ -130,7 +140,7 @@ object IconRenderer {
             paint.strokeWidth / 2,
             size - paint.strokeWidth / 2,
             size - paint.strokeWidth / 2,
-            paint
+            paint,
         )
 
         paint.style = Paint.Style.FILL
@@ -147,7 +157,10 @@ object IconRenderer {
         paint.isAntiAlias = true
         paint.blendMode = BlendMode.OVERLAY
         paint.shader = LinearGradient(
-            0f, 0f, 0f, size,
+            0f,
+            0f,
+            0f,
+            size,
             Color.argb(120, 255, 255, 255),
             Color.argb(120, 0, 0, 0),
             Shader.TileMode.CLAMP,
@@ -156,11 +169,78 @@ object IconRenderer {
         paint.blendMode = null
     }
 
+    private fun applyDuotone(canvas: Canvas, paint: Paint) {
+        val size = CANVAS_SIZE.toFloat()
+        paint.reset()
+        paint.isAntiAlias = true
+        paint.blendMode = BlendMode.COLOR
+        paint.shader = LinearGradient(
+            0f,
+            0f,
+            size,
+            size,
+            Color.rgb(110, 40, 240),
+            Color.rgb(255, 160, 40),
+            Shader.TileMode.CLAMP,
+        )
+        canvas.drawRect(0f, 0f, size, size, paint)
+        paint.blendMode = null
+    }
+
+    private fun applyHolographic(canvas: Canvas, paint: Paint) {
+        val size = CANVAS_SIZE.toFloat()
+        paint.reset()
+        paint.isAntiAlias = true
+        paint.blendMode = BlendMode.SCREEN
+        paint.shader = LinearGradient(
+            0f,
+            0f,
+            size,
+            size,
+            intArrayOf(
+                Color.argb(120, 255, 80, 180),
+                Color.argb(120, 80, 220, 255),
+                Color.argb(120, 255, 240, 90),
+                Color.argb(120, 140, 80, 255),
+            ),
+            floatArrayOf(0f, 0.35f, 0.7f, 1f),
+            Shader.TileMode.MIRROR,
+        )
+        canvas.drawRect(0f, 0f, size, size, paint)
+        paint.blendMode = null
+    }
+
+    private fun applyFilmGrain(canvas: Canvas, paint: Paint) {
+        val size = CANVAS_SIZE.toFloat()
+        paint.reset()
+        paint.isAntiAlias = false
+        paint.color = Color.argb(22, 255, 255, 255)
+        // Deterministic pseudo-random micro grain pattern
+        var seed = 1337
+        for (i in 0 until 400) {
+            seed = (seed * 1103515245 + 12345) and 0x7fffffff
+            val x = (seed % CANVAS_SIZE).toFloat()
+            seed = (seed * 1103515245 + 12345) and 0x7fffffff
+            val y = (seed % CANVAS_SIZE).toFloat()
+            canvas.drawPoint(x, y, paint)
+        }
+    }
+
+    private fun applyMaterialYou(canvas: Canvas, paint: Paint) {
+        val size = CANVAS_SIZE.toFloat()
+        paint.reset()
+        paint.isAntiAlias = true
+        paint.blendMode = BlendMode.HUE
+        paint.color = Color.argb(160, 100, 149, 237)
+        canvas.drawRect(0f, 0f, size, size, paint)
+        paint.blendMode = null
+    }
+
     private fun drawEdgeOutline(canvas: Canvas, maskPath: Path) {
         val outline = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             style = Paint.Style.STROKE
             strokeWidth = CANVAS_SIZE * 0.015f
-            color = Color.argb(38, 0, 0, 0) // ~15% opacity dark edge, per iOS 27 spec
+            color = Color.argb(38, 0, 0, 0)
         }
         canvas.drawPath(maskPath, outline)
     }

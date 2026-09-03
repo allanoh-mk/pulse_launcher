@@ -1,14 +1,13 @@
 package app.lawnchair.pulse.assistant
 
+import java.io.IOException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import okhttp3.Call
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okio.BufferedSource
-import java.io.IOException
 
 object SseReader {
     private val client = OkHttpClient()

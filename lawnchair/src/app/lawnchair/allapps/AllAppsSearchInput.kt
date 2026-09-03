@@ -160,6 +160,15 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
                         searchProvider.launch(launcher)
                     }
                 }
+                setOnLongClickListener {
+                    if (!app.lawnchair.pulse.privatespace.PrivateSpaceManager.isUnlocked.value) {
+                        app.lawnchair.pulse.privatespace.PrivateSpaceManager.requestUnlock(context as androidx.fragment.app.FragmentActivity)
+                    } else {
+                        app.lawnchair.pulse.privatespace.PrivateSpaceManager.lock()
+                        android.widget.Toast.makeText(context, "Private Space Locked", android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                    true
+                }
             }
             with(micIcon) {
                 setIcon(isGoogle, themed)

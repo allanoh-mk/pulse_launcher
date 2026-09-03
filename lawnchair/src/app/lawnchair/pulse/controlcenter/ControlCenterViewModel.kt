@@ -5,10 +5,10 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.media.AudioManager
-import android.net.wifi.WifiManager
 import android.provider.Settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.lawnchair.pulse.controlcenter.bridge.SystemBridge
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +21,7 @@ class ControlCenterViewModel(private val context: Context) : ViewModel() {
 
     private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    private val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager?
+    private val systemBridge = SystemBridge(context)
     private val bluetoothAdapter: BluetoothAdapter? = (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
 
     init {
@@ -55,10 +55,7 @@ class ControlCenterViewModel(private val context: Context) : ViewModel() {
     }
 
     fun toggleWifi() {
-        val newState = !_state.value.isWifiEnabled
-        _state.update { it.copy(isWifiEnabled = newState) }
-        @Suppress("DEPRECATION")
-        wifiManager?.isWifiEnabled = newState
+        systemBridge.openWifiPanel()
     }
 
     fun toggleBluetooth() {
@@ -86,6 +83,17 @@ class ControlCenterViewModel(private val context: Context) : ViewModel() {
         notificationManager.setInterruptionFilter(filter)
     }
 
+    fun toggleFlashlight() {
+        val newState = !_state.value.isFlashlightOn
+        _state.update { it.copy(isFlashlightOn = newState) }
+        systemBridge.setFlashlight(newState)
+    }
+
+    fun toggleAutoRotate() {
+        val newState = systemBridge.toggleAutoRotate()
+        _state.update { it.copy(isAutoRotateEnabled = newState) }
+    }
+
     private fun refreshState() {
         viewModelScope.launch {
             val brightness = try {
@@ -98,9 +106,16 @@ class ControlCenterViewModel(private val context: Context) : ViewModel() {
             val maxVol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
             val volume = if (maxVol > 0) currentVol.toFloat() / maxVol else 0f
 
-            val isWifiEnabled = wifiManager?.isWifiEnabled == true
+            val isWifiEnabled = try {
+                Settings.Global.getInt(context.contentResolver, Settings.Global.WIFI_ON) == 1
+            } catch (e: Exception) {
+                false
+            }
+
             val isBluetoothEnabled = bluetoothAdapter?.isEnabled == true
             val isDndEnabled = notificationManager.currentInterruptionFilter != NotificationManager.INTERRUPTION_FILTER_ALL
+            val isFlashlightOn = _state.value.isFlashlightOn
+            val isAutoRotateEnabled = systemBridge.isAutoRotateEnabled()
 
             _state.update {
                 it.copy(
@@ -108,7 +123,9 @@ class ControlCenterViewModel(private val context: Context) : ViewModel() {
                     volume = volume,
                     isWifiEnabled = isWifiEnabled,
                     isBluetoothEnabled = isBluetoothEnabled,
-                    isDndEnabled = isDndEnabled
+                    isDndEnabled = isDndEnabled,
+                    isFlashlightOn = isFlashlightOn,
+                    isAutoRotateEnabled = isAutoRotateEnabled,
                 )
             }
         }

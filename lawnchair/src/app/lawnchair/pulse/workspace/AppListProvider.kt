@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.graphics.drawable.Drawable
-import android.os.UserHandle
 import android.os.Process
+import android.os.UserHandle
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -56,7 +56,7 @@ object AppListProvider {
             override fun onPackagesUnavailable(
                 packageNames: Array<out String>?,
                 user: UserHandle?,
-                replacing: Boolean
+                replacing: Boolean,
             ) = refresh()
 
             private fun refresh() {

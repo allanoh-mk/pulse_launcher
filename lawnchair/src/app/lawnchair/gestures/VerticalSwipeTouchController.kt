@@ -83,7 +83,11 @@ class VerticalSwipeTouchController(
             if (velocity < 0) {
                 gestureController.onSwipeUp()
             } else {
-                gestureController.onSwipeDown()
+                if (motionEvent.pointerCount >= 2) {
+                    gestureController.onTwoFingerSwipeDown()
+                } else {
+                    gestureController.onSwipeDown()
+                }
             }
         }
         return true
@@ -98,9 +102,8 @@ class VerticalSwipeTouchController(
         if (overrideSwipeUp) {
             directions = directions or BothAxesSwipeDetector.DIRECTION_UP
         }
-        if (overrideSwipeDown) {
-            directions = directions or BothAxesSwipeDetector.DIRECTION_DOWN
-        }
+        // Always allow DOWN swipe because two-finger swipe down is hardcoded
+        directions = directions or BothAxesSwipeDetector.DIRECTION_DOWN
         return directions
     }
 

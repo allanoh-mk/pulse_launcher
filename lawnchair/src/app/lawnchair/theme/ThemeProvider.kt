@@ -46,7 +46,7 @@ class ThemeProvider(private val context: Context) {
         }
         wallpaperManager.addOnChangeListener(object : WallpaperManagerCompat.OnColorsChangedListener {
             override fun onColorsChanged() {
-                if (accentColor is ColorOption.WallpaperPrimary) {
+                if (accentColor is ColorOption.WallpaperPrimary || accentColor is ColorOption.WallpaperSecondary || accentColor is ColorOption.WallpaperTertiary) {
                     notifyColorSchemeChanged()
                 }
             }
@@ -85,6 +85,15 @@ class ThemeProvider(private val context: Context) {
         is ColorOption.WallpaperPrimary -> {
             val wallpaperPrimary = wallpaperManager.wallpaperColors?.primaryColor
             getColorScheme(wallpaperPrimary ?: ColorOption.LawnchairBlue.color, colorStyle.style)
+        }
+        
+        is ColorOption.WallpaperSecondary -> {
+            val wallpaperSecondary = wallpaperManager.wallpaperColors?.secondaryColor
+            getColorScheme(wallpaperSecondary ?: ColorOption.LawnchairBlue.color, colorStyle.style)
+        }
+        is ColorOption.WallpaperTertiary -> {
+            val wallpaperTertiary = wallpaperManager.wallpaperColors?.tertiaryColor
+            getColorScheme(wallpaperTertiary ?: ColorOption.LawnchairBlue.color, colorStyle.style)
         }
         is ColorOption.CustomColor -> getColorScheme(accentColor.color, colorStyle.style)
         else -> getColorScheme(ColorOption.LawnchairBlue.color, colorStyle.style)

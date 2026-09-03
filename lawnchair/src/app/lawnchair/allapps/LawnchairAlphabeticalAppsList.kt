@@ -30,6 +30,9 @@ class LawnchairAlphabeticalAppsList<T>(
                 hiddenApps = it
                 onAppsUpdated()
             }
+            app.lawnchair.pulse.privatespace.PrivateSpaceManager.isUnlocked.onEach(launchIn = context.launcher.lifecycleScope) {
+                onAppsUpdated()
+            }
         } catch (t: Throwable) {
             Log.w(TAG, "Failed initialize ignore: ", t)
         }
@@ -39,7 +42,7 @@ class LawnchairAlphabeticalAppsList<T>(
         this.mItemFilter = Predicate { info ->
             require(info is AppInfo) { "`info` must be an instance of `AppInfo`." }
             val componentKey = info.toComponentKey().toString()
-            itemFilter?.test(info) != false && !hiddenApps.contains(componentKey)
+            itemFilter?.test(info) != false && !app.lawnchair.pulse.privatespace.PrivateSpaceManager.isComponentHidden(componentKey, hiddenApps)
         }
         onAppsUpdated()
     }

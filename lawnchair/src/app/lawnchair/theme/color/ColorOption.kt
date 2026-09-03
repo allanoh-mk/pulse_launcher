@@ -42,6 +42,39 @@ sealed class ColorOption {
         override fun toString() = "wallpaper_primary"
     }
 
+    object WallpaperSecondary : ColorOption() {
+        override val isSupported = Utilities.ATLEAST_O_MR1
+
+        override val colorPreferenceEntry = ColorPreferenceEntry<ColorOption>(
+            this,
+            { stringResource(id = R.string.wallpaper) + " (Secondary)" },
+            { context ->
+                val wallpaperManager = WallpaperManagerCompat.INSTANCE.get(context)
+                val secondaryColor = wallpaperManager.wallpaperColors?.secondaryColor
+                secondaryColor ?: LawnchairBlue.color
+            },
+        )
+
+        override fun toString() = "wallpaper_secondary"
+    }
+
+    object WallpaperTertiary : ColorOption() {
+        override val isSupported = Utilities.ATLEAST_O_MR1
+
+        override val colorPreferenceEntry = ColorPreferenceEntry<ColorOption>(
+            this,
+            { stringResource(id = R.string.wallpaper) + " (Tertiary)" },
+            { context ->
+                val wallpaperManager = WallpaperManagerCompat.INSTANCE.get(context)
+                val tertiaryColor = wallpaperManager.wallpaperColors?.tertiaryColor
+                tertiaryColor ?: LawnchairBlue.color
+            },
+        )
+
+        override fun toString() = "wallpaper_tertiary"
+    }
+
+
     class CustomColor(val color: Int) : ColorOption() {
         override val isSupported = true
 
@@ -78,6 +111,8 @@ sealed class ColorOption {
         fun fromString(stringValue: String) = when (stringValue) {
             "system_accent" -> SystemAccent
             "wallpaper_primary" -> WallpaperPrimary
+            "wallpaper_secondary" -> WallpaperSecondary
+            "wallpaper_tertiary" -> WallpaperTertiary
             "default" -> Default
             else -> instantiateCustomColor(stringValue)
         }

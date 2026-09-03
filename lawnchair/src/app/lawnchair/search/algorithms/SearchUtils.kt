@@ -61,12 +61,12 @@ fun Sequence<AppInfo>.filterHiddenApps(
         }
         HiddenAppsInSearch.IF_NAME_TYPED -> {
             filter {
-                it.toComponentKey().toString() !in hiddenApps ||
+                !app.lawnchair.pulse.privatespace.PrivateSpaceManager.isComponentHidden(it.toComponentKey().toString(), hiddenApps) ||
                     it.title.toString().lowercase(Locale.getDefault()) == query
             }
         }
         else -> {
-            filter { it.toComponentKey().toString() !in hiddenApps }
+            filter { !app.lawnchair.pulse.privatespace.PrivateSpaceManager.isComponentHidden(it.toComponentKey().toString(), hiddenApps) }
         }
     }
 }

@@ -113,7 +113,7 @@ fun ListPage() {
                     // Trigger a custom tactile tick
                     try {
                         view.performHapticFeedback(
-                            android.view.HapticFeedbackConstants.CLOCK_TICK
+                            android.view.HapticFeedbackConstants.CLOCK_TICK,
                         )
                     } catch (e: Exception) {}
                 }
@@ -160,8 +160,8 @@ private fun AppRow(app: PulseAppInfo) {
 private fun AlphabetRail(
     letters: List<Char>,
     focusedIndex: Int?,
-    modifier: Modifier = Modifier,
     onFocusChange: (fraction: Float) -> Unit,
+    modifier: Modifier = Modifier,
     onFocusEnd: () -> Unit,
 ) {
     Column(

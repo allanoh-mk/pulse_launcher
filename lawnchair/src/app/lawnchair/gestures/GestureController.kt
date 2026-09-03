@@ -52,6 +52,13 @@ class GestureController(private val launcher: LawnchairLauncher) {
         triggerHandler(swipeUpHandler)
     }
 
+    fun onTwoFingerSwipeDown() {
+        // Hardcoded to open Drawing Canvas as per requirements
+        val intent = android.content.Intent(launcher, app.lawnchair.pulse.canvas.CanvasActivity::class.java)
+        intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+        launcher.startActivity(intent)
+    }
+
     fun onSwipeDown() {
         triggerHandler(swipeDownHandler)
     }

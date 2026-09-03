@@ -22,13 +22,13 @@ import app.lawnchair.pulse.core.pulsePreferences
  * persisted via [app.lawnchair.pulse.core.PulsePreferences.fontOption].
  */
 @Composable
-fun FontStudioSettingsScreen() {
+fun FontStudioSettingsScreen(modifier: Modifier = Modifier) {
     val preferences = pulsePreferences()
     val adapter = preferences.fontOption.getAdapter()
     val selected = PulseFontOption.fromName(adapter.state.value)
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
