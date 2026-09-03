@@ -1,13 +1,8 @@
-# Pulse Implementation Workspace
+# Pulse Implementation Documentation
 
-This directory is the execution source of truth for Pulse-specific work.
+This directory contains the implementation source-of-truth for Pulse product work. Documentation is intentionally split into focused Markdown files rather than placing feature specifications in the repository README.
 
-## Product rules
-- Minimum Android version: Android 12 / API 31.
-- Android 12 Go is a first-class target, including low-memory real-device validation.
-- Pulse is one product: no crippled Go edition.
-- The launcher has exactly three primary home screens: Feed, Bento, and List.
-- Existing Google/Discover-style feed integration is active in the Feed area and must be KEEP/REFACTOR, never blindly deleted.
+## Primary areas
+01 Feed · 02 Bento · 03 List · 04 Search · 05 Pulse Intelligence · 06 Onboarding · 07 Notifications · 08 Control Center · 09 Dynamic Island · 10 Pulse Music · 11 Wallpaper Motion · 12 Pulse Settings · 13 Performance and Go · 14 Icon and Brand · 15 Codebase Audit.
 
-## Feature folders
-Each feature lives in its own `implement` folder and documents product intent, UX rules, architecture, stages, permissions, failure modes, tests, performance budget, motion specification, and references.
+Each area contains an `implement/` directory. Broad legacy `FEATURE.md` files are retained temporarily as migration summaries; new implementation work should target the focused files beside them.
