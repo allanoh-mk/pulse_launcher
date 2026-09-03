@@ -1,0 +1,17 @@
+flowchart LR
+Q[Query / Context] --> I[Intent Classifier]
+I --> LA[Local Apps]
+I --> CO[Contacts]
+I --> FI[Files]
+I --> CA[Calculator]
+I --> CU[Currency]
+I --> WE[Web Providers]
+LA --> R[Rank + Deduplicate]
+CO --> R
+FI --> R
+CA --> R
+CU --> R
+WE --> R
+R --> SR[Search Cards]
+R --> FG[Feed Candidate Graph]
+FG --> FF[Pulse Feed]
