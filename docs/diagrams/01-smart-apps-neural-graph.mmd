@@ -1,0 +1,11 @@
+flowchart LR
+U[User Context] --> E[Local Event Stream]
+E --> G[Decayed Context Graph]
+A[Apps] --> F[App Features]
+F --> G
+G --> R[Ranking Engine]
+R --> D[Smart Dock]
+R --> L[List Suggestions]
+R --> S[Search Ranking]
+X[Privacy / Block Rules] -. filters .-> E
+X -. filters .-> R
